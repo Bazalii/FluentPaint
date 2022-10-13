@@ -1,5 +1,7 @@
 using FluentPaint.Core.Reader;
+using FluentPaint.Core.Reader.Implementations;
 using FluentPaint.Core.Writer;
+using FluentPaint.Core.Writer.Implementations;
 
 namespace FluentPaint.Core.Pnm;
 

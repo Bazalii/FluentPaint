@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Writer;
+namespace FluentPaint.Core.Writer.Implementations;
 
 public class PpmWriter : IPnmWriter
 {

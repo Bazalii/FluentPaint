@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Reader;
+namespace FluentPaint.Core.Reader.Implementations;
 
 public class PpmReader: IPnmReader
 {
