@@ -4,5 +4,5 @@ namespace FluentPaint.Core.Reader;
 
 public interface IPnmReader
 {
-    SKBitmap ReadImageData(FileStream fs, int width, int height);
+    SKBitmap ReadImageData(FileStream fileStream, int width, int height);
 }

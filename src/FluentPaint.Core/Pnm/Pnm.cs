@@ -5,26 +5,28 @@ namespace FluentPaint.Core.Pnm;
 
 public class Pnm
 {
-    public SKBitmap ReadPnm(string filePath)
+    public static SKBitmap ReadPnm(string filePath)
     {
-        var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-        var magicWord = (char) fs.ReadByte() + ((char) fs.ReadByte()).ToString();
-        fs.ReadByte();
-        
-        var line = ReadLine(fs);
-        var parameters = line.Split(new[]{' '});
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+        var type = (char)fileStream.ReadByte() + ((char)fileStream.ReadByte()).ToString();
+        fileStream.ReadByte();
+
+        var line = ReadLine(fileStream);
+        var parameters = line.Split(new[] { ' ' });
         var width = int.Parse(parameters[0]);
         var height = int.Parse(parameters[1]);
-        
-        var brightness = int.Parse(ReadLine(fs));
 
-        var imReader = PnmFactory.GetIPnmReader(PnmFactory.GetPnmType(magicWord));
-        return imReader.ReadImageData(fs, width, height);
+        var brightness = int.Parse(ReadLine(fileStream));
+
+        var reader = PnmFactory.GetPnmReader(PnmFactory.GetPnmType(type));
+
+        return reader.ReadImageData(fileStream, width, height);
     }
 
-    public void WritePnm(string filePath, SKBitmap bitmap)
+    public static void WritePnm(string filePath, SKBitmap bitmap)
     {
-        var extension = filePath.Substring(filePath.Length-4,4).ToLower();
+        var extension = filePath.Substring(filePath.Length - 4, 4).ToLower();
+
         var type = extension switch
         {
             ".pgm" => PnmType.P5,
@@ -32,37 +34,36 @@ public class Pnm
             ".pnm" => PnmType.P6,
             _ => throw new Exception()
         };
-        
-        var fs = new FileStream(filePath, FileMode.Create,FileAccess.Write,FileShare.None);
-        
-        WriteLine(fs,type.ToString());				
-        WriteLine(fs,bitmap.Width + " " + bitmap.Height);
-        WriteLine(fs,"255");
 
-        var imWriter = PnmFactory.GetIPnmWriter(type);
-        imWriter.WriteImageData(fs, bitmap);
+        var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
+
+        WriteLine(fileStream, type.ToString());
+        WriteLine(fileStream, bitmap.Width + " " + bitmap.Height);
+        WriteLine(fileStream, "255");
+
+        var writer = PnmFactory.GetPnmWriter(type);
+        writer.WriteImageData(fileStream, bitmap);
     }
 
-    private static string ReadLine(FileStream fs)
+    private static string ReadLine(Stream fileStream)
     {
-        var br = new BinaryReader(fs);
+        var binaryReader = new BinaryReader(fileStream);
+        var stringBuilder = new StringBuilder();
+        var current = binaryReader.ReadByte();
 
-        var sb = new StringBuilder();
-
-        var cur = br.ReadByte();
-        while (cur != '\n')
+        while (current != '\n')
         {
-            sb.Append(((char) cur).ToString());
-            cur = br.ReadByte();
+            stringBuilder.Append((char)current);
+            current = binaryReader.ReadByte();
         }
 
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
-    
-    private void WriteLine(FileStream fs, string line)
+
+    private static void WriteLine(Stream fileStream, string line)
     {
-        var bw = new BinaryWriter(fs);
-        
-        bw.Write(Encoding.ASCII.GetBytes(line+"\n"));			
+        var binaryWriter = new BinaryWriter(fileStream);
+
+        binaryWriter.Write(Encoding.ASCII.GetBytes(line + "\n"));
     }
 }

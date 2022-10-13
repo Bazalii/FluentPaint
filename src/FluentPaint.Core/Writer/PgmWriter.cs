@@ -4,18 +4,18 @@ namespace FluentPaint.Core.Writer;
 
 public class PgmWriter : IPnmWriter
 {
-    public void WriteImageData(FileStream fs, SKBitmap im)
+    public void WriteImageData(FileStream fileStream, SKBitmap bitmap)
     {
-        for (var y = 0; y < im.Height; y++)
+        for (var y = 0; y < bitmap.Height; y++)
         {
-            for (var x = 0; x < im.Width; x++)
+            for (var x = 0; x < bitmap.Width; x++)
             {
-                var c = im.GetPixel(x, y);
-                var luma = (int) (c.Red * 0.3 + c.Green * 0.59 + c.Blue * 0.11);
-                fs.WriteByte((byte) luma);
+                var pixel = bitmap.GetPixel(x, y);
+                var luma = (int)(pixel.Red * 0.3 + pixel.Green * 0.59 + pixel.Blue * 0.11);
+                fileStream.WriteByte((byte)luma);
             }
         }
 
-        fs.Close();
+        fileStream.Close();
     }
 }

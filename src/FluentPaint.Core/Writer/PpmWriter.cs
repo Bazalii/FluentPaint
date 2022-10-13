@@ -4,19 +4,19 @@ namespace FluentPaint.Core.Writer;
 
 public class PpmWriter : IPnmWriter
 {
-    public void WriteImageData(FileStream fs, SKBitmap im)
+    public void WriteImageData(FileStream fileStream, SKBitmap bitmap)
     {
-        for (var y = 0; y < im.Height; y++)
+        for (var y = 0; y < bitmap.Height; y++)
         {
-            for (var x = 0; x < im.Width; x++)
+            for (var x = 0; x < bitmap.Width; x++)
             {
-                SKColor c = im.GetPixel(x, y);
-                fs.WriteByte(c.Red);
-                fs.WriteByte(c.Green);
-                fs.WriteByte(c.Blue);
+                var pixel = bitmap.GetPixel(x, y);
+                fileStream.WriteByte(pixel.Red);
+                fileStream.WriteByte(pixel.Green);
+                fileStream.WriteByte(pixel.Blue);
             }
         }
 
-        fs.Close();
+        fileStream.Close();
     }
 }

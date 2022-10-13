@@ -1,4 +1,3 @@
-using FluentPaint.Core.Pnm;
 using FluentPaint.Core.Reader;
 using FluentPaint.Core.Writer;
 
@@ -11,28 +10,28 @@ public static class PnmFactory
         return line.Equals("P5") ? PnmType.P5 : PnmType.P6;
     }
     
-    public static IPnmWriter GetIPnmWriter(PnmType type)
+    public static IPnmWriter GetPnmWriter(PnmType type)
     {
-        IPnmWriter imWriter = type switch
+        IPnmWriter writer = type switch
         {
             PnmType.P5 => new PgmWriter(),
             PnmType.P6 => new PpmWriter(),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            _ => throw new Exception("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
-        return imWriter;
+        return writer;
     }
     
     
-    public static IPnmReader GetIPnmReader(PnmType type)
+    public static IPnmReader GetPnmReader(PnmType type)
     {
-        IPnmReader imWriter = type switch
+        IPnmReader reader = type switch
         {
             PnmType.P5 => new PgmReader(),
             PnmType.P6 => new PpmReader(),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            _ => throw new Exception("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
-        return imWriter;
+        return reader;
     }
 }
