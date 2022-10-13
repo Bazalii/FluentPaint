@@ -18,7 +18,7 @@ public static class PnmFactory
         {
             PnmType.P5 => new PgmWriter(),
             PnmType.P6 => new PpmWriter(),
-            _ => throw new Exception("Error: This file type is not supported, .ppm .pgm is expected")
+            _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
         return writer;
@@ -31,7 +31,7 @@ public static class PnmFactory
         {
             PnmType.P5 => new PgmReader(),
             PnmType.P6 => new PpmReader(),
-            _ => throw new Exception("Error: This file type is not supported, .ppm .pgm is expected")
+            _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
         return reader;
