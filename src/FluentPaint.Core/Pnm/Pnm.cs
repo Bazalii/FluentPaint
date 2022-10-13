@@ -18,6 +18,11 @@ public class Pnm
 
         var brightness = int.Parse(ReadLine(fileStream));
 
+        if (brightness != 255)
+        {
+            throw new Exception("Brightness should be 255!");
+        }
+
         var reader = PnmFactory.GetPnmReader(PnmFactory.GetPnmType(type));
 
         return reader.ReadImageData(fileStream, width, height);
