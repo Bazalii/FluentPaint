@@ -29,6 +29,7 @@ public class Pnm
         {
             ".pgm" => PnmType.P5,
             ".ppm" => PnmType.P6,
+            ".pnm" => PnmType.P6,
             _ => throw new Exception()
         };
         
