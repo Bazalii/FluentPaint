@@ -11,7 +11,7 @@ public static class PnmFactory
     {
         return line.Equals("P5") ? PnmType.P5 : PnmType.P6;
     }
-    
+
     public static IPnmWriter GetPnmWriter(PnmType type)
     {
         IPnmWriter writer = type switch
@@ -23,8 +23,8 @@ public static class PnmFactory
 
         return writer;
     }
-    
-    
+
+
     public static IPnmReader GetPnmReader(PnmType type)
     {
         IPnmReader reader = type switch

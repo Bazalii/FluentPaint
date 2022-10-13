@@ -8,9 +8,9 @@ public class Pnm
     public static SKBitmap ReadPnm(string filePath)
     {
         var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-        
+
         var type = ReadLine(fileStream);
-        
+
         var line = ReadLine(fileStream);
         var parameters = line.Split(new[] { ' ' });
         var width = int.Parse(parameters[0]);
@@ -32,7 +32,8 @@ public class Pnm
             ".pgm" => PnmType.P5,
             ".ppm" => PnmType.P6,
             ".pnm" => PnmType.P6,
-            _ => throw new Exception("Error: This file type is not supported, .ppm .pgm is expected (.pnm will write as p6)")
+            _ => throw new Exception(
+                "Error: This file type is not supported, .ppm .pgm is expected (.pnm will write as p6)")
         };
 
         var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -52,7 +53,7 @@ public class Pnm
 
         while (current != '\n')
         {
-            stringBuilder.Append((char)current);
+            stringBuilder.Append((char) current);
             current = binaryReader.ReadByte();
         }
 
