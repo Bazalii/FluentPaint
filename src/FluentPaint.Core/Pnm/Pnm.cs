@@ -1,8 +1,7 @@
 using System.Text;
-using FluentPaint.Core.Pnm;
 using SkiaSharp;
 
-namespace FluentPaint.Core.PNM;
+namespace FluentPaint.Core.Pnm;
 
 public class Pnm
 {

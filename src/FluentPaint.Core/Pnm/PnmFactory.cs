@@ -2,7 +2,7 @@ using FluentPaint.Core.Pnm;
 using FluentPaint.Core.Reader;
 using FluentPaint.Core.Writer;
 
-namespace FluentPaint.Core.PNM;
+namespace FluentPaint.Core.Pnm;
 
 public static class PnmFactory
 {
