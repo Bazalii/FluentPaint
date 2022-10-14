@@ -7,19 +7,19 @@
         x:Class="FluentPaint.UI.Views.MainWindow"
         Icon="/Assets/application-logo.png"
         Title="FluentPaint"
-        Background="#30f0e3">
+        Background="#FFFFFF">
 
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <Panel>
-        <Image Width="200"
-               Height="200"
+        <Image Width="600"
+               Height="600"
                Name="MainImage">
         </Image>
 
-        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#0ba132">
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#565656">
             <Button Margin="10"
                     Background="White"
                     FontSize="15"
