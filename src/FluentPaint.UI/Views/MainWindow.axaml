@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FluentPaint.UI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FluentPaint.UI.Views.MainWindow"
+        Icon="/Assets/application-logo.png"
+        Title="FluentPaint"
+        Background="#30f0e3">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Panel>
+        <Image Width="200"
+               Height="200"
+               Name="MainImage">
+        </Image>
+
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#0ba132">
+            <Button Margin="10"
+                    Background="White"
+                    FontSize="15"
+                    FontFamily="Roboto"
+                    Width="100"
+                    HorizontalContentAlignment="Center"
+                    CornerRadius="10"
+                    Click="OnLoadButtonClickCommand">
+                Load
+            </Button>
+            <Button Margin="10"
+                    Background="White"
+                    FontSize="15"
+                    FontFamily="Roboto"
+                    DockPanel.Dock="Right"
+                    Width="100"
+                    HorizontalContentAlignment="Center"
+                    CornerRadius="10"
+                    Click="OnSaveButtonClickCommand">
+                Save
+            </Button>
+        </DockPanel>
+    </Panel>
+
+
+</Window>
