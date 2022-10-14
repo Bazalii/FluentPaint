@@ -7,6 +7,10 @@ public static class SKBitmapExtensions
 {
     public static Bitmap ConvertToAvaloniaBitmap(this SKBitmap bitmap)
     {
-        return new Bitmap("");
+        var image = SKImage.FromPixels(bitmap.PeekPixels());
+        var encodedData = image.Encode();
+        var stream = encodedData.AsStream();
+        
+        return new Bitmap(stream);
     }
 }
