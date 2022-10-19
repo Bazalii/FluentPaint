@@ -14,32 +14,53 @@
     </Design.DataContext>
 
     <Panel>
-        <Image Width="600"
-               Height="600"
-               Name="MainImage">
+        <Image
+            Width="600"
+            Height="600"
+
+            Name="MainImage"
+
+            Source="{Binding File}">
         </Image>
 
         <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#565656">
-            <Button Margin="10"
-                    Background="White"
-                    FontSize="15"
-                    FontFamily="Roboto"
-                    Width="100"
-                    HorizontalContentAlignment="Center"
-                    CornerRadius="10"
-                    Click="OnLoadButtonClickCommand">
-                Load
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Left"
+
+                Content="Load"
+
+                Name="LoadButton"
+
+                Click="OnLoadButtonClickCommand">
             </Button>
-            <Button Margin="10"
-                    Background="White"
-                    FontSize="15"
-                    FontFamily="Roboto"
-                    DockPanel.Dock="Right"
-                    Width="100"
-                    HorizontalContentAlignment="Center"
-                    CornerRadius="10"
-                    Click="OnSaveButtonClickCommand">
-                Save
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Right"
+
+                Content="Save"
+
+                Name="SaveButton"
+
+                Click="OnSaveButtonClickCommand">
             </Button>
         </DockPanel>
     </Panel>
