@@ -2,16 +2,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:FluentPaint.UI.Views"
-        mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="100"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="500"
         x:Class="FluentPaint.UI.Views.ExceptionWindow"
         Title="ExceptionWindow"
         Background="#fc4903">
 
-    <Design.DataContext>
-        <views:ExceptionWindow />
-    </Design.DataContext>
-    
-    <TextBlock x:Name="ExceptionMessage" HorizontalAlignment="Center"/>
+    <Panel>
+        <TextBlock
+            FontSize="15"
+            FontFamily="Roboto"
+
+            HorizontalAlignment="Center"
+
+            Name="ExceptionMessage" />
+    </Panel>
 
 </Window>

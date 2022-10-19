@@ -8,11 +8,11 @@
         Title="SavePopupWindow"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="True">
-    
+
     <Design.DataContext>
         <views:SavePopupWindow />
     </Design.DataContext>
-    
+
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
@@ -28,20 +28,31 @@
         </Panel>
 
         <StackPanel Margin="20 40 20 20">
-            <TextBox x:Name="SaveFilePath" Watermark="File address" />
+            <TextBox
+                Name="SaveFilePath"
+                Watermark="File address" />
         </StackPanel>
 
-        <Button Margin="10"
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                Width="100"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Center"
-                HorizontalContentAlignment="Center"
-                CornerRadius="10"
-                Click="OnOkButtonClickCommand">
-            Ok
+        <Button
+            Width="100"
+            Height="35"
+            Margin="10"
+            CornerRadius="10"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Center"
+
+            Background="White"
+            FontSize="15"
+            FontFamily="Roboto"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            DockPanel.Dock="Right"
+
+            Content="Ok"
+
+            Name="OkButton"
+
+            Click="OnOkButtonClickCommand">
         </Button>
     </Panel>
 </Window>
