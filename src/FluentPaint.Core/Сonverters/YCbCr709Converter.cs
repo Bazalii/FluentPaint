@@ -4,12 +4,12 @@ namespace FluentPaint.Core.Сonverters;
 
 public class YCbCr709Converter : IConverter
 {
+    
     private const float A = 0.2126f;
     private const float B = 0.7152f;
     private const float C = 0.0752f;
     private const float D = 1.8556f;
     private const float E = 1.5748f;
-
 
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
@@ -25,11 +25,12 @@ public class YCbCr709Converter : IConverter
                 var blue = pixel.Blue;
                 var green = pixel.Green;
 
-                var Y = A * red + B * green + C * blue;
-                var Cb = (blue - Y) / D;
-                var Cr = (red - Y) / E;
+                var luminance = A * red + B * green + C * blue;
+                var blueComponent = (blue - luminance) / D;
+                var redComponent = (red - luminance) / E;
 
-                convertedBitmap.SetPixel(x, y, new SKColor((byte) Y, (byte) Cb,(byte) Cr));
+                convertedBitmap.SetPixel(x, y,
+                    new SKColor((byte) luminance, (byte) blueComponent, (byte) redComponent));
             }
         }
 
@@ -45,15 +46,15 @@ public class YCbCr709Converter : IConverter
             {
                 var pixel = bitmap.GetPixel(x, y);
 
-                var Y = pixel.Red;
-                var Cb = pixel.Green;
-                var Cr = pixel.Blue;
+                var luminance = pixel.Red;
+                var blueComponent = pixel.Green;
+                var redComponent = pixel.Blue;
 
-                var red = Y + E * Cr;
-                var green = Y - (A * E / B) * Cr - (C * D / B) * Cb;
-                var blue = Y + D * Cb;
-                
-                convertedBitmap.SetPixel(x, y, new SKColor((byte) red,(byte) green,(byte) blue));
+                var red = luminance + E * redComponent;
+                var green = luminance - (A * E / B) * redComponent - (C * D / B) * blueComponent;
+                var blue = luminance + D * blueComponent;
+
+                convertedBitmap.SetPixel(x, y, new SKColor((byte) red, (byte) green, (byte) blue));
             }
         }
 
