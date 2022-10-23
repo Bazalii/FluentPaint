@@ -106,8 +106,11 @@ public class HslConverter : IConverter
                 }
 
                 convertedBitmap.SetPixel(x, y,
-                    new SKColor((byte) (red * byte.MaxValue), (byte) (green * byte.MaxValue),
-                        (byte) (blue * byte.MaxValue)));
+                    new SKColor(
+                        (byte) (red * byte.MaxValue),
+                        (byte) (green * byte.MaxValue),
+                        (byte) (blue * byte.MaxValue)
+                    ));
             }
         }
 
