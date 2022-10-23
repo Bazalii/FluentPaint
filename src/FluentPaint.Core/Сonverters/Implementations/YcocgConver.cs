@@ -13,10 +13,12 @@ public class YcocgConver : IConverter
             for (var x = 0; x < bitmap.Width; x++)
             {
                 var pixel = bitmap.GetPixel(x, y);
-                float co = pixel.Red - pixel.Blue;
-                float cg = pixel.Green - pixel.Blue + co / 2;
-                float luma = pixel.Blue + co / 2 + cg / 2;
-                newBitmap.SetPixel(x, y, new SKColor((byte)luma, (byte)co, (byte)cg));
+                
+                float chrominanceGreen = pixel.Red - pixel.Blue;
+                var chrominanceOrange = pixel.Green - pixel.Blue + chrominanceGreen / 2;
+                var luma = pixel.Blue + chrominanceGreen / 2 + chrominanceOrange / 2;
+                
+                newBitmap.SetPixel(x, y, new SKColor((byte)luma, (byte)chrominanceGreen, (byte)chrominanceOrange));
             }
         }
 
@@ -32,13 +34,15 @@ public class YcocgConver : IConverter
             for (var x = 0; x < bitmap.Width; x++)
             {
                 var pixel = bitmap.GetPixel(x, y);
-                float luma = pixel.Red;
-                float co = pixel.Green;
-                float cg = pixel.Blue;
                 
-                float green = cg + luma - cg / 2;
-                float blue = luma - cg / 2 - co / 2;
-                float red = blue + co;
+                float luma = pixel.Red;
+                float chrominanceOrange = pixel.Green;
+                float chrominanceGreen = pixel.Blue;
+                
+                var green = chrominanceGreen + luma - chrominanceGreen / 2;
+                var blue = luma - chrominanceGreen / 2 - chrominanceOrange / 2;
+                var red = blue + chrominanceOrange;
+                
                 newBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
             }
         }
