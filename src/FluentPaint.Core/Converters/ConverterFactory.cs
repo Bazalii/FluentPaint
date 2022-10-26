@@ -1,7 +1,7 @@
-﻿using FluentPaint.Core.Pnm;
-using FluentPaint.Core.Сonverters.Implementations;
+﻿using FluentPaint.Core.Converters.Implementations;
+using FluentPaint.Core.Pnm;
 
-namespace FluentPaint.Core.Сonverters;
+namespace FluentPaint.Core.Converters;
 
 public class ConverterFactory
 {

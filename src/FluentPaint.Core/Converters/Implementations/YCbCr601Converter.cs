@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Сonverters;
+namespace FluentPaint.Core.Converters.Implementations;
 
 public class YCbCr601Converter : IConverter
 {
