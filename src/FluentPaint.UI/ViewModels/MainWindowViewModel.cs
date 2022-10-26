@@ -1,19 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Avalonia.Controls;
+using FluentPaint.Core.Converters;
 using FluentPaint.Core.Pnm;
 using ReactiveUI;
 using SkiaSharp;
 
 namespace FluentPaint.UI.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ReactiveObject
     {
         private string _loadingFilePath = string.Empty;
         private string _savingFilePath = string.Empty;
-        private SKBitmap _file = new();
+        private string _selectedBoxItem = "Space choosing";
+
+        private SKBitmap? _rgbFile;
+        private SKBitmap _currentColorSpaceFile = new();
+
+        private readonly ConverterFactory _converterFactory = new();
 
         private readonly List<string> _colorSpaceNames = new()
-            { "RGB", "HSL", "HSV", "YCbCr.601", "YCbCr.709", "YCoCg", "CMY" };
+            { "RGB", "HSL", "HSV", "YCbCr601", "YCbCr709", "YCoCg", "CMY" };
 
         public MainWindowViewModel()
         {
@@ -26,7 +33,20 @@ namespace FluentPaint.UI.ViewModels
             set
             {
                 _loadingFilePath = value;
-                File = Pnm.ReadPnm(value);
+                var file = Pnm.ReadPnm(value);
+
+                Enum.TryParse(SelectedBoxItem, out ColorSpace colorSpace);
+
+                if (colorSpace == ColorSpace.RGB)
+                {
+                    RgbFile = file;
+                }
+                else
+                {
+                    var convertor = _converterFactory.GetConverter(colorSpace);
+
+                    RgbFile = convertor.ToRgb(file);
+                }
             }
         }
 
@@ -36,19 +56,38 @@ namespace FluentPaint.UI.ViewModels
             set
             {
                 _savingFilePath = value;
-                Pnm.WritePnm(_savingFilePath, _file);
+                
+                Enum.TryParse(SelectedBoxItem, out ColorSpace colorSpace);
+
+                Pnm.WritePnm(_savingFilePath, colorSpace == ColorSpace.RGB ? _rgbFile : _currentColorSpaceFile);
             }
         }
 
-        public SKBitmap File
+        public SKBitmap RgbFile
         {
-            get => _file;
-            private set => this.RaiseAndSetIfChanged(ref _file, value);
-        }
+            get => _rgbFile;
+            set => this.RaiseAndSetIfChanged(ref _rgbFile, value);
+    }
 
         public List<ComboBoxItem> Items { get; set; } = new();
 
-        public string PlaceholderText { get; set; } = "Space choosing";
+        public string SelectedBoxItem
+        {
+            get => _selectedBoxItem;
+            set
+            {
+                _selectedBoxItem = value;
+
+                if (_rgbFile is null) return;
+
+                Enum.TryParse(SelectedBoxItem, out ColorSpace colorSpace);
+
+                if (colorSpace == ColorSpace.RGB) return;
+                
+                var convertor = _converterFactory.GetConverter(colorSpace);
+                _currentColorSpaceFile = convertor.FromRgb(_rgbFile);
+            }
+        }
 
         private void SetColorSpaces()
         {
