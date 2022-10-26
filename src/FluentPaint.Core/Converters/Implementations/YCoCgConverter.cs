@@ -2,11 +2,11 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Converters.Implementations;
 
-public class YcocgConver : IConverter
+public class YCoCgConverter : IConverter
 {
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
-        var newBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
         
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -18,16 +18,16 @@ public class YcocgConver : IConverter
                 var chrominanceOrange = pixel.Green - pixel.Blue + chrominanceGreen / 2;
                 var luma = pixel.Blue + chrominanceGreen / 2 + chrominanceOrange / 2;
                 
-                newBitmap.SetPixel(x, y, new SKColor((byte)luma, (byte)chrominanceGreen, (byte)chrominanceOrange));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte)luma, (byte)chrominanceGreen, (byte)chrominanceOrange));
             }
         }
 
-        return newBitmap;
+        return convertedBitmap;
     }
 
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
-        var newBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
         
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -43,10 +43,10 @@ public class YcocgConver : IConverter
                 var blue = luma - chrominanceGreen / 2 - chrominanceOrange / 2;
                 var red = blue + chrominanceOrange;
                 
-                newBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
             }
         }
 
-        return newBitmap;
+        return convertedBitmap;
     }
 }

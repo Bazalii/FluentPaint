@@ -13,7 +13,7 @@ public class ConverterFactory
             ColorSpace.HSV => new HsvConverter(),
             ColorSpace.YCbCr601 => new YCbCr601Converter(),
             ColorSpace.YCbCr709 => new YCbCr709Converter(),
-            ColorSpace.YCoCg => new YcocgConver(),
+            ColorSpace.YCoCg => new YCoCgConverter(),
             ColorSpace.CMY => new CmyConverter(),
             _ => throw new ArgumentException("Error: This color space is not supported")
         };

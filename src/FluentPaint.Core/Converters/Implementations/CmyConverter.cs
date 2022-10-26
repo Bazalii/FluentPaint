@@ -6,7 +6,7 @@ public class CmyConverter : IConverter
 {
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
-        var newBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
         
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -18,16 +18,16 @@ public class CmyConverter : IConverter
                 double magenta = 1 - pixel.Green / 255;
                 double yellow = 1 - pixel.Blue / 255;
                 
-                newBitmap.SetPixel(x, y, new SKColor((byte)cyan, (byte)magenta, (byte)yellow));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte)cyan, (byte)magenta, (byte)yellow));
             }
         }
 
-        return newBitmap;
+        return convertedBitmap;
     }
 
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
-        var newBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
         
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -43,10 +43,10 @@ public class CmyConverter : IConverter
                 double green = 255 - 255 * magenta;
                 double blue = 255 - 255 * yellow;
                 
-                newBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
             }
         }
 
-        return newBitmap;
+        return convertedBitmap;
     }
 }

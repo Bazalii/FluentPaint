@@ -6,7 +6,7 @@ public class HsvConverter : IConverter
 {
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
-        var convertedBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -72,7 +72,7 @@ public class HsvConverter : IConverter
 
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
-        var convertedBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
