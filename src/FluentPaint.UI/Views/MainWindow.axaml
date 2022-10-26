@@ -62,6 +62,24 @@
 
                 Click="OnSaveButtonClickCommand">
             </Button>
+            <ComboBox
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+
+                PlaceholderText="{Binding PlaceholderText}"
+
+                Name="SpaceColorChoosing"
+
+                Items="{Binding Items}">
+            </ComboBox>
         </DockPanel>
     </Panel>
 
