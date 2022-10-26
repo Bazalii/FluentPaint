@@ -20,7 +20,7 @@
 
             Name="MainImage"
 
-            Source="{Binding File}">
+            Source="{Binding RgbFile}">
         </Image>
 
         <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#565656">
@@ -74,11 +74,13 @@
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
 
-                PlaceholderText="{Binding PlaceholderText}"
+                PlaceholderText="Space choosing"
 
                 Name="SpaceColorChoosing"
 
-                Items="{Binding Items}">
+                Items="{Binding Items}"
+                
+                SelectionBoxItem="{Binding SelectedBoxItem, Mode=OneWayToSource}">
             </ComboBox>
         </DockPanel>
     </Panel>

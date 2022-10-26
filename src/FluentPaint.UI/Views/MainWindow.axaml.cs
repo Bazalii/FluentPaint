@@ -25,7 +25,7 @@ namespace FluentPaint.UI.Views
             try
             {
                 ViewModel.LoadingFilePath = await dialog.ShowDialog<string>(this);
-                MainImage.Source = ViewModel.File.ConvertToAvaloniaBitmap();
+                MainImage.Source = ViewModel.RgbFile.ConvertToAvaloniaBitmap();
             }
             catch (Exception exception)
             {
