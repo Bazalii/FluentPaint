@@ -73,14 +73,35 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
+                HorizontalAlignment="Left"
 
                 PlaceholderText="Space choosing"
-
+                
                 Name="SpaceColorChoosing"
 
-                Items="{Binding Items}"
-                
+                Items="{Binding Spaces}"
                 SelectionBoxItem="{Binding SelectedSpace, Mode=OneWayToSource}">
+            </ComboBox>
+            <ComboBox
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Right"
+
+                PlaceholderText="Channels"
+
+                Name="ChannelsChoosing"
+
+                Items="{Binding Channels}"
+                SelectionBoxItem="{Binding SelectedChannels, Mode=OneWayToSource}"
+                SelectionChanged="OnChannelsChange">
             </ComboBox>
         </DockPanel>
     </Panel>
