@@ -14,11 +14,15 @@ public class YCoCgConverter : IConverter
             {
                 var pixel = bitmap.GetPixel(x, y);
                 
-                float chrominanceGreen = pixel.Red - pixel.Blue;
-                var chrominanceOrange = pixel.Green - pixel.Blue + chrominanceGreen / 2;
-                var luma = pixel.Blue + chrominanceGreen / 2 + chrominanceOrange / 2;
+                double red = pixel.Red;
+                double green = pixel.Green;
+                double blue = pixel.Blue;
                 
-                convertedBitmap.SetPixel(x, y, new SKColor((byte)luma, (byte)chrominanceGreen, (byte)chrominanceOrange));
+                var luma = 0.25 * red + 0.5 * green + 0.25 * blue;
+                var chrominanceOrange = 0.5 * red - 0.5 * blue;
+                var chrominanceGreen = -0.25 * red + 0.5 * green - 0.25 * blue;
+
+                convertedBitmap.SetPixel(x, y, new SKColor((byte)luma, (byte)(128 + chrominanceOrange), (byte)(128 + chrominanceGreen)));
             }
         }
 
@@ -35,13 +39,28 @@ public class YCoCgConverter : IConverter
             {
                 var pixel = bitmap.GetPixel(x, y);
                 
-                float luma = pixel.Red;
-                float chrominanceOrange = pixel.Green;
-                float chrominanceGreen = pixel.Blue;
+                double luma = pixel.Red;
+                double chrominanceOrange = pixel.Green - 128;
+                double chrominanceGreen = pixel.Blue - 128;
+
+                var red = luma + chrominanceOrange - chrominanceGreen;
+                var green = luma + chrominanceGreen;
+                var blue = luma - chrominanceOrange - chrominanceGreen;
+
+                if (red < 0)
+                {
+                    red = 0;
+                }
                 
-                var green = chrominanceGreen + luma - chrominanceGreen / 2;
-                var blue = luma - chrominanceGreen / 2 - chrominanceOrange / 2;
-                var red = blue + chrominanceOrange;
+                if (green < 0)
+                {
+                    green = 0;
+                }
+
+                if (blue < 0)
+                {
+                    blue = 0;
+                }
                 
                 convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
             }
