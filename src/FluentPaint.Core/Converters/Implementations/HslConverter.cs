@@ -14,51 +14,43 @@ public class HslConverter : IConverter
             {
                 var currentPixel = bitmap.GetPixel(x, y);
 
-                var red = currentPixel.Red / 255.0f;
-                var green = currentPixel.Green / 255.0f;
-                var blue = currentPixel.Blue / 255.0f;
+                var red = currentPixel.Red / 255f;
+                var green = currentPixel.Green / 255f;
+                var blue = currentPixel.Blue / 255f;
 
                 var maximum = Math.Max(Math.Max(red, green), blue);
                 var minimum = Math.Min(Math.Min(red, green), blue);
 
-                var difference = (maximum - minimum) / 2;
+                var difference = maximum - minimum;
                 var summary = minimum + maximum;
 
-                float hue;
-                float saturation;
-                var luminance = difference / 2;
+                var hue = 0.0f;
+                var saturation = 0.0f;
+                var luminance = summary / 2;
 
-                if (difference == 0)
+                if (Math.Abs(difference) > 0.0001)
                 {
-                    hue = 0;
-                    saturation = 0;
-                }
-                else
-                {
-                    saturation = luminance <= 0.5 ? difference / summary : difference / (2 - summary);
+                    saturation = luminance <= 0.5 ? difference / summary : difference / (2f - summary);
 
-                    if (Math.Abs(red - maximum) < 0.0001)
+                    var firstIntermediateValue = ((maximum - red) / 6f + difference / 2f) / difference;
+                    var secondIntermediateValue = ((maximum - green) / 6f + difference / 2f) / difference;
+                    var thirdIntermediateValue = ((maximum - blue) / 6f + difference / 2f) / difference;
+
+                    hue = Math.Abs(red - maximum) >= 0.0001
+                        ? Math.Abs(green - maximum) >= 0.0001
+                            ? 2f / 3 + secondIntermediateValue - firstIntermediateValue
+                            : 1f / 3 + firstIntermediateValue - thirdIntermediateValue
+                        : thirdIntermediateValue - secondIntermediateValue;
+
+                    if (hue < 0)
                     {
-                        hue = (green - blue) / (6 * difference);
+                        hue += 1;
                     }
-                    else if (Math.Abs(green - maximum) < 0.0001)
-                    {
-                        hue = 1.0f / 3 + (blue - red) / (6 * difference);
-                    }
-                    else
-                    {
-                        hue = 1.0f / 3 + (red - green) / (6 * difference);
-                    }
-                }
 
-                if (hue < 0)
-                {
-                    hue += 1;
-                }
-
-                if (hue > 1)
-                {
-                    hue -= 1;
+                    if (hue > 1)
+                    {
+                        hue -= 1;
+                    }
                 }
 
                 hue *= 360;
@@ -83,7 +75,7 @@ public class HslConverter : IConverter
             {
                 var currentPixel = bitmap.GetPixel(x, y);
 
-                var hue = currentPixel.Red / 255f;
+                var hue = currentPixel.Red / 255f * 360;
                 var saturation = currentPixel.Green / 100f;
                 var luminance = currentPixel.Blue / 100f;
 
@@ -93,16 +85,16 @@ public class HslConverter : IConverter
 
                 if (Math.Abs(saturation) > 0.0001)
                 {
-                    var correctedHue = hue / 360;
+                    hue /= 360;
 
                     var secondIntermediateValue = luminance < 0.5
-                        ? luminance * (1 + saturation)
+                        ? luminance * (1f + saturation)
                         : luminance + saturation - luminance * saturation;
-                    var firstIntermediateValue = 2 * luminance - secondIntermediateValue;
+                    var firstIntermediateValue = 2f * luminance - secondIntermediateValue;
 
-                    red = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, correctedHue + 1f / 3);
-                    green = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, correctedHue);
-                    blue = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, correctedHue - 1f / 3);
+                    red = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, hue + 1f / 3);
+                    green = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, hue);
+                    blue = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, hue - 1f / 3);
                 }
 
                 convertedBitmap.SetPixel(x, y,
@@ -117,31 +109,31 @@ public class HslConverter : IConverter
         return convertedBitmap;
     }
 
-    private float ConvertHueToRgb(float firstValue, float secondValue, float correctedHue)
+    private float ConvertHueToRgb(float firstValue, float secondValue, float hue)
     {
-        if (correctedHue < 0)
+        if (hue < 0)
         {
-            correctedHue += 1;
+            hue += 1;
         }
 
-        if (correctedHue > 1)
+        if (hue > 1)
         {
-            correctedHue -= 1;
+            hue -= 1;
         }
 
-        if (2 * correctedHue < 1)
+        if (6.0 * hue < 1)
+        {
+            return firstValue + (secondValue - firstValue) * 6f * hue;
+        }
+
+        if (2.0 * hue < 1)
         {
             return secondValue;
         }
 
-        if (3 * correctedHue < 2)
+        if (3.0 * hue < 2)
         {
-            return (int) (firstValue + (secondValue - firstValue) * 6 * correctedHue);
-        }
-
-        if (6 * correctedHue < 1)
-        {
-            return (int) (firstValue + (secondValue - firstValue) * 6 * (2.0 / 3 - correctedHue));
+            return firstValue + (secondValue - firstValue) * 6f * (2.0f / 3 - hue);
         }
 
         return firstValue;
