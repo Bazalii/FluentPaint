@@ -12,7 +12,7 @@ namespace FluentPaint.UI.ViewModels
     {
         private string _loadingFilePath = string.Empty;
         private string _savingFilePath = string.Empty;
-        private string _selectedBoxItem = "Space choosing";
+        private string _selectedSpace = "Space choosing";
 
         private SKBitmap? _rgbFile;
         private SKBitmap _currentColorSpaceFile = new();
@@ -35,7 +35,7 @@ namespace FluentPaint.UI.ViewModels
                 _loadingFilePath = value;
                 var file = Pnm.ReadPnm(value);
 
-                Enum.TryParse(SelectedBoxItem, out ColorSpace colorSpace);
+                Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
                 if (colorSpace == ColorSpace.RGB)
                 {
@@ -57,7 +57,7 @@ namespace FluentPaint.UI.ViewModels
             {
                 _savingFilePath = value;
                 
-                Enum.TryParse(SelectedBoxItem, out ColorSpace colorSpace);
+                Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
                 Pnm.WritePnm(_savingFilePath, colorSpace == ColorSpace.RGB ? _rgbFile : _currentColorSpaceFile);
             }
@@ -71,16 +71,16 @@ namespace FluentPaint.UI.ViewModels
 
         public List<ComboBoxItem> Items { get; set; } = new();
 
-        public string SelectedBoxItem
+        public string SelectedSpace
         {
-            get => _selectedBoxItem;
+            get => _selectedSpace;
             set
             {
-                _selectedBoxItem = value;
+                _selectedSpace = value;
 
                 if (_rgbFile is null) return;
 
-                Enum.TryParse(SelectedBoxItem, out ColorSpace colorSpace);
+                Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
                 if (colorSpace == ColorSpace.RGB) return;
                 

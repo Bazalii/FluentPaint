@@ -80,7 +80,7 @@
 
                 Items="{Binding Items}"
                 
-                SelectionBoxItem="{Binding SelectedBoxItem, Mode=OneWayToSource}">
+                SelectionBoxItem="{Binding SelectedSpace, Mode=OneWayToSource}">
             </ComboBox>
         </DockPanel>
     </Panel>
