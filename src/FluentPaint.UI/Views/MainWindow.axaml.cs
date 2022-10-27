@@ -1,4 +1,5 @@
 using System;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using FluentPaint.UI.ViewModels;
@@ -64,6 +65,12 @@ namespace FluentPaint.UI.Views
             };
 
             window.Show();
+        }
+
+        private void OnChannelsChange(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
+        {
+            ViewModel.SelectedChannels = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;
+            MainImage.Source = ViewModel.GetBitmapChannels().ConvertToAvaloniaBitmap();
         }
     }
 }
