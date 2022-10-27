@@ -1,4 +1,4 @@
-namespace FluentPaint.Core.Pnm;
+namespace FluentPaint.Core.Enums;
 
 public enum ColorSpace
 {

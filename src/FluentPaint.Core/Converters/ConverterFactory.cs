@@ -1,5 +1,5 @@
 ﻿using FluentPaint.Core.Converters.Implementations;
-using FluentPaint.Core.Pnm;
+using FluentPaint.Core.Enums;
 
 namespace FluentPaint.Core.Converters;
 
