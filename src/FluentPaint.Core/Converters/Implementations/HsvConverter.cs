@@ -62,8 +62,10 @@ public class HsvConverter : IConverter
                 }
 
                 saturation *= 100;
+                value *= 100;
 
-                convertedBitmap.SetPixel(x, y, new SKColor((byte) (hue * 255 / 360), (byte) saturation, (byte) value));
+                convertedBitmap
+                    .SetPixel(x, y, new SKColor((byte) (hue * 255 / 360), (byte) saturation, (byte) (value / 255)));
             }
         }
 
