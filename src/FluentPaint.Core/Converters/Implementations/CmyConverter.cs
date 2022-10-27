@@ -14,9 +14,9 @@ public class CmyConverter : IConverter
             {
                 var pixel = bitmap.GetPixel(x, y);
                 
-                double cyan = 1 - pixel.Red / 255;
-                double magenta = 1 - pixel.Green / 255;
-                double yellow = 1 - pixel.Blue / 255;
+                double cyan = 255 - pixel.Red;
+                double magenta = 255 - pixel.Green;
+                double yellow = 255 - pixel.Blue;
                 
                 convertedBitmap.SetPixel(x, y, new SKColor((byte)cyan, (byte)magenta, (byte)yellow));
             }
@@ -39,9 +39,9 @@ public class CmyConverter : IConverter
                 var magenta = pixel.Green;
                 var yellow = pixel.Blue;
                 
-                double red = 255 - 255 * cyan;
-                double green = 255 - 255 * magenta;
-                double blue = 255 - 255 * yellow;
+                double red = 255 - cyan;
+                double green = 255 - magenta;
+                double blue = 255 - yellow;
                 
                 convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
             }
