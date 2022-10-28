@@ -1,10 +1,10 @@
-namespace FluentPaint.Core.Pnm;
+namespace FluentPaint.Core.Enums;
 
 public enum ColorSpace
 {
     RGB,
     HSL,
-    HSV, 
+    HSV,
     YCbCr601,
     YCbCr709,
     YCoCg,

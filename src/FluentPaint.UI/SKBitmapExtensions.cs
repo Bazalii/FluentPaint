@@ -10,7 +10,7 @@ public static class SKBitmapExtensions
         var image = SKImage.FromPixels(bitmap.PeekPixels());
         var encodedData = image.Encode();
         var stream = encodedData.AsStream();
-        
+
         return new Bitmap(stream);
     }
 }

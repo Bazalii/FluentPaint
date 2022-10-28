@@ -1,12 +1,12 @@
 ﻿using SkiaSharp;
 
-namespace FluentPaint.Core.Сonverters;
+namespace FluentPaint.Core.Converters.Implementations;
 
 public class HsvConverter : IConverter
 {
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
-        var convertedBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -62,8 +62,10 @@ public class HsvConverter : IConverter
                 }
 
                 saturation *= 100;
+                value *= 100;
 
-                convertedBitmap.SetPixel(x, y, new SKColor((byte) (hue * 255 / 360), (byte) saturation, (byte) value));
+                convertedBitmap
+                    .SetPixel(x, y, new SKColor((byte) (hue * 255 / 360), (byte) saturation, (byte) (value / 255)));
             }
         }
 
@@ -72,7 +74,7 @@ public class HsvConverter : IConverter
 
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
-        var convertedBitmap = new SKBitmap();
+        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {

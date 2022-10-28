@@ -47,6 +47,7 @@ public class Pnm
         WriteLine(fileStream, type.ToString());
         WriteLine(fileStream, bitmap.Width + " " + bitmap.Height);
         WriteLine(fileStream, "255");
+
         writer.WriteImageData(fileStream, bitmap);
     }
 
