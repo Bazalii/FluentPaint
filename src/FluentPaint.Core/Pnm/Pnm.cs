@@ -12,7 +12,7 @@ public class Pnm
         var type = ReadLine(fileStream);
 
         var line = ReadLine(fileStream);
-        var parameters = line.Split(new[] { ' ' });
+        var parameters = line.Split(new[] {' '});
         var width = int.Parse(parameters[0]);
         var height = int.Parse(parameters[1]);
 

@@ -28,9 +28,9 @@ public class YCbCr601Converter : IConverter
                 var redComponent = pixel.Red - luminance;
 
                 convertedBitmap.SetPixel(x, y,
-                    new SKColor((byte)luminance,
-                        (byte)((225 + blueComponent) * 255 / 450),
-                        (byte)((178 + redComponent) * 255 / 356)));
+                    new SKColor((byte) luminance,
+                        (byte) ((225 + blueComponent) * 255 / 450),
+                        (byte) ((178 + redComponent) * 255 / 356)));
             }
         }
 
@@ -75,7 +75,7 @@ public class YCbCr601Converter : IConverter
                     blue = 0;
                 }
 
-                convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte) red, (byte) green, (byte) blue));
             }
         }
 

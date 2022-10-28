@@ -1,5 +1,3 @@
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Converters.Implementations;
@@ -25,9 +23,9 @@ public class YCbCr709Converter : IConverter
                 var redComponent = pixel.Red - luminance;
 
                 convertedBitmap.SetPixel(x, y,
-                    new SKColor((byte)luminance,
-                        (byte)((236 + blueComponent) * 255 / 472),
-                        (byte)((200 + redComponent) * 255 / 400)));
+                    new SKColor((byte) luminance,
+                        (byte) ((236 + blueComponent) * 255 / 472),
+                        (byte) ((200 + redComponent) * 255 / 400)));
             }
         }
 
@@ -46,11 +44,11 @@ public class YCbCr709Converter : IConverter
                 var luminance = pixel.Red;
                 var blueComponent = pixel.Green * 472 / 255 - 236;
                 var redComponent = pixel.Blue * 400 / 255 - 200;
-                
+
                 var red = luminance + redComponent;
                 var green = luminance - (Kr * redComponent + Kb * blueComponent) / Kg;
                 var blue = luminance + blueComponent;
-                
+
                 if (red < 0)
                 {
                     red = 0;
@@ -66,7 +64,7 @@ public class YCbCr709Converter : IConverter
                     blue = 0;
                 }
 
-                convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte) red, (byte) green, (byte) blue));
             }
         }
 
