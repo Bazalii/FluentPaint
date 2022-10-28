@@ -6,6 +6,12 @@ using FluentPaint.UI.ViewModels;
 
 namespace FluentPaint.UI.Views
 {
+    /// <summary>
+    /// View for window that contains all controls for interaction with user.
+    /// </summary>
+    /// <remarks>
+    /// Also opens new windows like <see cref="ExceptionWindow"/>, <see cref="LoadPopupWindow"/> and <see cref="SavePopupWindow"/>>.
+    /// </remarks>
     public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         public MainWindow()
@@ -15,6 +21,14 @@ namespace FluentPaint.UI.Views
             DataContext = new MainWindowViewModel();
         }
 
+        /// <summary>
+        /// Opens <see cref="LoadPopupWindow"/> when LoadButton is clicked, loads file and shows it to user.
+        /// </summary>
+        /// <remarks>
+        /// If an exception is caught, opens <see cref="ExceptionWindow"/>.
+        /// </remarks>
+        /// <param name="sender"> Object that raises the event. </param>
+        /// <param name="e"> Arguments that are associated with event. </param>
         private async void OnLoadButtonClickCommand(object sender, RoutedEventArgs e)
         {
             var dialog = new LoadPopupWindow
@@ -34,6 +48,14 @@ namespace FluentPaint.UI.Views
             }
         }
 
+        /// <summary>
+        /// Opens <see cref="LoadPopupWindow"/> when SaveButton is clicked, saves picture using <see cref="FluentPaint.UI.ViewModels.MainWindowViewModel.SavingFilePath"/>.
+        /// </summary>
+        /// <remarks>
+        /// If an exception is caught, calls <see cref="FluentPaint.UI.Views.MainWindow.ShowException"/>.
+        /// </remarks>
+        /// <param name="sender"> Object that raises the event. </param>
+        /// <param name="e"> Arguments that are associated with event. </param>
         private async void OnSaveButtonClickCommand(object sender, RoutedEventArgs e)
         {
             var dialog = new SavePopupWindow
@@ -52,6 +74,10 @@ namespace FluentPaint.UI.Views
             }
         }
 
+        /// <summary>
+        /// Opens <see cref="ExceptionWindow"/> that contains information about caught exception.
+        /// </summary>
+        /// <param name="message"> Exception message. </param>
         private void ShowException(string message)
         {
             var window = new ExceptionWindow
@@ -67,6 +93,11 @@ namespace FluentPaint.UI.Views
             window.Show();
         }
 
+        /// <summary>
+        /// Gets current channels when user selects new item using ChannelsChoosing <see cref="ComboBox"/>.
+        /// </summary>
+        /// <param name="sender"> Object that raises the event. </param>
+        /// <param name="selectionChangedEventArgs"> Arguments that are associated with event. </param>
         private void OnChannelsChange(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
         {
             ViewModel.SelectedChannels = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;

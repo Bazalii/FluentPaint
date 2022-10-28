@@ -11,6 +11,9 @@ using SkiaSharp;
 
 namespace FluentPaint.UI.ViewModels
 {
+    /// <summary>
+    /// Contains business logic and data for MainWindow view.
+    /// </summary>
     public class MainWindowViewModel : ReactiveObject
     {
         private string _loadingFilePath = string.Empty;
@@ -36,6 +39,12 @@ namespace FluentPaint.UI.ViewModels
             SetChannels();
         }
 
+        /// <summary>
+        /// Path to the file that will be loaded in the application.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed loads file in RGB color space.
+        /// </remarks>
         public string LoadingFilePath
         {
             get => _loadingFilePath;
@@ -59,6 +68,12 @@ namespace FluentPaint.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Path to the file in which current picture will be saved in chosen color space.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed also saves file in in chosen color space.
+        /// </remarks>
         public string SavingFilePath
         {
             get => _savingFilePath;
@@ -72,16 +87,31 @@ namespace FluentPaint.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Represents loaded file in RGB color space.
+        /// </summary>
         public SKBitmap RgbFile
         {
             get => _rgbFile;
             set => this.RaiseAndSetIfChanged(ref _rgbFile, value);
         }
 
+        /// <summary>
+        /// Items that are displayed in ColorSpaceChoosing ComboBox of MainWindow.
+        /// </summary>
         public List<ComboBoxItem> Spaces { get; set; } = new();
 
+        /// <summary>
+        /// Items that are displayed in ChannelsChoosing ComboBox of MainWindow.
+        /// </summary>
         public List<ComboBoxItem> Channels { get; set; } = new();
 
+        /// <summary>
+        /// Color space that is selected by the user.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed also converts file to new color space.
+        /// </remarks>
         public string SelectedSpace
         {
             get => _selectedSpace;
@@ -100,8 +130,17 @@ namespace FluentPaint.UI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Color channels that will be shown.
+        /// </summary>
         public string SelectedChannels { get; set; } = "Channel";
 
+        /// <summary>
+        /// Filters image in current color space so that output contains only chosen channels using <see cref="SelectedSpace"/> and <see cref="SelectedChannels"/>.
+        /// </summary>
+        /// <returns>
+        /// Bitmap that contains only chosen channels.
+        /// </returns>
         public SKBitmap GetBitmapChannels()
         {
             Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
@@ -119,6 +158,9 @@ namespace FluentPaint.UI.ViewModels
             return convertor.ToRgb(modifiedCurrentColorSpaceBitmap);
         }
 
+        /// <summary>
+        /// Adds <see cref="ComboBoxItem"/> for each color space name in <see cref="Spaces"/> that are displayed in MainWindow.
+        /// </summary>
         private void SetColorSpaces()
         {
             _colorSpaceNames.ForEach(name =>
@@ -132,6 +174,9 @@ namespace FluentPaint.UI.ViewModels
             });
         }
 
+        /// <summary>
+        /// Adds <see cref="ComboBoxItem"/> for each channels combination in <see cref="Channels"/> that are displayed in MainWindow.
+        /// </summary>
         private void SetChannels()
         {
             _channels.ForEach(name =>

@@ -6,6 +6,9 @@ using FluentPaint.UI.ViewModels;
 
 namespace FluentPaint.UI
 {
+    /// <summary>
+    /// Generated class by Avalonia that is used to match Views with ViewModels.
+    /// </summary>
     public class ViewLocator : IDataTemplate
     {
         public IControl Build(object data)
