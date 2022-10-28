@@ -2,7 +2,7 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Reader.Implementations;
 
-public class PgmReader : IPnmReader
+public class PgmReader : IPictureReader
 {
     public SKBitmap ReadImageData(FileStream fileStream, int width, int height)
     {
