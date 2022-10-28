@@ -76,7 +76,7 @@
                 HorizontalAlignment="Left"
 
                 PlaceholderText="Space choosing"
-                
+
                 Name="SpaceColorChoosing"
 
                 Items="{Binding Spaces}"

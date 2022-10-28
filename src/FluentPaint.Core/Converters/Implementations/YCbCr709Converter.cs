@@ -23,9 +23,11 @@ public class YCbCr709Converter : IConverter
                 var redComponent = pixel.Red - luminance;
 
                 convertedBitmap.SetPixel(x, y,
-                    new SKColor((byte) luminance,
+                    new SKColor(
+                        (byte) luminance,
                         (byte) ((236 + blueComponent) * 255 / 472),
-                        (byte) ((200 + redComponent) * 255 / 400)));
+                        (byte) ((200 + redComponent) * 255 / 400)
+                    ));
             }
         }
 
@@ -35,6 +37,7 @@ public class YCbCr709Converter : IConverter
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        
         for (var y = 0; y < bitmap.Height; y++)
         {
             for (var x = 0; x < bitmap.Width; x++)

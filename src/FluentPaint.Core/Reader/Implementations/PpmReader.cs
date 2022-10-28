@@ -12,10 +12,11 @@ public class PpmReader : IPnmReader
         {
             for (var x = 0; x < width; x++)
             {
-                var valR = (byte) fileStream.ReadByte();
-                var valG = (byte) fileStream.ReadByte();
-                var valB = (byte) fileStream.ReadByte();
-                bitmap.SetPixel(x, y, new SKColor(valR, valG, valB));
+                var red = (byte) fileStream.ReadByte();
+                var green = (byte) fileStream.ReadByte();
+                var blue = (byte) fileStream.ReadByte();
+                
+                bitmap.SetPixel(x, y, new SKColor(red, green, blue));
             }
         }
 

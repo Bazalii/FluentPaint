@@ -4,6 +4,6 @@ namespace FluentPaint.Core.Converters;
 
 public interface IConverter
 {
-    public SKBitmap FromRgb(SKBitmap bitmap);
-    public SKBitmap ToRgb(SKBitmap bitmap);
+    SKBitmap FromRgb(SKBitmap bitmap);
+    SKBitmap ToRgb(SKBitmap bitmap);
 }

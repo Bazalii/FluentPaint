@@ -12,8 +12,9 @@ public class PgmReader : IPnmReader
         {
             for (var x = 0; x < width; x++)
             {
-                var val = (byte) fileStream.ReadByte();
-                bitmap.SetPixel(x, y, new SKColor(val, val, val));
+                var value = (byte) fileStream.ReadByte();
+
+                bitmap.SetPixel(x, y, new SKColor(value, value, value));
             }
         }
 

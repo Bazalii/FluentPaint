@@ -11,6 +11,7 @@ public class PpmWriter : IPnmWriter
             for (var x = 0; x < bitmap.Width; x++)
             {
                 var pixel = bitmap.GetPixel(x, y);
+                
                 fileStream.WriteByte(pixel.Red);
                 fileStream.WriteByte(pixel.Green);
                 fileStream.WriteByte(pixel.Blue);
