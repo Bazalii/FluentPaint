@@ -4,7 +4,14 @@ using SkiaSharp;
 namespace FluentPaint.Core.Pnm;
 
 public class Pnm
-{
+{   
+    
+    /// <summary>
+    /// Reading the file in PNM format.
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns>SKBitmap</returns>
+    /// <exception cref="Exception"></exception>
     public static SKBitmap ReadPnm(string filePath)
     {
         var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
