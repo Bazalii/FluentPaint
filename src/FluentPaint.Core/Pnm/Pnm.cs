@@ -23,7 +23,7 @@ public class Pnm
             throw new Exception("Brightness should be 255!");
         }
 
-        var reader = PnmFactory.GetPnmReader(PnmFactory.GetPnmType(type));
+        var reader = PictureFactory.GetReader(PictureFactory.GetType(type));
 
         return reader.ReadImageData(fileStream, width, height);
     }
@@ -34,15 +34,15 @@ public class Pnm
 
         var type = extension switch
         {
-            ".pgm" => PnmType.P5,
-            ".ppm" => PnmType.P6,
-            ".pnm" => PnmType.P6,
+            ".pgm" => PictureType.P5,
+            ".ppm" => PictureType.P6,
+            ".pnm" => PictureType.P6,
             _ => throw new Exception(
                 "Error: This file type is not supported, .ppm .pgm is expected (.pnm will write as p6)")
         };
 
         var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-        var writer = PnmFactory.GetPnmWriter(type);
+        var writer = PictureFactory.GetWriter(type);
 
         WriteLine(fileStream, type.ToString());
         WriteLine(fileStream, bitmap.Width + " " + bitmap.Height);
