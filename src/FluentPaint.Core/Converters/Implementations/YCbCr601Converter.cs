@@ -4,11 +4,9 @@ namespace FluentPaint.Core.Converters.Implementations;
 
 public class YCbCr601Converter : IConverter
 {
-    private const float A = 0.299f;
-    private const float B = 0.587f;
-    private const float C = 0.114f;
-    private const float D = 1.772f;
-    private const float E = 1.402f;
+    private const float Kr = 0.299f;
+    private const float Kg = 0.587f;
+    private const float Kb = 0.114f;
 
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
@@ -20,34 +18,19 @@ public class YCbCr601Converter : IConverter
             {
                 var pixel = bitmap.GetPixel(x, y);
 
-                var red = pixel.Red / 255f;
-                var blue = pixel.Blue / 255f;
-                var green = pixel.Green / 255f;
+                // Another variant (don't remove pls)
+                // var luminance = 16 + 219 * Kr * red + 219 * Kg * green + 219 * Kb * blue;
+                // var blueComponent = 128 - 112 * Kr / (1 - Kb) * red - 112 * Kg / (1 - Kb) * green + 112 * blue;
+                // var redComponent = 128 + 112 * red - 112 * Kg / (1 - Kr) * green - 112 * Kb / (1 - Kr) * blue;
 
-                /*var luminance = A * red + B * green + C * blue;
-                var blueComponent = (blue - luminance) / D;
-                var redComponent = (red - luminance) / E;*/
-
-                var luminance = 16 + 65.481f * red + 128.553f * green + 24.996f * blue;
-                var blueComponent = 128 - 37.797f * red - 74.203 * green + 112.0f * blue;
-                var redComponent = 128 + 112.0f * red - 93.786f * green - 18.214f * blue;
-
-                /*blueComponent = blueComponent switch
-                {
-                    > 240 => 240,
-                    < 16 => 16,
-                    _ => blueComponent
-                };
-                
-                redComponent = redComponent switch
-                {
-                    > 240 => 240,
-                    < 16 => 16,
-                    _ => redComponent
-                };*/
+                var luminance = Kr * pixel.Red + Kg * pixel.Green + Kb * pixel.Blue;
+                var blueComponent = pixel.Blue - luminance;
+                var redComponent = pixel.Red - luminance;
 
                 convertedBitmap.SetPixel(x, y,
-                    new SKColor((byte) luminance, (byte) blueComponent, (byte) redComponent));
+                    new SKColor((byte)luminance,
+                        (byte)((225 + blueComponent) * 255 / 450),
+                        (byte)((178 + redComponent) * 255 / 356)));
             }
         }
 
@@ -64,39 +47,35 @@ public class YCbCr601Converter : IConverter
             {
                 var pixel = bitmap.GetPixel(x, y);
 
-                var luminance = pixel.Red / 256f;
-                var blueComponent = pixel.Green / 256f;
-                var redComponent = pixel.Blue / 256f;
-                
-                
-                /*blueComponent = blueComponent switch
+                var luminance = pixel.Red;
+                var blueComponent = pixel.Green * 450 / 255 - 225;
+                var redComponent = pixel.Blue * 356 / 255 - 178;
+
+                // Another variant (don't remove pls)
+                // var red = 298.082f * luminance + 408.583f * redComponent - 222.921;
+                // var green = 298.082f * luminance - 100.291f * blueComponent - 208.120f * redComponent + 135.576;
+                // var blue = 298.082f * luminance + 516.412f * blueComponent - 276.836;
+
+                var red = luminance + redComponent;
+                var green = luminance - (Kr * redComponent + Kb * blueComponent) / Kg;
+                var blue = luminance + blueComponent;
+
+                if (red < 0)
                 {
-                    > 240 / 256f => 240 / 256f,
-                    < 16 / 256f => 16 / 256f,
-                    _ => blueComponent
-                };
-                
-                redComponent = redComponent switch
+                    red = 0;
+                }
+
+                if (green < 0)
                 {
-                    > 240 / 256f=> 240/ 256f,
-                    < 16/ 256f => 16/ 256f,
-                    _ => redComponent
-                };*/
+                    green = 0;
+                }
 
-                var red = 298.082f * luminance + 408.583f * redComponent - 222.921;
-                var green = 298.082f * luminance - 100.291f * blueComponent - 208.120f * redComponent + 135.576;
-                var blue = 298.082f * luminance + 516.412f * blueComponent - 276.836;
+                if (blue < 0)
+                {
+                    blue = 0;
+                }
 
-                /*var red = (255 / 219) * (luminance - 16) + 255f / 224 * 1.402f * (redComponent - 128);
-
-                var green = (255 / 219) * (luminance - 16) - (255f / 214) * 1.772f * (0.114f / 0.587f) *
-                                                           (blueComponent - 128)
-                                                           - (255f / 214) * 1.402f * (0.299f / 0.587) *
-                                                           (redComponent - 128);
-
-                var blue = (255 / 219) * (luminance - 16) + (255f / 214) * 1.772f * (blueComponent - 128);*/
-
-                convertedBitmap.SetPixel(x, y, new SKColor((byte) red, (byte) green, (byte) blue));
+                convertedBitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
             }
         }
 
