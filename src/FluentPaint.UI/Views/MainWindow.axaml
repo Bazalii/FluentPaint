@@ -77,7 +77,7 @@
 
                 PlaceholderText="Space choosing"
 
-                Name="SpaceColorChoosing"
+                Name="ColorSpaceChoosing"
 
                 Items="{Binding Spaces}"
                 SelectionBoxItem="{Binding SelectedSpace, Mode=OneWayToSource}">
