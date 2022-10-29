@@ -3,14 +3,14 @@
 namespace FluentPaint.Core.Converters.Implementations;
 
 /// <summary>
-/// Provides methods to convert pictures from RGB to HSV, and in the opposite direction.
+/// Provides methods to convert pictures from RGB to HSV and in the opposite direction.
 /// </summary>
 public class HsvConverter : IConverter
 {
     /// <summary>
-    /// Convert picture from RGB to HSV.
+    /// Converts picture from RGB to HSV.
     /// </summary>
-    /// <param name="bitmap"><see cref="SKBitmap"/> Bitmap containing all pixels of the picture.</param>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
@@ -83,9 +83,9 @@ public class HsvConverter : IConverter
     }
 
     /// <summary>
-    /// Convert picture from HSV to RGB.
+    /// Converts picture from HSV to RGB.
     /// </summary>
-    /// <param name="bitmap"><see cref="SKBitmap"/> Bitmap containing all pixels of the picture.</param>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>

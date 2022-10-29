@@ -3,14 +3,14 @@
 namespace FluentPaint.Core.Converters.Implementations;
 
 /// <summary>
-/// Provides methods to convert pictures from RGB to HSL, and in the opposite direction.
+/// Provides methods to convert pictures from RGB to HSL and in the opposite direction.
 /// </summary>
 public class HslConverter : IConverter
 {
     /// <summary>
-    /// Convert picture from RGB to HSL.
+    /// Converts picture from RGB to HSL.
     /// </summary>
-    /// <param name="bitmap"><see cref="SKBitmap"/> Bitmap containing all pixels of the picture</param>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
@@ -76,9 +76,9 @@ public class HslConverter : IConverter
     }
 
     /// <summary>
-    /// Convert picture from HSL to RGB.
+    /// Converts picture from HSL to RGB.
     /// </summary>
-    /// <param name="bitmap"> <see cref="SKBitmap"/> Bitmap containing all pixels of the picture.</param>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
