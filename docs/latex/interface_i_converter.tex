@@ -1,0 +1,79 @@
+\hypertarget{interface_i_converter}{}\doxysection{IConverter Interface Reference}
+\label{interface_i_converter}\index{IConverter@{IConverter}}
+
+
+Provides methods to convert picture from rgb to corresponding color space and in the opposite direction.   
+
+
+Inheritance diagram for IConverter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.362530cm]{interface_i_converter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+SKBitmap \mbox{\hyperlink{interface_i_converter_ac983b9b48c3bfe9dcfbabb884d81eebd}{From\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from rgb to corresponding color space.  \end{DoxyCompactList}\item 
+SKBitmap \mbox{\hyperlink{interface_i_converter_a55c565bf5490a9ddd9d63db267777cee}{To\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from corresponding color space to rgb.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides methods to convert picture from rgb to corresponding color space and in the opposite direction.  
+
+Definition at line \mbox{\hyperlink{_i_converter_8cs_source_l00007}{7}} of file \mbox{\hyperlink{_i_converter_8cs_source}{IConverter.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_i_converter_ac983b9b48c3bfe9dcfbabb884d81eebd}\label{interface_i_converter_ac983b9b48c3bfe9dcfbabb884d81eebd}} 
+\index{IConverter@{IConverter}!FromRgb@{FromRgb}}
+\index{FromRgb@{FromRgb}!IConverter@{IConverter}}
+\doxysubsubsection{\texorpdfstring{FromRgb()}{FromRgb()}}
+{\footnotesize\ttfamily SKBitmap IConverter.\+From\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from rgb to corresponding color space.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_cmy_converter_a88b56c12a1a4e25796155738ae590494}{Cmy\+Converter}}, \mbox{\hyperlink{class_hsl_converter_a6ead227d48b1b9e051d8da62197a28d1}{Hsl\+Converter}}, \mbox{\hyperlink{class_hsv_converter_a318a71c98d9bb5911b367378c3d78b0a}{Hsv\+Converter}}, \mbox{\hyperlink{class_y_cb_cr601_converter_ac8be13c8e77e9821f87c98818d4559f5}{YCb\+Cr601\+Converter}}, \mbox{\hyperlink{class_y_cb_cr709_converter_a119aed627cd55e8c6b3aba7e241bfbd7}{YCb\+Cr709\+Converter}}, and \mbox{\hyperlink{class_y_co_cg_converter_a2c98976f6bb0b1558e4d8cf9c9a4d0f8}{YCo\+Cg\+Converter}}.
+
+\mbox{\Hypertarget{interface_i_converter_a55c565bf5490a9ddd9d63db267777cee}\label{interface_i_converter_a55c565bf5490a9ddd9d63db267777cee}} 
+\index{IConverter@{IConverter}!ToRgb@{ToRgb}}
+\index{ToRgb@{ToRgb}!IConverter@{IConverter}}
+\doxysubsubsection{\texorpdfstring{ToRgb()}{ToRgb()}}
+{\footnotesize\ttfamily SKBitmap IConverter.\+To\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from corresponding color space to rgb.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_cmy_converter_a6a685dbccda4322dbf5cf65c4e0188cc}{Cmy\+Converter}}, \mbox{\hyperlink{class_hsl_converter_a27c68a0f3912da44da0463e8678f8c4a}{Hsl\+Converter}}, \mbox{\hyperlink{class_hsv_converter_acab6683e0bc3e04a028577feffe1c714}{Hsv\+Converter}}, \mbox{\hyperlink{class_y_cb_cr601_converter_ab347bba8f7ae17d0af87150135fda2ca}{YCb\+Cr601\+Converter}}, \mbox{\hyperlink{class_y_cb_cr709_converter_a0ec4204deb2d457df56ede5890474878}{YCb\+Cr709\+Converter}}, and \mbox{\hyperlink{class_y_co_cg_converter_ac6215993c0511cb57dc7ebd0cb018ef0}{YCo\+Cg\+Converter}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_i_converter_8cs}{IConverter.\+cs}}\end{DoxyCompactItemize}

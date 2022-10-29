@@ -1,0 +1,344 @@
+\hypertarget{class_main_window_view_model}{}\doxysection{Main\+Window\+View\+Model Class Reference}
+\label{class_main_window_view_model}\index{MainWindowViewModel@{MainWindowViewModel}}
+
+
+Contains business logic and data for \mbox{\hyperlink{class_main_window}{Main\+Window}} view.   
+
+
+Inheritance diagram for Main\+Window\+View\+Model\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_main_window_view_model}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window_view_model_aea33f24dad4fd1bb353e23b2d461377e}{Main\+Window\+View\+Model}} ()
+\item 
+SKBitmap \mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{Get\+Bitmap\+Channels}} ()
+\begin{DoxyCompactList}\small\item\em Filters image in current color space so that output contains only chosen channels using \mbox{\hyperlink{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}{Selected\+Space}} and \mbox{\hyperlink{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}{Selected\+Channels}}.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_main_window_view_model_ae9ba3b2dea9bf2e181c399cd3192c292}{Loading\+File\+Path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Path to the file that will be loaded in the application.  \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_main_window_view_model_a4c7924982d4167f49eff108e7a78fc84}{Saving\+File\+Path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Path to the file in which current picture will be saved in chosen color space.  \end{DoxyCompactList}\item 
+SKBitmap \mbox{\hyperlink{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}{Rgb\+File}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Represents loaded file in RGB color space.  \end{DoxyCompactList}\item 
+List$<$ Combo\+Box\+Item $>$ \mbox{\hyperlink{class_main_window_view_model_a645226638cb9baedf207395f5001a632}{Spaces}} = new()\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Items that are displayed in Color\+Space\+Choosing Combo\+Box of \mbox{\hyperlink{class_main_window}{Main\+Window}}.  \end{DoxyCompactList}\item 
+List$<$ Combo\+Box\+Item $>$ \mbox{\hyperlink{class_main_window_view_model_aa89a45c26a219119247c66b99494a18a}{Channels}} = new()\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Items that are displayed in Channels\+Choosing Combo\+Box of \mbox{\hyperlink{class_main_window}{Main\+Window}}.  \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}{Selected\+Space}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Color space that is selected by the user.  \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}{Selected\+Channels}} = \char`\"{}Channel\char`\"{}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Color channels that will be shown.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_main_window_view_model_aaf22605dadc47c3f8e30a1802a235d94}{Set\+Color\+Spaces}} ()
+\begin{DoxyCompactList}\small\item\em Adds Combo\+Box\+Item for each color space name in \mbox{\hyperlink{class_main_window_view_model_a645226638cb9baedf207395f5001a632}{Spaces}} that are displayed in \mbox{\hyperlink{class_main_window}{Main\+Window}}.  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_view_model_ad6ec976d7e2dee70b6d61178f9b5a914}{Set\+Channels}} ()
+\begin{DoxyCompactList}\small\item\em Adds Combo\+Box\+Item for each channels combination in \mbox{\hyperlink{class_main_window_view_model_aa89a45c26a219119247c66b99494a18a}{Channels}} that are displayed in \mbox{\hyperlink{class_main_window}{Main\+Window}}.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_main_window_view_model_addb53b89744d04b0e50e6734bb9d481b}{\+\_\+loading\+File\+Path}} = string.\+Empty
+\item 
+string \mbox{\hyperlink{class_main_window_view_model_abadb01f560c6507298affd269e11e65f}{\+\_\+saving\+File\+Path}} = string.\+Empty
+\item 
+string \mbox{\hyperlink{class_main_window_view_model_ae1fc1a5ae74ea3be38c48edd20e1a92b}{\+\_\+selected\+Space}} = \char`\"{}Space choosing\char`\"{}
+\item 
+SKBitmap? \mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{\+\_\+rgb\+File}}
+\item 
+SKBitmap \mbox{\hyperlink{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}{\+\_\+current\+Color\+Space\+File}} = new()
+\item 
+readonly \mbox{\hyperlink{class_converter_factory}{Converter\+Factory}} \mbox{\hyperlink{class_main_window_view_model_a7e46d3718f59fea20534098e4452dee0}{\+\_\+converter\+Factory}} = new()
+\item 
+readonly \mbox{\hyperlink{interface_i_channel_getter}{IChannel\+Getter}} \mbox{\hyperlink{class_main_window_view_model_a17a6cd5107e4ddd35882d9d00f6cbe45}{\+\_\+channel\+Getter}} = new \mbox{\hyperlink{class_channel_getter}{Channel\+Getter}}()
+\item 
+readonly List$<$ string $>$ \mbox{\hyperlink{class_main_window_view_model_a3dfd65b17239497d4928b580c5c01be1}{\+\_\+color\+Space\+Names}}
+\item 
+readonly List$<$ string $>$ \mbox{\hyperlink{class_main_window_view_model_a2d4ea66676578e008da2bd6bb0a8b0d6}{\+\_\+channels}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains business logic and data for \mbox{\hyperlink{class_main_window}{Main\+Window}} view.  
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_main_window_view_model_aea33f24dad4fd1bb353e23b2d461377e}\label{class_main_window_view_model_aea33f24dad4fd1bb353e23b2d461377e}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!MainWindowViewModel@{MainWindowViewModel}}
+\index{MainWindowViewModel@{MainWindowViewModel}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{MainWindowViewModel()}{MainWindowViewModel()}}
+{\footnotesize\ttfamily Main\+Window\+View\+Model.\+Main\+Window\+View\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00036}{36}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}\label{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!GetBitmapChannels@{GetBitmapChannels}}
+\index{GetBitmapChannels@{GetBitmapChannels}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{GetBitmapChannels()}{GetBitmapChannels()}}
+{\footnotesize\ttfamily SKBitmap Main\+Window\+View\+Model.\+Get\+Bitmap\+Channels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Filters image in current color space so that output contains only chosen channels using \mbox{\hyperlink{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}{Selected\+Space}} and \mbox{\hyperlink{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}{Selected\+Channels}}.  
+
+\begin{DoxyReturn}{Returns}
+Bitmap that contains only chosen channels. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00144}{144}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_ad6ec976d7e2dee70b6d61178f9b5a914}\label{class_main_window_view_model_ad6ec976d7e2dee70b6d61178f9b5a914}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!SetChannels@{SetChannels}}
+\index{SetChannels@{SetChannels}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{SetChannels()}{SetChannels()}}
+{\footnotesize\ttfamily void Main\+Window\+View\+Model.\+Set\+Channels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adds Combo\+Box\+Item for each channels combination in \mbox{\hyperlink{class_main_window_view_model_aa89a45c26a219119247c66b99494a18a}{Channels}} that are displayed in \mbox{\hyperlink{class_main_window}{Main\+Window}}.  
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00180}{180}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_aaf22605dadc47c3f8e30a1802a235d94}\label{class_main_window_view_model_aaf22605dadc47c3f8e30a1802a235d94}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!SetColorSpaces@{SetColorSpaces}}
+\index{SetColorSpaces@{SetColorSpaces}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{SetColorSpaces()}{SetColorSpaces()}}
+{\footnotesize\ttfamily void Main\+Window\+View\+Model.\+Set\+Color\+Spaces (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adds Combo\+Box\+Item for each color space name in \mbox{\hyperlink{class_main_window_view_model_a645226638cb9baedf207395f5001a632}{Spaces}} that are displayed in \mbox{\hyperlink{class_main_window}{Main\+Window}}.  
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00164}{164}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_main_window_view_model_a17a6cd5107e4ddd35882d9d00f6cbe45}\label{class_main_window_view_model_a17a6cd5107e4ddd35882d9d00f6cbe45}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_channelGetter@{\_channelGetter}}
+\index{\_channelGetter@{\_channelGetter}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_channelGetter}{\_channelGetter}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{interface_i_channel_getter}{IChannel\+Getter}} Main\+Window\+View\+Model.\+\_\+channel\+Getter = new \mbox{\hyperlink{class_channel_getter}{Channel\+Getter}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00028}{28}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a2d4ea66676578e008da2bd6bb0a8b0d6}\label{class_main_window_view_model_a2d4ea66676578e008da2bd6bb0a8b0d6}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_channels@{\_channels}}
+\index{\_channels@{\_channels}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_channels}{\_channels}}
+{\footnotesize\ttfamily readonly List$<$string$>$ Main\+Window\+View\+Model.\+\_\+channels\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \textcolor{keyword}{new}()}
+\DoxyCodeLine{        \{ \textcolor{stringliteral}{"{}First"{}}, \textcolor{stringliteral}{"{}Second"{}}, \textcolor{stringliteral}{"{}Third"{}}, \textcolor{stringliteral}{"{}FirstAndSecond"{}}, \textcolor{stringliteral}{"{}FirstAndThird"{}}, \textcolor{stringliteral}{"{}SecondAndThird"{}}, \textcolor{stringliteral}{"{}All"{}} \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00033}{33}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a3dfd65b17239497d4928b580c5c01be1}\label{class_main_window_view_model_a3dfd65b17239497d4928b580c5c01be1}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_colorSpaceNames@{\_colorSpaceNames}}
+\index{\_colorSpaceNames@{\_colorSpaceNames}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_colorSpaceNames}{\_colorSpaceNames}}
+{\footnotesize\ttfamily readonly List$<$string$>$ Main\+Window\+View\+Model.\+\_\+color\+Space\+Names\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \textcolor{keyword}{new}()}
+\DoxyCodeLine{        \{ \textcolor{stringliteral}{"{}RGB"{}}, \textcolor{stringliteral}{"{}HSL"{}}, \textcolor{stringliteral}{"{}HSV"{}}, \textcolor{stringliteral}{"{}YCbCr601"{}}, \textcolor{stringliteral}{"{}YCbCr709"{}}, \textcolor{stringliteral}{"{}YCoCg"{}}, \textcolor{stringliteral}{"{}CMY"{}} \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00030}{30}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a7e46d3718f59fea20534098e4452dee0}\label{class_main_window_view_model_a7e46d3718f59fea20534098e4452dee0}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_converterFactory@{\_converterFactory}}
+\index{\_converterFactory@{\_converterFactory}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_converterFactory}{\_converterFactory}}
+{\footnotesize\ttfamily readonly \mbox{\hyperlink{class_converter_factory}{Converter\+Factory}} Main\+Window\+View\+Model.\+\_\+converter\+Factory = new()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}\label{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_currentColorSpaceFile@{\_currentColorSpaceFile}}
+\index{\_currentColorSpaceFile@{\_currentColorSpaceFile}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_currentColorSpaceFile}{\_currentColorSpaceFile}}
+{\footnotesize\ttfamily SKBitmap Main\+Window\+View\+Model.\+\_\+current\+Color\+Space\+File = new()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00025}{25}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_addb53b89744d04b0e50e6734bb9d481b}\label{class_main_window_view_model_addb53b89744d04b0e50e6734bb9d481b}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_loadingFilePath@{\_loadingFilePath}}
+\index{\_loadingFilePath@{\_loadingFilePath}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_loadingFilePath}{\_loadingFilePath}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+\_\+loading\+File\+Path = string.\+Empty\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00019}{19}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}\label{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_rgbFile@{\_rgbFile}}
+\index{\_rgbFile@{\_rgbFile}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_rgbFile}{\_rgbFile}}
+{\footnotesize\ttfamily SKBitmap? Main\+Window\+View\+Model.\+\_\+rgb\+File\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00024}{24}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_abadb01f560c6507298affd269e11e65f}\label{class_main_window_view_model_abadb01f560c6507298affd269e11e65f}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_savingFilePath@{\_savingFilePath}}
+\index{\_savingFilePath@{\_savingFilePath}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_savingFilePath}{\_savingFilePath}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+\_\+saving\+File\+Path = string.\+Empty\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00020}{20}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_ae1fc1a5ae74ea3be38c48edd20e1a92b}\label{class_main_window_view_model_ae1fc1a5ae74ea3be38c48edd20e1a92b}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!\_selectedSpace@{\_selectedSpace}}
+\index{\_selectedSpace@{\_selectedSpace}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{\_selectedSpace}{\_selectedSpace}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+\_\+selected\+Space = \char`\"{}Space choosing\char`\"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00022}{22}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_main_window_view_model_aa89a45c26a219119247c66b99494a18a}\label{class_main_window_view_model_aa89a45c26a219119247c66b99494a18a}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!Channels@{Channels}}
+\index{Channels@{Channels}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{Channels}{Channels}}
+{\footnotesize\ttfamily List$<$Combo\+Box\+Item$>$ Main\+Window\+View\+Model.\+Channels = new()\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Items that are displayed in Channels\+Choosing Combo\+Box of \mbox{\hyperlink{class_main_window}{Main\+Window}}.  
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00107}{107}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_ae9ba3b2dea9bf2e181c399cd3192c292}\label{class_main_window_view_model_ae9ba3b2dea9bf2e181c399cd3192c292}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!LoadingFilePath@{LoadingFilePath}}
+\index{LoadingFilePath@{LoadingFilePath}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{LoadingFilePath}{LoadingFilePath}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+Loading\+File\+Path\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Path to the file that will be loaded in the application.  
+
+When this property is changed loads file in RGB color space. 
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00048}{48}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}\label{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!RgbFile@{RgbFile}}
+\index{RgbFile@{RgbFile}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{RgbFile}{RgbFile}}
+{\footnotesize\ttfamily SKBitmap Main\+Window\+View\+Model.\+Rgb\+File\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Represents loaded file in RGB color space.  
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00093}{93}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a4c7924982d4167f49eff108e7a78fc84}\label{class_main_window_view_model_a4c7924982d4167f49eff108e7a78fc84}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!SavingFilePath@{SavingFilePath}}
+\index{SavingFilePath@{SavingFilePath}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{SavingFilePath}{SavingFilePath}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+Saving\+File\+Path\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Path to the file in which current picture will be saved in chosen color space.  
+
+When this property is changed also saves file in in chosen color space. 
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00077}{77}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}\label{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!SelectedChannels@{SelectedChannels}}
+\index{SelectedChannels@{SelectedChannels}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{SelectedChannels}{SelectedChannels}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+Selected\+Channels = \char`\"{}Channel\char`\"{}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Color channels that will be shown.  
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00136}{136}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}\label{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!SelectedSpace@{SelectedSpace}}
+\index{SelectedSpace@{SelectedSpace}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{SelectedSpace}{SelectedSpace}}
+{\footnotesize\ttfamily string Main\+Window\+View\+Model.\+Selected\+Space\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Color space that is selected by the user.  
+
+When this property is changed also converts file to new color space. 
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00115}{115}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_view_model_a645226638cb9baedf207395f5001a632}\label{class_main_window_view_model_a645226638cb9baedf207395f5001a632}} 
+\index{MainWindowViewModel@{MainWindowViewModel}!Spaces@{Spaces}}
+\index{Spaces@{Spaces}!MainWindowViewModel@{MainWindowViewModel}}
+\doxysubsubsection{\texorpdfstring{Spaces}{Spaces}}
+{\footnotesize\ttfamily List$<$Combo\+Box\+Item$>$ Main\+Window\+View\+Model.\+Spaces = new()\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Items that are displayed in Color\+Space\+Choosing Combo\+Box of \mbox{\hyperlink{class_main_window}{Main\+Window}}.  
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00102}{102}} of file \mbox{\hyperlink{_main_window_view_model_8cs_source}{Main\+Window\+View\+Model.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_main_window_view_model_8cs}{Main\+Window\+View\+Model.\+cs}}\end{DoxyCompactItemize}

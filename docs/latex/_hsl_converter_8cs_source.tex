@@ -1,0 +1,147 @@
+\hypertarget{_hsl_converter_8cs_source}{}\doxysection{Hsl\+Converter.\+cs}
+\label{_hsl_converter_8cs_source}\index{HslConverter.cs@{HslConverter.cs}}
+\mbox{\hyperlink{_hsl_converter_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00001}00001 \textcolor{keyword}{using }SkiaSharp;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00003}00003 \textcolor{keyword}{namespace }FluentPaint.Core.Converters.Implementations;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00008}\mbox{\hyperlink{class_hsl_converter}{00008}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_hsl_converter}{HslConverter}} : \mbox{\hyperlink{interface_i_converter}{IConverter}}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00017}\mbox{\hyperlink{class_hsl_converter_a6ead227d48b1b9e051d8da62197a28d1}{00017}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_hsl_converter_a6ead227d48b1b9e051d8da62197a28d1}{FromRgb}}(SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00018}00018     \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00019}00019         var convertedBitmap = \textcolor{keyword}{new} SKBitmap(bitmap.Width, bitmap.Height);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00021}00021         \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00022}00022         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00023}00023             \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00024}00024             \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00025}00025                 var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00027}00027                 var red = currentPixel.Red / 255f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00028}00028                 var green = currentPixel.Green / 255f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00029}00029                 var blue = currentPixel.Blue / 255f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00031}00031                 var maximum = Math.Max(Math.Max(red, green), blue);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00032}00032                 var minimum = Math.Min(Math.Min(red, green), blue);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00034}00034                 var difference = maximum -\/ minimum;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00035}00035                 var summary = minimum + maximum;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00037}00037                 var hue = 0.0f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00038}00038                 var saturation = 0.0f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00039}00039                 var luminance = summary / 2;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00041}00041                 \textcolor{keywordflow}{if} (Math.Abs(difference) > 0.0001)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00042}00042                 \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00043}00043                     saturation = luminance <= 0.5 ? difference / summary : difference / (2f -\/ summary);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00045}00045                     var firstIntermediateValue = ((maximum -\/ red) / 6f + difference / 2f) / difference;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00046}00046                     var secondIntermediateValue = ((maximum -\/ green) / 6f + difference / 2f) / difference;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00047}00047                     var thirdIntermediateValue = ((maximum -\/ blue) / 6f + difference / 2f) / difference;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00049}00049                     hue = Math.Abs(red -\/ maximum) >= 0.0001}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00050}00050                         ? Math.Abs(green -\/ maximum) >= 0.0001}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00051}00051                             ? 2f / 3 + secondIntermediateValue -\/ firstIntermediateValue}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00052}00052                             : 1f / 3 + firstIntermediateValue -\/ thirdIntermediateValue}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00053}00053                         : thirdIntermediateValue -\/ secondIntermediateValue;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00055}00055                     \textcolor{keywordflow}{if} (hue < 0)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00056}00056                     \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00057}00057                         hue += 1;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00058}00058                     \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00060}00060                     \textcolor{keywordflow}{if} (hue > 1)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00061}00061                     \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00062}00062                         hue -\/= 1;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00063}00063                     \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00064}00064                 \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00066}00066                 hue *= 360;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00067}00067                 saturation *= 100;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00068}00068                 luminance *= 100;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00070}00070                 convertedBitmap}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00071}00071                     .SetPixel(x, y, \textcolor{keyword}{new} SKColor((\textcolor{keywordtype}{byte}) (hue * 255 / 360), (\textcolor{keywordtype}{byte}) saturation, (byte) luminance));}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00072}00072             \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00073}00073         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00075}00075         \textcolor{keywordflow}{return} convertedBitmap;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00076}00076     \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00085}\mbox{\hyperlink{class_hsl_converter_a27c68a0f3912da44da0463e8678f8c4a}{00085}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_hsl_converter_a27c68a0f3912da44da0463e8678f8c4a}{ToRgb}}(SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00086}00086     \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00087}00087         var convertedBitmap = \textcolor{keyword}{new} SKBitmap(bitmap.Width, bitmap.Height);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00089}00089         \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00091}00091             \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00092}00092             \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00093}00093                 var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00095}00095                 var hue = currentPixel.Red / 255f * 360;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00096}00096                 var saturation = currentPixel.Green / 100f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00097}00097                 var luminance = currentPixel.Blue / 100f;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00099}00099                 var red = luminance;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00100}00100                 var green = luminance;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00101}00101                 var blue = luminance;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00103}00103                 \textcolor{keywordflow}{if} (Math.Abs(saturation) > 0.0001)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00104}00104                 \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00105}00105                     hue /= 360;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00107}00107                     var secondIntermediateValue = luminance < 0.5}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00108}00108                         ? luminance * (1f + saturation)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00109}00109                         : luminance + saturation -\/ luminance * saturation;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00110}00110                     var firstIntermediateValue = 2f * luminance -\/ secondIntermediateValue;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00112}00112                     red = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, hue + 1f / 3);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00113}00113                     green = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, hue);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00114}00114                     blue = ConvertHueToRgb(firstIntermediateValue, secondIntermediateValue, hue -\/ 1f / 3);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00115}00115                 \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00117}00117                 convertedBitmap.SetPixel(x, y,}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00118}00118                     \textcolor{keyword}{new} SKColor(}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00119}00119                         (\textcolor{keywordtype}{byte}) (red * \textcolor{keywordtype}{byte}.MaxValue),}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00120}00120                         (\textcolor{keywordtype}{byte}) (green * \textcolor{keywordtype}{byte}.MaxValue),}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00121}00121                         (\textcolor{keywordtype}{byte}) (blue * \textcolor{keywordtype}{byte}.MaxValue)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00122}00122                     ));}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00123}00123             \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00124}00124         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00126}00126         \textcolor{keywordflow}{return} convertedBitmap;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00138}\mbox{\hyperlink{class_hsl_converter_a1c4d03e870b8b2da34b0678fc485154c}{00138}}     \textcolor{keyword}{private} \textcolor{keywordtype}{float} \mbox{\hyperlink{class_hsl_converter_a1c4d03e870b8b2da34b0678fc485154c}{ConvertHueToRgb}}(\textcolor{keywordtype}{float} firstValue, \textcolor{keywordtype}{float} secondValue, \textcolor{keywordtype}{float} hue)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00139}00139     \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00140}00140         \textcolor{keywordflow}{if} (hue < 0)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00141}00141         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00142}00142             hue += 1;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00143}00143         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00145}00145         \textcolor{keywordflow}{if} (hue > 1)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00146}00146         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00147}00147             hue -\/= 1;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00148}00148         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00150}00150         \textcolor{keywordflow}{if} (6.0 * hue < 1)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00151}00151         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00152}00152             \textcolor{keywordflow}{return} firstValue + (secondValue -\/ firstValue) * 6f * hue;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00153}00153         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00155}00155         \textcolor{keywordflow}{if} (2.0 * hue < 1)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00156}00156         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00157}00157             \textcolor{keywordflow}{return} secondValue;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00158}00158         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00159}00159 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00160}00160         \textcolor{keywordflow}{if} (3.0 * hue < 2)}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00161}00161         \{}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00162}00162             \textcolor{keywordflow}{return} firstValue + (secondValue -\/ firstValue) * 6f * (2.0f / 3 -\/ hue);}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00163}00163         \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00164}00164 }
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00165}00165         \textcolor{keywordflow}{return} firstValue;}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00166}00166     \}}
+\DoxyCodeLine{\Hypertarget{_hsl_converter_8cs_source_l00167}00167 \}}
+
+\end{DoxyCode}

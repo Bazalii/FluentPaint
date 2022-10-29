@@ -1,0 +1,29 @@
+\hypertarget{_converter_factory_8cs_source}{}\doxysection{Converter\+Factory.\+cs}
+\label{_converter_factory_8cs_source}\index{ConverterFactory.cs@{ConverterFactory.cs}}
+\mbox{\hyperlink{_converter_factory_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00001}00001 \textcolor{keyword}{using }FluentPaint.Core.Converters.Implementations;}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00002}00002 \textcolor{keyword}{using }FluentPaint.Core.Enums;}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00004}00004 \textcolor{keyword}{namespace }FluentPaint.Core.Converters;}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00009}\mbox{\hyperlink{class_converter_factory}{00009}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_converter_factory}{ConverterFactory}}}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00021}\mbox{\hyperlink{class_converter_factory_a3cf934b266e757a044fe081a1f7bb6e3}{00021}}     \textcolor{keyword}{public} \mbox{\hyperlink{interface_i_converter}{IConverter}} \mbox{\hyperlink{class_converter_factory_a3cf934b266e757a044fe081a1f7bb6e3}{GetConverter}}(\mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}} colorSpace)}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00022}00022     \{}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00023}00023         \mbox{\hyperlink{interface_i_converter}{IConverter}} converter = colorSpace \textcolor{keywordflow}{switch}}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00024}00024         \{}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00025}00025             ColorSpace.HSL => \textcolor{keyword}{new} \mbox{\hyperlink{class_hsl_converter}{HslConverter}}(),}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00026}00026             ColorSpace.HSV => \textcolor{keyword}{new} \mbox{\hyperlink{class_hsv_converter}{HsvConverter}}(),}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00027}00027             ColorSpace.YCbCr601 => \textcolor{keyword}{new} \mbox{\hyperlink{class_y_cb_cr601_converter}{YCbCr601Converter}}(),}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00028}00028             ColorSpace.YCbCr709 => \textcolor{keyword}{new} \mbox{\hyperlink{class_y_cb_cr709_converter}{YCbCr709Converter}}(),}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00029}00029             ColorSpace.YCoCg => \textcolor{keyword}{new} \mbox{\hyperlink{class_y_co_cg_converter}{YCoCgConverter}}(),}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00030}00030             ColorSpace.CMY => \textcolor{keyword}{new} \mbox{\hyperlink{class_cmy_converter}{CmyConverter}}(),}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00031}00031             \_ => \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}Error: This color space is not supported"{}})}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00032}00032         \};}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00034}00034         \textcolor{keywordflow}{return} converter;}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00035}00035     \}}
+\DoxyCodeLine{\Hypertarget{_converter_factory_8cs_source_l00036}00036 \}}
+
+\end{DoxyCode}

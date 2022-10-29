@@ -1,0 +1,59 @@
+\hypertarget{interface_i_picture_reader}{}\doxysection{IPicture\+Reader Interface Reference}
+\label{interface_i_picture_reader}\index{IPictureReader@{IPictureReader}}
+
+
+Default interface for readers.   
+
+
+Inheritance diagram for IPicture\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interface_i_picture_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+SKBitmap \mbox{\hyperlink{interface_i_picture_reader_a28e132d1f0f81c4a248613e0ecf3b589}{Read\+Image\+Data}} (File\+Stream file\+Stream, int width, int height)
+\begin{DoxyCompactList}\small\item\em Read picture from file.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Default interface for readers.  
+
+Definition at line \mbox{\hyperlink{_i_picture_reader_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_i_picture_reader_8cs_source}{IPicture\+Reader.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_i_picture_reader_a28e132d1f0f81c4a248613e0ecf3b589}\label{interface_i_picture_reader_a28e132d1f0f81c4a248613e0ecf3b589}} 
+\index{IPictureReader@{IPictureReader}!ReadImageData@{ReadImageData}}
+\index{ReadImageData@{ReadImageData}!IPictureReader@{IPictureReader}}
+\doxysubsubsection{\texorpdfstring{ReadImageData()}{ReadImageData()}}
+{\footnotesize\ttfamily SKBitmap IPicture\+Reader.\+Read\+Image\+Data (\begin{DoxyParamCaption}\item[{File\+Stream}]{file\+Stream,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Read picture from file.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Stream} & file with picture. \\
+\hline
+{\em width} & picture width, which is the number of bytes in the row. \\
+\hline
+{\em height} & picture height, which is the number of bytes in the column. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Filled bitmap. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_pgm_reader_aabf3aca6cd64943aed2e9fd9786b3469}{Pgm\+Reader}}, and \mbox{\hyperlink{class_ppm_reader_a703412c86e48d9b7f300b11942eb203b}{Ppm\+Reader}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_i_picture_reader_8cs}{IPicture\+Reader.\+cs}}\end{DoxyCompactItemize}

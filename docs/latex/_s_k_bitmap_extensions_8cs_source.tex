@@ -1,0 +1,22 @@
+\hypertarget{_s_k_bitmap_extensions_8cs_source}{}\doxysection{SKBitmap\+Extensions.\+cs}
+\label{_s_k_bitmap_extensions_8cs_source}\index{SKBitmapExtensions.cs@{SKBitmapExtensions.cs}}
+\mbox{\hyperlink{_s_k_bitmap_extensions_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00001}00001 \textcolor{keyword}{using }SkiaSharp;}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00002}\mbox{\hyperlink{_s_k_bitmap_extensions_8cs_a43ced1cda6840fdc326fbc42aa835b2e}{00002}} \textcolor{keyword}{using }\mbox{\hyperlink{_s_k_bitmap_extensions_8cs_a43ced1cda6840fdc326fbc42aa835b2e}{Bitmap}} = Avalonia.Media.Imaging.Bitmap;}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00004}00004 \textcolor{keyword}{namespace }FluentPaint.UI;}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00009}\mbox{\hyperlink{class_s_k_bitmap_extensions}{00009}} \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }\mbox{\hyperlink{class_s_k_bitmap_extensions}{SKBitmapExtensions}}}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00018}\mbox{\hyperlink{class_s_k_bitmap_extensions_a0cd685602db5fa81c8a621b332bbb6c1}{00018}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{_s_k_bitmap_extensions_8cs_a43ced1cda6840fdc326fbc42aa835b2e}{Bitmap}} \mbox{\hyperlink{class_s_k_bitmap_extensions_a0cd685602db5fa81c8a621b332bbb6c1}{ConvertToAvaloniaBitmap}}(\textcolor{keyword}{this} SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00019}00019     \{}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00020}00020         var image = SKImage.FromPixels(bitmap.PeekPixels());}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00021}00021         var encodedData = image.Encode();}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00022}00022         var stream = encodedData.AsStream();}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00024}00024         \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{_s_k_bitmap_extensions_8cs_a43ced1cda6840fdc326fbc42aa835b2e}{Bitmap}}(stream);}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00025}00025     \}}
+\DoxyCodeLine{\Hypertarget{_s_k_bitmap_extensions_8cs_source_l00026}00026 \}}
+
+\end{DoxyCode}

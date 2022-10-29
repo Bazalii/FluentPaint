@@ -1,0 +1,118 @@
+\hypertarget{class_hsl_converter}{}\doxysection{Hsl\+Converter Class Reference}
+\label{class_hsl_converter}\index{HslConverter@{HslConverter}}
+
+
+Provides methods to convert pictures from RGB to HSL and in the opposite direction.   
+
+
+Inheritance diagram for Hsl\+Converter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_hsl_converter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+SKBitmap \mbox{\hyperlink{class_hsl_converter_a6ead227d48b1b9e051d8da62197a28d1}{From\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from RGB to HSL.  \end{DoxyCompactList}\item 
+SKBitmap \mbox{\hyperlink{class_hsl_converter_a27c68a0f3912da44da0463e8678f8c4a}{To\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from HSL to RGB.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{class_hsl_converter_a1c4d03e870b8b2da34b0678fc485154c}{Convert\+Hue\+To\+Rgb}} (float first\+Value, float second\+Value, float hue)
+\begin{DoxyCompactList}\small\item\em Helper method to convert hue to RGB.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides methods to convert pictures from RGB to HSL and in the opposite direction.  
+
+Definition at line \mbox{\hyperlink{_hsl_converter_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_hsl_converter_8cs_source}{Hsl\+Converter.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_hsl_converter_a1c4d03e870b8b2da34b0678fc485154c}\label{class_hsl_converter_a1c4d03e870b8b2da34b0678fc485154c}} 
+\index{HslConverter@{HslConverter}!ConvertHueToRgb@{ConvertHueToRgb}}
+\index{ConvertHueToRgb@{ConvertHueToRgb}!HslConverter@{HslConverter}}
+\doxysubsubsection{\texorpdfstring{ConvertHueToRgb()}{ConvertHueToRgb()}}
+{\footnotesize\ttfamily float Hsl\+Converter.\+Convert\+Hue\+To\+Rgb (\begin{DoxyParamCaption}\item[{float}]{first\+Value,  }\item[{float}]{second\+Value,  }\item[{float}]{hue }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Helper method to convert hue to RGB.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em first\+Value} & Received intermediate value. \\
+\hline
+{\em second\+Value} & Received intermediate value. \\
+\hline
+{\em hue} & Received hue. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted hue. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_hsl_converter_8cs_source_l00138}{138}} of file \mbox{\hyperlink{_hsl_converter_8cs_source}{Hsl\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_hsl_converter_a6ead227d48b1b9e051d8da62197a28d1}\label{class_hsl_converter_a6ead227d48b1b9e051d8da62197a28d1}} 
+\index{HslConverter@{HslConverter}!FromRgb@{FromRgb}}
+\index{FromRgb@{FromRgb}!HslConverter@{HslConverter}}
+\doxysubsubsection{\texorpdfstring{FromRgb()}{FromRgb()}}
+{\footnotesize\ttfamily SKBitmap Hsl\+Converter.\+From\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from RGB to HSL.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_converter_ac983b9b48c3bfe9dcfbabb884d81eebd}{IConverter}}.
+
+
+
+Definition at line \mbox{\hyperlink{_hsl_converter_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_hsl_converter_8cs_source}{Hsl\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_hsl_converter_a27c68a0f3912da44da0463e8678f8c4a}\label{class_hsl_converter_a27c68a0f3912da44da0463e8678f8c4a}} 
+\index{HslConverter@{HslConverter}!ToRgb@{ToRgb}}
+\index{ToRgb@{ToRgb}!HslConverter@{HslConverter}}
+\doxysubsubsection{\texorpdfstring{ToRgb()}{ToRgb()}}
+{\footnotesize\ttfamily SKBitmap Hsl\+Converter.\+To\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from HSL to RGB.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_converter_a55c565bf5490a9ddd9d63db267777cee}{IConverter}}.
+
+
+
+Definition at line \mbox{\hyperlink{_hsl_converter_8cs_source_l00085}{85}} of file \mbox{\hyperlink{_hsl_converter_8cs_source}{Hsl\+Converter.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_hsl_converter_8cs}{Hsl\+Converter.\+cs}}\end{DoxyCompactItemize}

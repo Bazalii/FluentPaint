@@ -1,0 +1,24 @@
+\hypertarget{_program_8cs_source}{}\doxysection{Program.\+cs}
+\label{_program_8cs_source}\index{Program.cs@{Program.cs}}
+\mbox{\hyperlink{_program_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00001}00001 \textcolor{keyword}{using }Avalonia;}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00002}00002 \textcolor{keyword}{using }Avalonia.ReactiveUI;}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00003}00003 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00005}00005 \textcolor{keyword}{namespace }FluentPaint.UI;}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00010}\mbox{\hyperlink{class_program}{00010}} \textcolor{keyword}{class }\mbox{\hyperlink{class_program}{Program}}}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00020}00020     [STAThread]}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00021}\mbox{\hyperlink{class_program_ada72f8d1518f89bc2e6ad807d5059564}{00021}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_program_ada72f8d1518f89bc2e6ad807d5059564}{Main}}(\textcolor{keywordtype}{string}[] args) => BuildAvaloniaApp()}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00022}00022         .StartWithClassicDesktopLifetime(args);}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00033}\mbox{\hyperlink{class_program_a7c5a66c5428564821da24b3ac53b73f8}{00033}}     \textcolor{keyword}{public} \textcolor{keyword}{static} AppBuilder \mbox{\hyperlink{class_program_a7c5a66c5428564821da24b3ac53b73f8}{BuildAvaloniaApp}}()}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00034}00034         => AppBuilder.Configure<\mbox{\hyperlink{class_app}{App}}>()}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00035}00035             .UsePlatformDetect()}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00036}00036             .LogToTrace()}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00037}00037             .UseReactiveUI();}
+\DoxyCodeLine{\Hypertarget{_program_8cs_source_l00038}00038 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,153 @@
+\hypertarget{_main_window_view_model_8cs_source}{}\doxysection{Main\+Window\+View\+Model.\+cs}
+\label{_main_window_view_model_8cs_source}\index{MainWindowViewModel.cs@{MainWindowViewModel.cs}}
+\mbox{\hyperlink{_main_window_view_model_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00003}00003 \textcolor{keyword}{using }Avalonia.Controls;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00004}00004 \textcolor{keyword}{using }FluentPaint.Core.Channels;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00005}00005 \textcolor{keyword}{using }FluentPaint.Core.Channels.Implementations;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00006}00006 \textcolor{keyword}{using }FluentPaint.Core.Converters;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00007}00007 \textcolor{keyword}{using }FluentPaint.Core.Enums;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00008}00008 \textcolor{keyword}{using }FluentPaint.Core.Pnm;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00009}00009 \textcolor{keyword}{using }ReactiveUI;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00010}00010 \textcolor{keyword}{using }SkiaSharp;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00012}00012 \textcolor{keyword}{namespace }FluentPaint.UI.ViewModels;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00017}\mbox{\hyperlink{class_main_window_view_model}{00017}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_main_window_view_model}{MainWindowViewModel}} : ReactiveObject}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00019}\mbox{\hyperlink{class_main_window_view_model_addb53b89744d04b0e50e6734bb9d481b}{00019}}     \textcolor{keyword}{private} \textcolor{keywordtype}{string} \_loadingFilePath = \textcolor{keywordtype}{string}.Empty;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00020}\mbox{\hyperlink{class_main_window_view_model_abadb01f560c6507298affd269e11e65f}{00020}}     \textcolor{keyword}{private} \textcolor{keywordtype}{string} \_savingFilePath = \textcolor{keywordtype}{string}.Empty;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00022}\mbox{\hyperlink{class_main_window_view_model_ae1fc1a5ae74ea3be38c48edd20e1a92b}{00022}}     \textcolor{keyword}{private} \textcolor{keywordtype}{string} \_selectedSpace = \textcolor{stringliteral}{"{}Space choosing"{}};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00024}\mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{00024}}     \textcolor{keyword}{private} SKBitmap? \mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{\_rgbFile}};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00025}\mbox{\hyperlink{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}{00025}}     \textcolor{keyword}{private} SKBitmap \_currentColorSpaceFile = \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00027}\mbox{\hyperlink{class_main_window_view_model_a7e46d3718f59fea20534098e4452dee0}{00027}}     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_converter_factory}{ConverterFactory}} \_converterFactory = \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00028}\mbox{\hyperlink{class_main_window_view_model_a17a6cd5107e4ddd35882d9d00f6cbe45}{00028}}     \textcolor{keyword}{private} readonly \mbox{\hyperlink{interface_i_channel_getter}{IChannelGetter}} \_channelGetter = \textcolor{keyword}{new} \mbox{\hyperlink{class_channel_getter}{ChannelGetter}}();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00030}\mbox{\hyperlink{class_main_window_view_model_a3dfd65b17239497d4928b580c5c01be1}{00030}}     \textcolor{keyword}{private} readonly List<string> \_colorSpaceNames = \textcolor{keyword}{new}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00031}00031         \{ \textcolor{stringliteral}{"{}RGB"{}}, \textcolor{stringliteral}{"{}HSL"{}}, \textcolor{stringliteral}{"{}HSV"{}}, \textcolor{stringliteral}{"{}YCbCr601"{}}, \textcolor{stringliteral}{"{}YCbCr709"{}}, \textcolor{stringliteral}{"{}YCoCg"{}}, \textcolor{stringliteral}{"{}CMY"{}} \};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00033}\mbox{\hyperlink{class_main_window_view_model_a2d4ea66676578e008da2bd6bb0a8b0d6}{00033}}     \textcolor{keyword}{private} readonly List<string> \_channels = \textcolor{keyword}{new}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00034}00034         \{ \textcolor{stringliteral}{"{}First"{}}, \textcolor{stringliteral}{"{}Second"{}}, \textcolor{stringliteral}{"{}Third"{}}, \textcolor{stringliteral}{"{}FirstAndSecond"{}}, \textcolor{stringliteral}{"{}FirstAndThird"{}}, \textcolor{stringliteral}{"{}SecondAndThird"{}}, \textcolor{stringliteral}{"{}All"{}} \};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00036}\mbox{\hyperlink{class_main_window_view_model_aea33f24dad4fd1bb353e23b2d461377e}{00036}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_main_window_view_model_aea33f24dad4fd1bb353e23b2d461377e}{MainWindowViewModel}}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00037}00037     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00038}00038         SetColorSpaces();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00039}00039         SetChannels();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00040}00040     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00048}\mbox{\hyperlink{class_main_window_view_model_ae9ba3b2dea9bf2e181c399cd3192c292}{00048}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} LoadingFilePath}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00049}00049     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00050}00050         \textcolor{keyword}{get} => \_loadingFilePath;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00051}00051         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00053}00053             \_loadingFilePath = value;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00054}00054             var file = \mbox{\hyperlink{class_pnm_handler}{PnmHandler}}.\mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{ReadPnm}}(value);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00056}00056             Enum.TryParse(SelectedSpace, out \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}} colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00058}00058             \textcolor{keywordflow}{if} (colorSpace == \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}}.RGB)}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00059}00059             \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00060}00060                 RgbFile = file;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00061}00061             \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00062}00062             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00063}00063             \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00064}00064                 var convertor = \_converterFactory.GetConverter(colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00066}00066                 RgbFile = convertor.ToRgb(file);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00067}00067             \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00068}00068         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00069}00069     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00077}\mbox{\hyperlink{class_main_window_view_model_a4c7924982d4167f49eff108e7a78fc84}{00077}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} SavingFilePath}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00078}00078     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00079}00079         \textcolor{keyword}{get} => \_savingFilePath;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00080}00080         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00081}00081         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00082}00082             \_savingFilePath = value;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00084}00084             Enum.TryParse(SelectedSpace, out \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}} colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00086}00086             \mbox{\hyperlink{class_pnm_handler}{PnmHandler}}.\mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{WritePnm}}(\_savingFilePath, colorSpace == \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}}.RGB ? \_rgbFile : \_currentColorSpaceFile);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00088}00088     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00093}\mbox{\hyperlink{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}{00093}}     \textcolor{keyword}{public} SKBitmap RgbFile}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00094}00094     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00095}00095         \textcolor{keyword}{get} => \_rgbFile;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00096}00096         \textcolor{keyword}{set} => this.RaiseAndSetIfChanged(ref \_rgbFile, value);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00097}00097     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00102}\mbox{\hyperlink{class_main_window_view_model_a645226638cb9baedf207395f5001a632}{00102}}     \textcolor{keyword}{public} List<ComboBoxItem> Spaces \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00107}\mbox{\hyperlink{class_main_window_view_model_aa89a45c26a219119247c66b99494a18a}{00107}}     \textcolor{keyword}{public} List<ComboBoxItem> Channels \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00115}\mbox{\hyperlink{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}{00115}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} SelectedSpace}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00116}00116     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00117}00117         \textcolor{keyword}{get} => \_selectedSpace;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00118}00118         \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00119}00119         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00120}00120             \_selectedSpace = value;}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00122}00122             \textcolor{keywordflow}{if} (\_rgbFile is \textcolor{keyword}{null}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00124}00124             Enum.TryParse(SelectedSpace, out \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}} colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00126}00126             \textcolor{keywordflow}{if} (colorSpace == \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}}.RGB) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00128}00128             var convertor = \_converterFactory.GetConverter(colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00129}00129             \_currentColorSpaceFile = convertor.FromRgb(\_rgbFile);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00130}00130         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00131}00131     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00136}\mbox{\hyperlink{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}{00136}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} SelectedChannels \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{stringliteral}{"{}Channel"{}};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00144}\mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{00144}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{GetBitmapChannels}}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00145}00145     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00146}00146         Enum.TryParse(SelectedSpace, out \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}} colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00147}00147         Enum.TryParse(SelectedChannels, out \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}} colorChannels);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00149}00149         \textcolor{keywordflow}{if} (colorSpace == \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}}.RGB)}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00150}00150         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00151}00151             \textcolor{keywordflow}{return} \_channelGetter.GetChannels(\_rgbFile, colorChannels);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00152}00152         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00154}00154         var convertor = \_converterFactory.GetConverter(colorSpace);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00156}00156         var modifiedCurrentColorSpaceBitmap = \_channelGetter.GetChannels(\_currentColorSpaceFile, colorChannels);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00158}00158         \textcolor{keywordflow}{return} convertor.ToRgb(modifiedCurrentColorSpaceBitmap);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00159}00159     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00160}00160 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00164}\mbox{\hyperlink{class_main_window_view_model_aaf22605dadc47c3f8e30a1802a235d94}{00164}}     \textcolor{keyword}{private} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_window_view_model_aaf22605dadc47c3f8e30a1802a235d94}{SetColorSpaces}}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00165}00165     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00166}00166         \_colorSpaceNames.ForEach(name =>}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00167}00167         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00168}00168             var comboBoxItem = \textcolor{keyword}{new} ComboBoxItem}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00169}00169             \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00170}00170                 Content = name}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00171}00171             \};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00172}00172 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00173}00173             Spaces.Add(comboBoxItem);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00174}00174         \});}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00175}00175     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00176}00176 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00180}\mbox{\hyperlink{class_main_window_view_model_ad6ec976d7e2dee70b6d61178f9b5a914}{00180}}     \textcolor{keyword}{private} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_window_view_model_ad6ec976d7e2dee70b6d61178f9b5a914}{SetChannels}}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00181}00181     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00182}00182         \_channels.ForEach(name =>}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00183}00183         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00184}00184             var comboBoxItem = \textcolor{keyword}{new} ComboBoxItem}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00185}00185             \{}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00186}00186                 Content = name}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00187}00187             \};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00189}00189             Channels.Add(comboBoxItem);}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00190}00190         \});}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00191}00191     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00192}00192 \}}
+
+\end{DoxyCode}

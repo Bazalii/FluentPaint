@@ -1,0 +1,133 @@
+\hypertarget{class_y_cb_cr709_converter}{}\doxysection{YCb\+Cr709\+Converter Class Reference}
+\label{class_y_cb_cr709_converter}\index{YCbCr709Converter@{YCbCr709Converter}}
+
+
+Provides methods to convert pictures from RGB to YCb\+Cr709 and in the opposite direction.   
+
+
+Inheritance diagram for YCb\+Cr709\+Converter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_y_cb_cr709_converter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+SKBitmap \mbox{\hyperlink{class_y_cb_cr709_converter_a119aed627cd55e8c6b3aba7e241bfbd7}{From\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from RGB to YCb\+Cr709.  \end{DoxyCompactList}\item 
+SKBitmap \mbox{\hyperlink{class_y_cb_cr709_converter_a0ec4204deb2d457df56ede5890474878}{To\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from YCb\+Cr709 to RGB.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const float \mbox{\hyperlink{class_y_cb_cr709_converter_a045f99c7cc8289159c10eea8ad7e5d3d}{Kr}} = 0.\+2126f
+\begin{DoxyCompactList}\small\item\em Essential constants for conversion formulas.  \end{DoxyCompactList}\item 
+const float \mbox{\hyperlink{class_y_cb_cr709_converter_a0886a2944105aba4723e9e880a325c25}{Kg}} = 0.\+7152f
+\item 
+const float \mbox{\hyperlink{class_y_cb_cr709_converter_a603b59de06950a9a141a6367262d5edf}{Kb}} = 0.\+0722f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides methods to convert pictures from RGB to YCb\+Cr709 and in the opposite direction.  
+
+Definition at line \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source}{YCb\+Cr709\+Converter.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_y_cb_cr709_converter_a119aed627cd55e8c6b3aba7e241bfbd7}\label{class_y_cb_cr709_converter_a119aed627cd55e8c6b3aba7e241bfbd7}} 
+\index{YCbCr709Converter@{YCbCr709Converter}!FromRgb@{FromRgb}}
+\index{FromRgb@{FromRgb}!YCbCr709Converter@{YCbCr709Converter}}
+\doxysubsubsection{\texorpdfstring{FromRgb()}{FromRgb()}}
+{\footnotesize\ttfamily SKBitmap YCb\+Cr709\+Converter.\+From\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from RGB to YCb\+Cr709.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_converter_ac983b9b48c3bfe9dcfbabb884d81eebd}{IConverter}}.
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source_l00024}{24}} of file \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source}{YCb\+Cr709\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_y_cb_cr709_converter_a0ec4204deb2d457df56ede5890474878}\label{class_y_cb_cr709_converter_a0ec4204deb2d457df56ede5890474878}} 
+\index{YCbCr709Converter@{YCbCr709Converter}!ToRgb@{ToRgb}}
+\index{ToRgb@{ToRgb}!YCbCr709Converter@{YCbCr709Converter}}
+\doxysubsubsection{\texorpdfstring{ToRgb()}{ToRgb()}}
+{\footnotesize\ttfamily SKBitmap YCb\+Cr709\+Converter.\+To\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from YCb\+Cr709 to RGB.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_converter_a55c565bf5490a9ddd9d63db267777cee}{IConverter}}.
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source_l00057}{57}} of file \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source}{YCb\+Cr709\+Converter.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_y_cb_cr709_converter_a603b59de06950a9a141a6367262d5edf}\label{class_y_cb_cr709_converter_a603b59de06950a9a141a6367262d5edf}} 
+\index{YCbCr709Converter@{YCbCr709Converter}!Kb@{Kb}}
+\index{Kb@{Kb}!YCbCr709Converter@{YCbCr709Converter}}
+\doxysubsubsection{\texorpdfstring{Kb}{Kb}}
+{\footnotesize\ttfamily const float YCb\+Cr709\+Converter.\+Kb = 0.\+0722f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source}{YCb\+Cr709\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_y_cb_cr709_converter_a0886a2944105aba4723e9e880a325c25}\label{class_y_cb_cr709_converter_a0886a2944105aba4723e9e880a325c25}} 
+\index{YCbCr709Converter@{YCbCr709Converter}!Kg@{Kg}}
+\index{Kg@{Kg}!YCbCr709Converter@{YCbCr709Converter}}
+\doxysubsubsection{\texorpdfstring{Kg}{Kg}}
+{\footnotesize\ttfamily const float YCb\+Cr709\+Converter.\+Kg = 0.\+7152f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source}{YCb\+Cr709\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_y_cb_cr709_converter_a045f99c7cc8289159c10eea8ad7e5d3d}\label{class_y_cb_cr709_converter_a045f99c7cc8289159c10eea8ad7e5d3d}} 
+\index{YCbCr709Converter@{YCbCr709Converter}!Kr@{Kr}}
+\index{Kr@{Kr}!YCbCr709Converter@{YCbCr709Converter}}
+\doxysubsubsection{\texorpdfstring{Kr}{Kr}}
+{\footnotesize\ttfamily const float YCb\+Cr709\+Converter.\+Kr = 0.\+2126f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Essential constants for conversion formulas.  
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_y_cb_cr709_converter_8cs_source}{YCb\+Cr709\+Converter.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_y_cb_cr709_converter_8cs}{YCb\+Cr709\+Converter.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,92 @@
+\hypertarget{_y_cb_cr601_converter_8cs_source}{}\doxysection{YCb\+Cr601\+Converter.\+cs}
+\label{_y_cb_cr601_converter_8cs_source}\index{YCbCr601Converter.cs@{YCbCr601Converter.cs}}
+\mbox{\hyperlink{_y_cb_cr601_converter_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00001}00001 \textcolor{keyword}{using }SkiaSharp;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00003}00003 \textcolor{keyword}{namespace }FluentPaint.Core.Converters.Implementations;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00008}\mbox{\hyperlink{class_y_cb_cr601_converter}{00008}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_y_cb_cr601_converter}{YCbCr601Converter}} : \mbox{\hyperlink{interface_i_converter}{IConverter}}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00013}\mbox{\hyperlink{class_y_cb_cr601_converter_a6e45b1bfd72490c02fe1d4510dbec81f}{00013}}     \textcolor{keyword}{private} \textcolor{keyword}{const} \textcolor{keywordtype}{float} Kr = 0.299f;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00014}\mbox{\hyperlink{class_y_cb_cr601_converter_a1236467be405c7c6d0f3896a39d946b9}{00014}}     \textcolor{keyword}{private} \textcolor{keyword}{const} \textcolor{keywordtype}{float} Kg = 0.587f;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00015}\mbox{\hyperlink{class_y_cb_cr601_converter_af4ea45898ee7ac5977464301164ff1de}{00015}}     \textcolor{keyword}{private} \textcolor{keyword}{const} \textcolor{keywordtype}{float} Kb = 0.114f;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00024}\mbox{\hyperlink{class_y_cb_cr601_converter_ac8be13c8e77e9821f87c98818d4559f5}{00024}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_y_cb_cr601_converter_ac8be13c8e77e9821f87c98818d4559f5}{FromRgb}}(SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00025}00025     \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00026}00026         var convertedBitmap = \textcolor{keyword}{new} SKBitmap(bitmap.Width, bitmap.Height);}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00028}00028         \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00029}00029         \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00030}00030             \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00031}00031             \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00032}00032                 var pixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00034}00034                 \textcolor{comment}{// Another variant (don't remove pls)}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00035}00035                 \textcolor{comment}{// var luminance = 16 + 219 * Kr * red + 219 * Kg * green + 219 * Kb * blue;}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00036}00036                 \textcolor{comment}{// var blueComponent = 128 -\/ 112 * Kr / (1 -\/ Kb) * red -\/ 112 * Kg / (1 -\/ Kb) * green + 112 * blue;}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00037}00037                 \textcolor{comment}{// var redComponent = 128 + 112 * red -\/ 112 * Kg / (1 -\/ Kr) * green -\/ 112 * Kb / (1 -\/ Kr) * blue;}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00039}00039                 var luminance = Kr * pixel.Red + Kg * pixel.Green + Kb * pixel.Blue;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00040}00040                 var blueComponent = pixel.Blue -\/ luminance;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00041}00041                 var redComponent = pixel.Red -\/ luminance;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00043}00043                 convertedBitmap.SetPixel(x, y,}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00044}00044                     \textcolor{keyword}{new} SKColor(}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00045}00045                         (\textcolor{keywordtype}{byte}) luminance,}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00046}00046                         (\textcolor{keywordtype}{byte}) ((225 + blueComponent) * 255 / 450),}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00047}00047                         (\textcolor{keywordtype}{byte}) ((178 + redComponent) * 255 / 356)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00048}00048                     ));}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00049}00049             \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00052}00052         \textcolor{keywordflow}{return} convertedBitmap;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00053}00053     \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00062}\mbox{\hyperlink{class_y_cb_cr601_converter_ab347bba8f7ae17d0af87150135fda2ca}{00062}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_y_cb_cr601_converter_ab347bba8f7ae17d0af87150135fda2ca}{ToRgb}}(SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00063}00063     \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00064}00064         var convertedBitmap = \textcolor{keyword}{new} SKBitmap(bitmap.Width, bitmap.Height);}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00066}00066         \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00067}00067         \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00068}00068             \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00069}00069             \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00070}00070                 var pixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00072}00072                 var luminance = pixel.Red;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00073}00073                 var blueComponent = pixel.Green * 450 / 255 -\/ 225;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00074}00074                 var redComponent = pixel.Blue * 356 / 255 -\/ 178;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00076}00076                 \textcolor{comment}{// Another variant (don't remove pls)}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00077}00077                 \textcolor{comment}{// var red = 298.082f * luminance + 408.583f * redComponent -\/ 222.921;}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00078}00078                 \textcolor{comment}{// var green = 298.082f * luminance -\/ 100.291f * blueComponent -\/ 208.120f * redComponent + 135.576;}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00079}00079                 \textcolor{comment}{// var blue = 298.082f * luminance + 516.412f * blueComponent -\/ 276.836;}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00081}00081                 var red = luminance + redComponent;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00082}00082                 var green = luminance -\/ (Kr * redComponent + Kb * blueComponent) / Kg;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00083}00083                 var blue = luminance + blueComponent;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00085}00085                 \textcolor{keywordflow}{if} (red < 0)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00086}00086                 \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00087}00087                     red = 0;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00088}00088                 \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00090}00090                 \textcolor{keywordflow}{if} (green < 0)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00091}00091                 \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00092}00092                     green = 0;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00093}00093                 \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00095}00095                 \textcolor{keywordflow}{if} (blue < 0)}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00096}00096                 \{}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00097}00097                     blue = 0;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00098}00098                 \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00100}00100                 convertedBitmap.SetPixel(x, y, \textcolor{keyword}{new} SKColor((\textcolor{keywordtype}{byte}) red, (\textcolor{keywordtype}{byte}) green, (\textcolor{keywordtype}{byte}) blue));}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00101}00101             \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00102}00102         \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00104}00104         \textcolor{keywordflow}{return} convertedBitmap;}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00105}00105     \}}
+\DoxyCodeLine{\Hypertarget{_y_cb_cr601_converter_8cs_source_l00106}00106 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,45 @@
+\hypertarget{_picture_factory_8cs_source}{}\doxysection{Picture\+Factory.\+cs}
+\label{_picture_factory_8cs_source}\index{PictureFactory.cs@{PictureFactory.cs}}
+\mbox{\hyperlink{_picture_factory_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00001}00001 \textcolor{keyword}{using }FluentPaint.Core.Enums;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00002}00002 \textcolor{keyword}{using }FluentPaint.Core.Pictures.Readers;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00003}00003 \textcolor{keyword}{using }FluentPaint.Core.Pictures.Readers.Implementations;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00004}00004 \textcolor{keyword}{using }FluentPaint.Core.Pictures.Writers;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00005}00005 \textcolor{keyword}{using }FluentPaint.Core.Pictures.Writers.Implementations;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00007}00007 \textcolor{keyword}{namespace }FluentPaint.Core.Pictures;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00012}\mbox{\hyperlink{class_picture_factory}{00012}} \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }\mbox{\hyperlink{class_picture_factory}{PictureFactory}}}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00021}\mbox{\hyperlink{class_picture_factory_a5bd3c69edfc22a1682c62520923027c5}{00021}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}} \mbox{\hyperlink{class_picture_factory_a5bd3c69edfc22a1682c62520923027c5}{GetType}}(\textcolor{keywordtype}{string} line)}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00022}00022     \{}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00023}00023         \textcolor{keywordflow}{return} line.Equals(\textcolor{stringliteral}{"{}P5"{}}) ? PictureType.P5 : \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}}.P6;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00024}00024     \}}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00036}\mbox{\hyperlink{class_picture_factory_ad0f98d4498a3792c7155e9c336866d48}{00036}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_i_picture_writer}{IPictureWriter}} \mbox{\hyperlink{class_picture_factory_ad0f98d4498a3792c7155e9c336866d48}{GetWriter}}(\mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}} type)}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00037}00037     \{}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00038}00038         \mbox{\hyperlink{interface_i_picture_writer}{IPictureWriter}} writer = type \textcolor{keywordflow}{switch}}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00040}00040             PictureType.P5 => \textcolor{keyword}{new} \mbox{\hyperlink{class_pgm_writer}{PgmWriter}}(),}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00041}00041             PictureType.P6 => \textcolor{keyword}{new} \mbox{\hyperlink{class_ppm_writer}{PpmWriter}}(),}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00042}00042             \_ => \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}Error: This file type is not supported, .ppm .pgm is expected"{}})}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00043}00043         \};}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00045}00045         \textcolor{keywordflow}{return} writer;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00046}00046     \}}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00058}\mbox{\hyperlink{class_picture_factory_ad597280b1442aa93259907c6a6b02af2}{00058}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{interface_i_picture_reader}{IPictureReader}} \mbox{\hyperlink{class_picture_factory_ad597280b1442aa93259907c6a6b02af2}{GetReader}}(\mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}} type)}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00059}00059     \{}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00060}00060         \mbox{\hyperlink{interface_i_picture_reader}{IPictureReader}} reader = type \textcolor{keywordflow}{switch}}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00061}00061         \{}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00062}00062             PictureType.P5 => \textcolor{keyword}{new} \mbox{\hyperlink{class_pgm_reader}{PgmReader}}(),}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00063}00063             PictureType.P6 => \textcolor{keyword}{new} \mbox{\hyperlink{class_ppm_reader}{PpmReader}}(),}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00064}00064             \_ => \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}Error: This file type is not supported, .ppm .pgm is expected"{}})}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00065}00065         \};}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00067}00067         \textcolor{keywordflow}{return} reader;}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00068}00068     \}}
+\DoxyCodeLine{\Hypertarget{_picture_factory_8cs_source_l00069}00069 \}}
+
+\end{DoxyCode}
