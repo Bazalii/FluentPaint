@@ -3,8 +3,19 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Channels.Implementations;
 
+/// <summary>
+/// Provides method to get one or many color channels of pictures.
+/// </summary>
 public class ChannelGetter : IChannelGetter
 {
+    /// <summary>
+    /// Gets picture in provided color channels.
+    /// </summary>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <param name="channels"> Channels in which the image will be displayed. </param>
+    /// <returns>
+    /// Bitmap with pixels with correct color channels according to provided channels.
+    /// </returns>
     public SKBitmap GetChannels(SKBitmap bitmap, ColorChannels channels)
     {
         var modifiedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
