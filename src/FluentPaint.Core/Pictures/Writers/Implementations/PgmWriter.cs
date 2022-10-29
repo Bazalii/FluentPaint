@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Writer.Implementations;
+namespace FluentPaint.Core.Pictures.Writers.Implementations;
 
 /// <summary>
 /// Writer to .pgm files

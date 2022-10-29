@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Reader;
+namespace FluentPaint.Core.Pictures.Readers;
 
 /// <summary>
 /// Default interface for readers.
