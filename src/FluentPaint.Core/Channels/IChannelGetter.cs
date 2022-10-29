@@ -9,12 +9,12 @@ namespace FluentPaint.Core.Channels;
 public interface IChannelGetter
 {
     /// <summary>
-    /// Get picture in provided color channels.
+    /// Gets picture in provided color channels.
     /// </summary>
-    /// <param name="bitmap"> <see cref="SKBitmap"/> Bitmap containing all pixels of the picture. </param>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
     /// <param name="channels"> Channels in which the image will be displayed. </param>
     /// <returns>
-    /// Bitmap with pixels with correct color according to provided channels.
+    /// Bitmap with pixels with correct color channels according to provided channels.
     /// </returns>
     SKBitmap GetChannels(SKBitmap bitmap, ColorChannels channels);
 }
