@@ -2,8 +2,18 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Converters.Implementations;
 
+/// <summary>
+/// Provides methods to convert pictures from RGB to CMY and in the opposite direction.
+/// </summary>
 public class CmyConverter : IConverter
 {
+    /// <summary>
+    /// Converts picture from RGB to CMY.
+    /// </summary>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -25,6 +35,13 @@ public class CmyConverter : IConverter
         return convertedBitmap;
     }
 
+    /// <summary>
+    /// Converts picture from CMY to RGB.
+    /// </summary>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);

@@ -2,12 +2,25 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Converters.Implementations;
 
+/// <summary>
+/// Provides methods to convert pictures from RGB to YCbCr709 and in the opposite direction.
+/// </summary>
 public class YCbCr709Converter : IConverter
 {
+    /// <summary>
+    /// Essential constants for conversion formulas.
+    /// </summary>
     private const float Kr = 0.2126f;
     private const float Kg = 0.7152f;
     private const float Kb = 0.0722f;
 
+    /// <summary>
+    /// Converts picture from RGB to YCbCr709.
+    /// </summary>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -34,6 +47,13 @@ public class YCbCr709Converter : IConverter
         return convertedBitmap;
     }
 
+    /// <summary>
+    /// Converts picture from YCbCr709 to RGB.
+    /// </summary>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture.</param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
