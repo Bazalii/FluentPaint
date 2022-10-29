@@ -1,9 +1,10 @@
-using FluentPaint.Core.Reader;
-using FluentPaint.Core.Reader.Implementations;
-using FluentPaint.Core.Writer;
-using FluentPaint.Core.Writer.Implementations;
+using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures.Readers;
+using FluentPaint.Core.Pictures.Readers.Implementations;
+using FluentPaint.Core.Pictures.Writers;
+using FluentPaint.Core.Pictures.Writers.Implementations;
 
-namespace FluentPaint.Core.Pnm;
+namespace FluentPaint.Core.Pictures;
 
 /// <summary>
 /// Provides writers and readers of files in all supported formats.

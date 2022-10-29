@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Writer;
+namespace FluentPaint.Core.Pictures.Writers;
 
 /// <summary>
 /// Default interface for writers.

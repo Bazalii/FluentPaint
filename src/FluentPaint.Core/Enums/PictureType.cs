@@ -1,4 +1,4 @@
-namespace FluentPaint.Core.Pnm;
+namespace FluentPaint.Core.Enums;
 
 /// <summary>
 /// Contains all the picture formats that program can handle.

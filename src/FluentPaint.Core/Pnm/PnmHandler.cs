@@ -1,4 +1,6 @@
 using System.Text;
+using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Pnm;
@@ -6,7 +8,7 @@ namespace FluentPaint.Core.Pnm;
 /// <summary>
 /// Provides methods to read and write pnm picture using filepath.
 /// </summary>
-public class Pnm
+public class PnmHandler
 {
     /// <summary>
     /// Reads pnm file using filepath and writes it to Bitmap.

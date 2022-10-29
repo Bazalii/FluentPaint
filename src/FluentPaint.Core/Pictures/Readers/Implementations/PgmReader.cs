@@ -1,11 +1,11 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Reader.Implementations;
+namespace FluentPaint.Core.Pictures.Readers.Implementations;
 
 /// <summary>
-/// Reader for .ppm files.
+/// Reader for .pgm files.
 /// </summary>
-public class PpmReader : IPictureReader
+public class PgmReader : IPictureReader
 {
     public SKBitmap ReadImageData(FileStream fileStream, int width, int height)
     {
@@ -15,11 +15,9 @@ public class PpmReader : IPictureReader
         {
             for (var x = 0; x < bitmap.Width; x++)
             {
-                var red = (byte)fileStream.ReadByte();
-                var green = (byte)fileStream.ReadByte();
-                var blue = (byte)fileStream.ReadByte();
+                var value = (byte)fileStream.ReadByte();
 
-                bitmap.SetPixel(x, y, new SKColor(red, green, blue));
+                bitmap.SetPixel(x, y, new SKColor(value, value, value));
             }
         }
 

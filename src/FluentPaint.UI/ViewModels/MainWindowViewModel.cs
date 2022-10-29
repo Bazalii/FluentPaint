@@ -51,7 +51,7 @@ public class MainWindowViewModel : ReactiveObject
         set
         {
             _loadingFilePath = value;
-            var file = Pnm.ReadPnm(value);
+            var file = PnmHandler.ReadPnm(value);
 
             Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
@@ -83,7 +83,7 @@ public class MainWindowViewModel : ReactiveObject
 
             Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
-            Pnm.WritePnm(_savingFilePath, colorSpace == ColorSpace.RGB ? _rgbFile : _currentColorSpaceFile);
+            PnmHandler.WritePnm(_savingFilePath, colorSpace == ColorSpace.RGB ? _rgbFile : _currentColorSpaceFile);
         }
     }
 
