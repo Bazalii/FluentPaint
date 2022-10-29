@@ -2,6 +2,9 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Writer.Implementations;
 
+/// <summary>
+/// Writer to .pgm files
+/// </summary>
 public class PgmWriter : IPictureWriter
 {
     public void WriteImageData(FileStream fileStream, SKBitmap bitmap)
