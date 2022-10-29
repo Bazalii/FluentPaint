@@ -11,9 +11,9 @@ public class PgmReader : IPictureReader
     {
         var bitmap = new SKBitmap(width, height);
 
-        for (var x = 0; x < width; x++)
+        for (var y = 0; y < bitmap.Height; y++)
         {
-            for (var y = 0; y < height; y++)
+            for (var x = 0; x < bitmap.Width; x++)
             {
                 var value = (byte)fileStream.ReadByte();
 
