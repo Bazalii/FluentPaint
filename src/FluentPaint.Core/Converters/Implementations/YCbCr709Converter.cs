@@ -4,10 +4,18 @@ namespace FluentPaint.Core.Converters.Implementations;
 
 public class YCbCr709Converter : IConverter
 {
+    /// <summary>
+    /// Essential constants for conversion formulas.
+    /// </summary>
     private const float Kr = 0.2126f;
     private const float Kg = 0.7152f;
     private const float Kb = 0.0722f;
 
+    /// <summary>
+    /// Provides methods to convert picture from RGB to YCbCr709.
+    /// </summary>
+    /// <param name="bitmap"> bitmap containing all pixels of the picture.</param>
+    /// <returns> converted bitmap.</returns>
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -34,6 +42,11 @@ public class YCbCr709Converter : IConverter
         return convertedBitmap;
     }
 
+    /// <summary>
+    /// Provides methods to convert picture from YCbCr709 to RGB.
+    /// </summary>
+    /// <param name="bitmap"> bitmap containing all pixels of the picture.</param>
+    /// <returns> converted bitmap.</returns>
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);

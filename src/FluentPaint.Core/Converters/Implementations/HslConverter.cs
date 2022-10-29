@@ -4,6 +4,11 @@ namespace FluentPaint.Core.Converters.Implementations;
 
 public class HslConverter : IConverter
 {
+    /// <summary>
+    /// Provides methods to convert picture from RGB to HSL.
+    /// </summary>
+    /// <param name="bitmap"> bitmap containing all pixels of the picture</param>
+    /// <returns> converted bitmap</returns>
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -65,6 +70,11 @@ public class HslConverter : IConverter
         return convertedBitmap;
     }
 
+    /// <summary>
+    /// Provides methods to convert picture from HSL to RGB.
+    /// </summary>
+    /// <param name="bitmap"> bitmap containing all pixels of the picture.</param>
+    /// <returns> converted bitmap.</returns>
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -109,6 +119,13 @@ public class HslConverter : IConverter
         return convertedBitmap;
     }
 
+    /// <summary>
+    /// Helper method to convert hue to RGB.
+    /// </summary>
+    /// <param name="firstValue"></param>
+    /// <param name="secondValue"></param>
+    /// <param name="hue"></param>
+    /// <returns></returns>
     private float ConvertHueToRgb(float firstValue, float secondValue, float hue)
     {
         if (hue < 0)
