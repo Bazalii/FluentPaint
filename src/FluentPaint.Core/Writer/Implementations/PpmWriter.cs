@@ -2,6 +2,9 @@ using SkiaSharp;
 
 namespace FluentPaint.Core.Writer.Implementations;
 
+/// <summary>
+/// Writer to .ppm files
+/// </summary>
 public class PpmWriter : IPictureWriter
 {
     public void WriteImageData(FileStream fileStream, SKBitmap bitmap)
