@@ -7,16 +7,20 @@ namespace FluentPaint.Core.Converters;
 public interface IConverter
 {
     /// <summary>
-    /// Provides methods to convert picture from rgb to corresponding color space.
+    /// Provides method to convert picture from rgb to corresponding color space.
     /// </summary>
-    /// <param name="bitmap"> bitmap containing all pixels of the picture.</param>
-    /// <returns> converted bitmap</returns>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> Bitmap containing all pixels of the picture. </param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     SKBitmap FromRgb(SKBitmap bitmap);
     
     /// <summary>
-    /// Provides methods to convert picture from corresponding color space to rgb.
+    /// Provides method to convert picture from corresponding color space to rgb.
     /// </summary>
-    /// <param name="bitmap"> bitmap containing all pixels of the picture.</param>
-    /// <returns> converted bitmap.</returns>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> Bitmap containing all pixels of the picture. </param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     SKBitmap ToRgb(SKBitmap bitmap);
 }

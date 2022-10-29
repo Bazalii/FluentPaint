@@ -12,7 +12,9 @@ public class ConverterFactory
     /// Provides suitable converter based on provided color space.
     /// </summary>
     /// <param name="colorSpace"><c>type</c> is a color space of the picture.</param>
-    /// <returns>converter to handle pictures of provided color space.</returns>
+    /// <returns>
+    /// Converter to handle pictures of provided color space.
+    /// </returns>
     /// <exception cref="ArgumentException">
     /// Thrown when provided color space is incorrect.
     /// </exception>

@@ -2,13 +2,18 @@
 
 namespace FluentPaint.Core.Converters.Implementations;
 
+/// <summary>
+/// Provides methods to convert pictures from RGB to HSL, and in the opposite direction.
+/// </summary>
 public class HslConverter : IConverter
 {
     /// <summary>
-    /// Provides methods to convert picture from RGB to HSL.
+    /// Convert picture from RGB to HSL.
     /// </summary>
-    /// <param name="bitmap"> bitmap containing all pixels of the picture</param>
-    /// <returns> converted bitmap</returns>
+    /// <param name="bitmap"><see cref="SKBitmap"/> Bitmap containing all pixels of the picture</param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     public SKBitmap FromRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -71,10 +76,12 @@ public class HslConverter : IConverter
     }
 
     /// <summary>
-    /// Provides methods to convert picture from HSL to RGB.
+    /// Convert picture from HSL to RGB.
     /// </summary>
-    /// <param name="bitmap"> bitmap containing all pixels of the picture.</param>
-    /// <returns> converted bitmap.</returns>
+    /// <param name="bitmap"> <see cref="SKBitmap"/> Bitmap containing all pixels of the picture.</param>
+    /// <returns>
+    /// Converted bitmap.
+    /// </returns>
     public SKBitmap ToRgb(SKBitmap bitmap)
     {
         var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
@@ -122,10 +129,12 @@ public class HslConverter : IConverter
     /// <summary>
     /// Helper method to convert hue to RGB.
     /// </summary>
-    /// <param name="firstValue"></param>
-    /// <param name="secondValue"></param>
-    /// <param name="hue"></param>
-    /// <returns></returns>
+    /// <param name="firstValue"> Received intermediate value. </param>
+    /// <param name="secondValue"> Received intermediate value. </param>
+    /// <param name="hue"> Received hue. </param>
+    /// <returns>
+    /// Converted hue.
+    /// </returns>
     private float ConvertHueToRgb(float firstValue, float secondValue, float hue)
     {
         if (hue < 0)
