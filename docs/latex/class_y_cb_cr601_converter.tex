@@ -1,0 +1,133 @@
+\hypertarget{class_y_cb_cr601_converter}{}\doxysection{YCb\+Cr601\+Converter Class Reference}
+\label{class_y_cb_cr601_converter}\index{YCbCr601Converter@{YCbCr601Converter}}
+
+
+Provides methods to convert pictures from RGB to YCb\+Cr601 and in the opposite direction.   
+
+
+Inheritance diagram for YCb\+Cr601\+Converter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_y_cb_cr601_converter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+SKBitmap \mbox{\hyperlink{class_y_cb_cr601_converter_ac8be13c8e77e9821f87c98818d4559f5}{From\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from RGB to YCb\+Cr601.  \end{DoxyCompactList}\item 
+SKBitmap \mbox{\hyperlink{class_y_cb_cr601_converter_ab347bba8f7ae17d0af87150135fda2ca}{To\+Rgb}} (SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Converts picture from YCb\+Cr601 to RGB.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const float \mbox{\hyperlink{class_y_cb_cr601_converter_a6e45b1bfd72490c02fe1d4510dbec81f}{Kr}} = 0.\+299f
+\begin{DoxyCompactList}\small\item\em Essential constants for conversion formulas.  \end{DoxyCompactList}\item 
+const float \mbox{\hyperlink{class_y_cb_cr601_converter_a1236467be405c7c6d0f3896a39d946b9}{Kg}} = 0.\+587f
+\item 
+const float \mbox{\hyperlink{class_y_cb_cr601_converter_af4ea45898ee7ac5977464301164ff1de}{Kb}} = 0.\+114f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides methods to convert pictures from RGB to YCb\+Cr601 and in the opposite direction.  
+
+Definition at line \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source}{YCb\+Cr601\+Converter.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_y_cb_cr601_converter_ac8be13c8e77e9821f87c98818d4559f5}\label{class_y_cb_cr601_converter_ac8be13c8e77e9821f87c98818d4559f5}} 
+\index{YCbCr601Converter@{YCbCr601Converter}!FromRgb@{FromRgb}}
+\index{FromRgb@{FromRgb}!YCbCr601Converter@{YCbCr601Converter}}
+\doxysubsubsection{\texorpdfstring{FromRgb()}{FromRgb()}}
+{\footnotesize\ttfamily SKBitmap YCb\+Cr601\+Converter.\+From\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from RGB to YCb\+Cr601.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_converter_ac983b9b48c3bfe9dcfbabb884d81eebd}{IConverter}}.
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source_l00024}{24}} of file \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source}{YCb\+Cr601\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_y_cb_cr601_converter_ab347bba8f7ae17d0af87150135fda2ca}\label{class_y_cb_cr601_converter_ab347bba8f7ae17d0af87150135fda2ca}} 
+\index{YCbCr601Converter@{YCbCr601Converter}!ToRgb@{ToRgb}}
+\index{ToRgb@{ToRgb}!YCbCr601Converter@{YCbCr601Converter}}
+\doxysubsubsection{\texorpdfstring{ToRgb()}{ToRgb()}}
+{\footnotesize\ttfamily SKBitmap YCb\+Cr601\+Converter.\+To\+Rgb (\begin{DoxyParamCaption}\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})}
+
+
+
+Converts picture from YCb\+Cr601 to RGB.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em bitmap} & SKBitmap that contains all pixels of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted bitmap. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_i_converter_a55c565bf5490a9ddd9d63db267777cee}{IConverter}}.
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source_l00062}{62}} of file \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source}{YCb\+Cr601\+Converter.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_y_cb_cr601_converter_af4ea45898ee7ac5977464301164ff1de}\label{class_y_cb_cr601_converter_af4ea45898ee7ac5977464301164ff1de}} 
+\index{YCbCr601Converter@{YCbCr601Converter}!Kb@{Kb}}
+\index{Kb@{Kb}!YCbCr601Converter@{YCbCr601Converter}}
+\doxysubsubsection{\texorpdfstring{Kb}{Kb}}
+{\footnotesize\ttfamily const float YCb\+Cr601\+Converter.\+Kb = 0.\+114f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source}{YCb\+Cr601\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_y_cb_cr601_converter_a1236467be405c7c6d0f3896a39d946b9}\label{class_y_cb_cr601_converter_a1236467be405c7c6d0f3896a39d946b9}} 
+\index{YCbCr601Converter@{YCbCr601Converter}!Kg@{Kg}}
+\index{Kg@{Kg}!YCbCr601Converter@{YCbCr601Converter}}
+\doxysubsubsection{\texorpdfstring{Kg}{Kg}}
+{\footnotesize\ttfamily const float YCb\+Cr601\+Converter.\+Kg = 0.\+587f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source}{YCb\+Cr601\+Converter.\+cs}}.
+
+\mbox{\Hypertarget{class_y_cb_cr601_converter_a6e45b1bfd72490c02fe1d4510dbec81f}\label{class_y_cb_cr601_converter_a6e45b1bfd72490c02fe1d4510dbec81f}} 
+\index{YCbCr601Converter@{YCbCr601Converter}!Kr@{Kr}}
+\index{Kr@{Kr}!YCbCr601Converter@{YCbCr601Converter}}
+\doxysubsubsection{\texorpdfstring{Kr}{Kr}}
+{\footnotesize\ttfamily const float YCb\+Cr601\+Converter.\+Kr = 0.\+299f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Essential constants for conversion formulas.  
+
+
+
+Definition at line \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_y_cb_cr601_converter_8cs_source}{YCb\+Cr601\+Converter.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_y_cb_cr601_converter_8cs}{YCb\+Cr601\+Converter.\+cs}}\end{DoxyCompactItemize}

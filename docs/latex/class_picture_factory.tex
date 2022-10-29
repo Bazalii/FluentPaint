@@ -1,0 +1,107 @@
+\hypertarget{class_picture_factory}{}\doxysection{Picture\+Factory Class Reference}
+\label{class_picture_factory}\index{PictureFactory@{PictureFactory}}
+
+
+Provides writers and readers of files in all supported formats.   
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{Picture\+Type}} \mbox{\hyperlink{class_picture_factory_a5bd3c69edfc22a1682c62520923027c5}{Get\+Type}} (string line)
+\begin{DoxyCompactList}\small\item\em Picks up correct format of the picture using string.  \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_i_picture_writer}{IPicture\+Writer}} \mbox{\hyperlink{class_picture_factory_ad0f98d4498a3792c7155e9c336866d48}{Get\+Writer}} (\mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{Picture\+Type}} type)
+\begin{DoxyCompactList}\small\item\em Picks up suitable writer using a picture format.  \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{interface_i_picture_reader}{IPicture\+Reader}} \mbox{\hyperlink{class_picture_factory_ad597280b1442aa93259907c6a6b02af2}{Get\+Reader}} (\mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{Picture\+Type}} type)
+\begin{DoxyCompactList}\small\item\em Picks up suitable reader using picture format.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides writers and readers of files in all supported formats.  
+
+Definition at line \mbox{\hyperlink{_picture_factory_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_picture_factory_8cs_source}{Picture\+Factory.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_picture_factory_ad597280b1442aa93259907c6a6b02af2}\label{class_picture_factory_ad597280b1442aa93259907c6a6b02af2}} 
+\index{PictureFactory@{PictureFactory}!GetReader@{GetReader}}
+\index{GetReader@{GetReader}!PictureFactory@{PictureFactory}}
+\doxysubsubsection{\texorpdfstring{GetReader()}{GetReader()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_i_picture_reader}{IPicture\+Reader}} Picture\+Factory.\+Get\+Reader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{Picture\+Type}}}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Picks up suitable reader using picture format.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & type of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Object of \mbox{\hyperlink{interface_i_picture_reader}{IPicture\+Reader}} type to handle pictures of provided type. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Exception} & Thrown when provided picture format is incorrect. \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_picture_factory_8cs_source_l00058}{58}} of file \mbox{\hyperlink{_picture_factory_8cs_source}{Picture\+Factory.\+cs}}.
+
+\mbox{\Hypertarget{class_picture_factory_a5bd3c69edfc22a1682c62520923027c5}\label{class_picture_factory_a5bd3c69edfc22a1682c62520923027c5}} 
+\index{PictureFactory@{PictureFactory}!GetType@{GetType}}
+\index{GetType@{GetType}!PictureFactory@{PictureFactory}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{Picture\+Type}} Picture\+Factory.\+Get\+Type (\begin{DoxyParamCaption}\item[{string}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Picks up correct format of the picture using string.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & contains format of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Proper type of the picture 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_picture_factory_8cs_source_l00021}{21}} of file \mbox{\hyperlink{_picture_factory_8cs_source}{Picture\+Factory.\+cs}}.
+
+\mbox{\Hypertarget{class_picture_factory_ad0f98d4498a3792c7155e9c336866d48}\label{class_picture_factory_ad0f98d4498a3792c7155e9c336866d48}} 
+\index{PictureFactory@{PictureFactory}!GetWriter@{GetWriter}}
+\index{GetWriter@{GetWriter}!PictureFactory@{PictureFactory}}
+\doxysubsubsection{\texorpdfstring{GetWriter()}{GetWriter()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{interface_i_picture_writer}{IPicture\+Writer}} Picture\+Factory.\+Get\+Writer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{Picture\+Type}}}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Picks up suitable writer using a picture format.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & type of the picture. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Object of \mbox{\hyperlink{interface_i_picture_writer}{IPicture\+Writer}} type to handle pictures of provided type. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Exception} & Thrown when provided picture format is incorrect. \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_picture_factory_8cs_source_l00036}{36}} of file \mbox{\hyperlink{_picture_factory_8cs_source}{Picture\+Factory.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_picture_factory_8cs}{Picture\+Factory.\+cs}}\end{DoxyCompactItemize}

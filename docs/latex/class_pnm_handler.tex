@@ -1,0 +1,132 @@
+\hypertarget{class_pnm_handler}{}\doxysection{Pnm\+Handler Class Reference}
+\label{class_pnm_handler}\index{PnmHandler@{PnmHandler}}
+
+
+Provides methods to read and write pnm picture using filepath.   
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static SKBitmap \mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{Read\+Pnm}} (string file\+Path)
+\begin{DoxyCompactList}\small\item\em Reads pnm file using filepath and writes it to Bitmap.  \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{Write\+Pnm}} (string file\+Path, SKBitmap bitmap)
+\begin{DoxyCompactList}\small\item\em Writes pnm file from bitmap in file using provided filepath.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static string \mbox{\hyperlink{class_pnm_handler_aa707fc5ba0ee2b22b8bbdc3e309c294b}{Read\+Line}} (Stream file\+Stream)
+\begin{DoxyCompactList}\small\item\em Reads line from provided filestream.  \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_pnm_handler_ad4cfcd6422d4c0309a56e151ed0227c4}{Write\+Line}} (Stream file\+Stream, string line)
+\begin{DoxyCompactList}\small\item\em Writes line to provided filestream.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides methods to read and write pnm picture using filepath.  
+
+Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00011}{11}} of file \mbox{\hyperlink{_pnm_handler_8cs_source}{Pnm\+Handler.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pnm_handler_aa707fc5ba0ee2b22b8bbdc3e309c294b}\label{class_pnm_handler_aa707fc5ba0ee2b22b8bbdc3e309c294b}} 
+\index{PnmHandler@{PnmHandler}!ReadLine@{ReadLine}}
+\index{ReadLine@{ReadLine}!PnmHandler@{PnmHandler}}
+\doxysubsubsection{\texorpdfstring{ReadLine()}{ReadLine()}}
+{\footnotesize\ttfamily static string Pnm\+Handler.\+Read\+Line (\begin{DoxyParamCaption}\item[{Stream}]{file\+Stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Reads line from provided filestream.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Stream} & Stream that contains information to read. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Line that was read from provided filestream. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00084}{84}} of file \mbox{\hyperlink{_pnm_handler_8cs_source}{Pnm\+Handler.\+cs}}.
+
+\mbox{\Hypertarget{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}\label{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}} 
+\index{PnmHandler@{PnmHandler}!ReadPnm@{ReadPnm}}
+\index{ReadPnm@{ReadPnm}!PnmHandler@{PnmHandler}}
+\doxysubsubsection{\texorpdfstring{ReadPnm()}{ReadPnm()}}
+{\footnotesize\ttfamily static SKBitmap Pnm\+Handler.\+Read\+Pnm (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reads pnm file using filepath and writes it to Bitmap.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & absolute filepath to the picture. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & Thrown when brightness value not equal to 255. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+SKBitmap with read pixels. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_pnm_handler_8cs_source}{Pnm\+Handler.\+cs}}.
+
+\mbox{\Hypertarget{class_pnm_handler_ad4cfcd6422d4c0309a56e151ed0227c4}\label{class_pnm_handler_ad4cfcd6422d4c0309a56e151ed0227c4}} 
+\index{PnmHandler@{PnmHandler}!WriteLine@{WriteLine}}
+\index{WriteLine@{WriteLine}!PnmHandler@{PnmHandler}}
+\doxysubsubsection{\texorpdfstring{WriteLine()}{WriteLine()}}
+{\footnotesize\ttfamily static void Pnm\+Handler.\+Write\+Line (\begin{DoxyParamCaption}\item[{Stream}]{file\+Stream,  }\item[{string}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Writes line to provided filestream.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Stream} & Stream that is used for writing information. \\
+\hline
+{\em line} & String that will be written to filestream. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00104}{104}} of file \mbox{\hyperlink{_pnm_handler_8cs_source}{Pnm\+Handler.\+cs}}.
+
+\mbox{\Hypertarget{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}\label{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}} 
+\index{PnmHandler@{PnmHandler}!WritePnm@{WritePnm}}
+\index{WritePnm@{WritePnm}!PnmHandler@{PnmHandler}}
+\doxysubsubsection{\texorpdfstring{WritePnm()}{WritePnm()}}
+{\footnotesize\ttfamily static void Pnm\+Handler.\+Write\+Pnm (\begin{DoxyParamCaption}\item[{string}]{file\+Path,  }\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Writes pnm file from bitmap in file using provided filepath.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & an absolute filepath to the picture. \\
+\hline
+{\em bitmap} & a data structure that contains all bytes of the picture. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & Thrown when provided picture format is incorrect. \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00054}{54}} of file \mbox{\hyperlink{_pnm_handler_8cs_source}{Pnm\+Handler.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_pnm_handler_8cs}{Pnm\+Handler.\+cs}}\end{DoxyCompactItemize}

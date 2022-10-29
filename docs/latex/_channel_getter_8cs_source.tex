@@ -1,0 +1,119 @@
+\hypertarget{_channel_getter_8cs_source}{}\doxysection{Channel\+Getter.\+cs}
+\label{_channel_getter_8cs_source}\index{ChannelGetter.cs@{ChannelGetter.cs}}
+\mbox{\hyperlink{_channel_getter_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00001}00001 \textcolor{keyword}{using }FluentPaint.Core.Enums;}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00002}00002 \textcolor{keyword}{using }SkiaSharp;}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00004}00004 \textcolor{keyword}{namespace }FluentPaint.Core.Channels.Implementations;}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00009}\mbox{\hyperlink{class_channel_getter}{00009}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_channel_getter}{ChannelGetter}} : \mbox{\hyperlink{interface_i_channel_getter}{IChannelGetter}}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00019}\mbox{\hyperlink{class_channel_getter_a5e4a12c61b9c9c35c22ef76fd79cf687}{00019}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_channel_getter_a5e4a12c61b9c9c35c22ef76fd79cf687}{GetChannels}}(SKBitmap bitmap, \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}} channels)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00020}00020     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00021}00021         var modifiedBitmap = \textcolor{keyword}{new} SKBitmap(bitmap.Width, bitmap.Height);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00023}00023         \textcolor{keyword}{const} \textcolor{keywordtype}{byte} defaultValue = 0;}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00025}00025         \textcolor{keywordflow}{switch} (channels)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00027}00027             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.First:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00028}00028                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00029}00029                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00030}00030                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00031}00031                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00032}00032                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00034}00034                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00035}00035                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(currentPixel.Red, defaultValue, defaultValue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00036}00036                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00037}00037                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00039}00039                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00040}00040             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.Second:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00041}00041                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00042}00042                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00043}00043                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00044}00044                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00045}00045                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00047}00047                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00048}00048                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(defaultValue, currentPixel.Green, defaultValue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00049}00049                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00050}00050                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00052}00052                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00053}00053             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.Third:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00054}00054                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00055}00055                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00056}00056                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00057}00057                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00058}00058                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00060}00060                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00061}00061                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(defaultValue, defaultValue, currentPixel.Blue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00062}00062                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00063}00063                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00065}00065                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00066}00066             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.FirstAndSecond:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00067}00067                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00068}00068                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00069}00069                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00070}00070                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00071}00071                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00073}00073                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00074}00074                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(currentPixel.Red, currentPixel.Green, defaultValue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00075}00075                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00076}00076                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00078}00078                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00079}00079             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.FirstAndThird:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00080}00080                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00081}00081                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00082}00082                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00083}00083                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00084}00084                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00086}00086                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00087}00087                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(currentPixel.Red, defaultValue, currentPixel.Blue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00088}00088                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00089}00089                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00091}00091                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00092}00092             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.SecondAndThird:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00093}00093                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00094}00094                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00095}00095                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00096}00096                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00097}00097                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00099}00099                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00100}00100                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(defaultValue, currentPixel.Green, currentPixel.Blue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00101}00101                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00102}00102                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00104}00104                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00105}00105             \textcolor{keywordflow}{case} \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}}.All:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00106}00106                 \textcolor{keywordflow}{for} (var y = 0; y < bitmap.Height; y++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00107}00107                 \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00108}00108                     \textcolor{keywordflow}{for} (var x = 0; x < bitmap.Width; x++)}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00109}00109                     \{}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00110}00110                         var currentPixel = bitmap.GetPixel(x, y);}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00112}00112                         modifiedBitmap}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00113}00113                             .SetPixel(x, y, \textcolor{keyword}{new} SKColor(currentPixel.Red, currentPixel.Green, currentPixel.Blue));}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00114}00114                     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00115}00115                 \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00117}00117                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00118}00118             \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00119}00119                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentOutOfRangeException(nameof(channels), channels, \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00120}00120         \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00122}00122         \textcolor{keywordflow}{return} modifiedBitmap;}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00123}00123     \}}
+\DoxyCodeLine{\Hypertarget{_channel_getter_8cs_source_l00124}00124 \}}
+
+\end{DoxyCode}

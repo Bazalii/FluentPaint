@@ -1,0 +1,81 @@
+\hypertarget{_main_window_8axaml_8cs_source}{}\doxysection{Main\+Window.\+axaml.\+cs}
+\label{_main_window_8axaml_8cs_source}\index{MainWindow.axaml.cs@{MainWindow.axaml.cs}}
+\mbox{\hyperlink{_main_window_8axaml_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00002}00002 \textcolor{keyword}{using }Avalonia.Controls;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00003}00003 \textcolor{keyword}{using }Avalonia.Interactivity;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00004}00004 \textcolor{keyword}{using }Avalonia.ReactiveUI;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00005}00005 \textcolor{keyword}{using }FluentPaint.UI.ViewModels;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00007}00007 \textcolor{keyword}{namespace }FluentPaint.UI.Views;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00015}\mbox{\hyperlink{class_main_window}{00015}} \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_main_window}{MainWindow}} : ReactiveWindow<MainWindowViewModel>}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00016}00016 \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00017}\mbox{\hyperlink{class_main_window_af607d50e4d1b04d3c494661489283f45}{00017}}     \textcolor{keyword}{public} \mbox{\hyperlink{class_main_window_af607d50e4d1b04d3c494661489283f45}{MainWindow}}()}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00018}00018     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00019}00019         InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00021}00021         DataContext = \textcolor{keyword}{new} \mbox{\hyperlink{class_main_window_view_model}{MainWindowViewModel}}();}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00032}\mbox{\hyperlink{class_main_window_a64e6cd640cc79f1f9a68313eb8fd5db1}{00032}}     \textcolor{keyword}{private} async \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_window_a64e6cd640cc79f1f9a68313eb8fd5db1}{OnLoadButtonClickCommand}}(\textcolor{keywordtype}{object} sender, RoutedEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00033}00033     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00034}00034         var dialog = \textcolor{keyword}{new} \mbox{\hyperlink{class_load_popup_window}{LoadPopupWindow}}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00035}00035         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00036}00036             Width = 700,}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00037}00037             Height = 300}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00038}00038         \};}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00040}00040         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00042}00042             ViewModel.LoadingFilePath = await dialog.ShowDialog<\textcolor{keywordtype}{string}>(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00043}00043             MainImage.Source = ViewModel.RgbFile.ConvertToAvaloniaBitmap();}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00044}00044         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00045}00045         \textcolor{keywordflow}{catch} (Exception exception)}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00046}00046         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00047}00047             ShowException(exception.Message);}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00048}00048         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00049}00049     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00059}\mbox{\hyperlink{class_main_window_a55bdec4a288f113eaa73acf514568f71}{00059}}     \textcolor{keyword}{private} async \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_window_a55bdec4a288f113eaa73acf514568f71}{OnSaveButtonClickCommand}}(\textcolor{keywordtype}{object} sender, RoutedEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00060}00060     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00061}00061         var dialog = \textcolor{keyword}{new} \mbox{\hyperlink{class_save_popup_window}{SavePopupWindow}}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00062}00062         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00063}00063             Width = 700,}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00064}00064             Height = 300}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00065}00065         \};}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00067}00067         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00068}00068         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00069}00069             ViewModel.SavingFilePath = await dialog.ShowDialog<\textcolor{keywordtype}{string}>(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00070}00070         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00071}00071         \textcolor{keywordflow}{catch} (Exception exception)}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00072}00072         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00073}00073             ShowException(exception.Message);}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00074}00074         \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00075}00075     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00081}\mbox{\hyperlink{class_main_window_a243fac365d8cadb9723e45b8d3b18b6f}{00081}}     \textcolor{keyword}{private} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_window_a243fac365d8cadb9723e45b8d3b18b6f}{ShowException}}(\textcolor{keywordtype}{string} message)}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00082}00082     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00083}00083         var window = \textcolor{keyword}{new} \mbox{\hyperlink{class_exception_window}{ExceptionWindow}}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00084}00084         \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00085}00085             Width = 700,}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00086}00086             Height = 300,}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00087}00087             ExceptionMessage =}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00088}00088             \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00089}00089                 Text = message}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00090}00090             \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00091}00091         \};}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00093}00093         window.Show();}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00094}00094     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00101}\mbox{\hyperlink{class_main_window_a98c73ff4300aa794643ed41203ccc210}{00101}}     \textcolor{keyword}{private} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_window_a98c73ff4300aa794643ed41203ccc210}{OnChannelsChange}}(\textcolor{keywordtype}{object}? sender, SelectionChangedEventArgs selectionChangedEventArgs)}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00102}00102     \{}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00103}00103         ViewModel.SelectedChannels = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00104}00104         MainImage.Source = ViewModel.GetBitmapChannels().ConvertToAvaloniaBitmap();}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00105}00105     \}}
+\DoxyCodeLine{\Hypertarget{_main_window_8axaml_8cs_source_l00106}00106 \}}
+
+\end{DoxyCode}

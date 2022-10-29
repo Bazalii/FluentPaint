@@ -1,0 +1,145 @@
+\hypertarget{class_main_window}{}\doxysection{Main\+Window Class Reference}
+\label{class_main_window}\index{MainWindow@{MainWindow}}
+
+
+View for window that contains all controls for interaction with user.   
+
+
+Inheritance diagram for Main\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_main_window}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window_af607d50e4d1b04d3c494661489283f45}{Main\+Window}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async void \mbox{\hyperlink{class_main_window_a64e6cd640cc79f1f9a68313eb8fd5db1}{On\+Load\+Button\+Click\+Command}} (object sender, Routed\+Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Opens \mbox{\hyperlink{class_load_popup_window}{Load\+Popup\+Window}} when Load\+Button is clicked, loads file and shows it to user.  \end{DoxyCompactList}\item 
+async void \mbox{\hyperlink{class_main_window_a55bdec4a288f113eaa73acf514568f71}{On\+Save\+Button\+Click\+Command}} (object sender, Routed\+Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Opens \mbox{\hyperlink{class_load_popup_window}{Load\+Popup\+Window}} when Save\+Button is clicked, saves picture using Fluent\+Paint.\+UI.\+View\+Models.\+Main\+Window\+View\+Model.\+Saving\+File\+Path.  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a243fac365d8cadb9723e45b8d3b18b6f}{Show\+Exception}} (string message)
+\begin{DoxyCompactList}\small\item\em Opens \mbox{\hyperlink{class_exception_window}{Exception\+Window}} that contains information about caught exception.  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a98c73ff4300aa794643ed41203ccc210}{On\+Channels\+Change}} (object? sender, Selection\+Changed\+Event\+Args selection\+Changed\+Event\+Args)
+\begin{DoxyCompactList}\small\item\em Gets current channels when user selects new item using Channels\+Choosing Combo\+Box.  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+View for window that contains all controls for interaction with user.  
+
+Also opens new windows like \mbox{\hyperlink{class_exception_window}{Exception\+Window}}, \mbox{\hyperlink{class_load_popup_window}{Load\+Popup\+Window}} and \mbox{\hyperlink{class_save_popup_window}{Save\+Popup\+Window}}\texorpdfstring{$>$}{>}. 
+
+Definition at line \mbox{\hyperlink{_main_window_8axaml_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_main_window_8axaml_8cs_source}{Main\+Window.\+axaml.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_main_window_af607d50e4d1b04d3c494661489283f45}\label{class_main_window_af607d50e4d1b04d3c494661489283f45}} 
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily Main\+Window.\+Main\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_main_window_8axaml_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_main_window_8axaml_8cs_source}{Main\+Window.\+axaml.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_main_window_a98c73ff4300aa794643ed41203ccc210}\label{class_main_window_a98c73ff4300aa794643ed41203ccc210}} 
+\index{MainWindow@{MainWindow}!OnChannelsChange@{OnChannelsChange}}
+\index{OnChannelsChange@{OnChannelsChange}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{OnChannelsChange()}{OnChannelsChange()}}
+{\footnotesize\ttfamily void Main\+Window.\+On\+Channels\+Change (\begin{DoxyParamCaption}\item[{object?}]{sender,  }\item[{Selection\+Changed\+Event\+Args}]{selection\+Changed\+Event\+Args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gets current channels when user selects new item using Channels\+Choosing Combo\+Box.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & Object that raises the event. \\
+\hline
+{\em selection\+Changed\+Event\+Args} & Arguments that are associated with event. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_main_window_8axaml_8cs_source_l00101}{101}} of file \mbox{\hyperlink{_main_window_8axaml_8cs_source}{Main\+Window.\+axaml.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_a64e6cd640cc79f1f9a68313eb8fd5db1}\label{class_main_window_a64e6cd640cc79f1f9a68313eb8fd5db1}} 
+\index{MainWindow@{MainWindow}!OnLoadButtonClickCommand@{OnLoadButtonClickCommand}}
+\index{OnLoadButtonClickCommand@{OnLoadButtonClickCommand}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{OnLoadButtonClickCommand()}{OnLoadButtonClickCommand()}}
+{\footnotesize\ttfamily async void Main\+Window.\+On\+Load\+Button\+Click\+Command (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Routed\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Opens \mbox{\hyperlink{class_load_popup_window}{Load\+Popup\+Window}} when Load\+Button is clicked, loads file and shows it to user.  
+
+If an exception is caught, opens \mbox{\hyperlink{class_exception_window}{Exception\+Window}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & Object that raises the event. \\
+\hline
+{\em e} & Arguments that are associated with event. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_main_window_8axaml_8cs_source_l00032}{32}} of file \mbox{\hyperlink{_main_window_8axaml_8cs_source}{Main\+Window.\+axaml.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_a55bdec4a288f113eaa73acf514568f71}\label{class_main_window_a55bdec4a288f113eaa73acf514568f71}} 
+\index{MainWindow@{MainWindow}!OnSaveButtonClickCommand@{OnSaveButtonClickCommand}}
+\index{OnSaveButtonClickCommand@{OnSaveButtonClickCommand}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{OnSaveButtonClickCommand()}{OnSaveButtonClickCommand()}}
+{\footnotesize\ttfamily async void Main\+Window.\+On\+Save\+Button\+Click\+Command (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Routed\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Opens \mbox{\hyperlink{class_load_popup_window}{Load\+Popup\+Window}} when Save\+Button is clicked, saves picture using Fluent\+Paint.\+UI.\+View\+Models.\+Main\+Window\+View\+Model.\+Saving\+File\+Path.  
+
+If an exception is caught, calls Fluent\+Paint.\+UI.\+Views.\+Main\+Window.\+Show\+Exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & Object that raises the event. \\
+\hline
+{\em e} & Arguments that are associated with event. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_main_window_8axaml_8cs_source_l00059}{59}} of file \mbox{\hyperlink{_main_window_8axaml_8cs_source}{Main\+Window.\+axaml.\+cs}}.
+
+\mbox{\Hypertarget{class_main_window_a243fac365d8cadb9723e45b8d3b18b6f}\label{class_main_window_a243fac365d8cadb9723e45b8d3b18b6f}} 
+\index{MainWindow@{MainWindow}!ShowException@{ShowException}}
+\index{ShowException@{ShowException}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ShowException()}{ShowException()}}
+{\footnotesize\ttfamily void Main\+Window.\+Show\+Exception (\begin{DoxyParamCaption}\item[{string}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Opens \mbox{\hyperlink{class_exception_window}{Exception\+Window}} that contains information about caught exception.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Exception message. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_main_window_8axaml_8cs_source_l00081}{81}} of file \mbox{\hyperlink{_main_window_8axaml_8cs_source}{Main\+Window.\+axaml.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_main_window_8axaml_8cs}{Main\+Window.\+axaml.\+cs}}\end{DoxyCompactItemize}

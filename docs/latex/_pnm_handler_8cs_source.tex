@@ -1,0 +1,83 @@
+\hypertarget{_pnm_handler_8cs_source}{}\doxysection{Pnm\+Handler.\+cs}
+\label{_pnm_handler_8cs_source}\index{PnmHandler.cs@{PnmHandler.cs}}
+\mbox{\hyperlink{_pnm_handler_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00001}00001 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00002}00002 \textcolor{keyword}{using }FluentPaint.Core.Enums;}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00003}00003 \textcolor{keyword}{using }FluentPaint.Core.Pictures;}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00004}00004 \textcolor{keyword}{using }SkiaSharp;}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00006}00006 \textcolor{keyword}{namespace }FluentPaint.Core.Pnm;}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00011}\mbox{\hyperlink{class_pnm_handler}{00011}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_pnm_handler}{PnmHandler}}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00023}\mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{00023}}     \textcolor{keyword}{public} \textcolor{keyword}{static} SKBitmap \mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{ReadPnm}}(\textcolor{keywordtype}{string} filePath)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00024}00024     \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00025}00025         var fileStream = \textcolor{keyword}{new} FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00027}00027         var type = ReadLine(fileStream);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00029}00029         var line = ReadLine(fileStream);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00030}00030         var parameters = line.Split(\textcolor{keyword}{new}[] \{ \textcolor{charliteral}{' '} \});}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00031}00031         var width = \textcolor{keywordtype}{int}.Parse(parameters[0]);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00032}00032         var height = \textcolor{keywordtype}{int}.Parse(parameters[1]);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00034}00034         var brightness = \textcolor{keywordtype}{int}.Parse(ReadLine(fileStream));}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00036}00036         \textcolor{keywordflow}{if} (brightness != 255)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00037}00037         \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00038}00038             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Exception(\textcolor{stringliteral}{"{}Brightness should be 255!"{}});}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00039}00039         \}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00041}00041         var reader = \mbox{\hyperlink{class_picture_factory}{PictureFactory}}.\mbox{\hyperlink{class_picture_factory_ad597280b1442aa93259907c6a6b02af2}{GetReader}}(\mbox{\hyperlink{class_picture_factory}{PictureFactory}}.\mbox{\hyperlink{class_picture_factory_a5bd3c69edfc22a1682c62520923027c5}{GetType}}(type));}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00043}00043         \textcolor{keywordflow}{return} reader.\mbox{\hyperlink{interface_i_picture_reader_a28e132d1f0f81c4a248613e0ecf3b589}{ReadImageData}}(fileStream, width, height);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00044}00044     \}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00054}\mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{00054}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{WritePnm}}(\textcolor{keywordtype}{string} filePath, SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00055}00055     \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00056}00056         var extension = filePath.Substring(filePath.Length -\/ 4, 4).ToLower();}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00058}00058         var type = extension \textcolor{keywordflow}{switch}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00059}00059         \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00060}00060             \textcolor{stringliteral}{"{}.pgm"{}} => \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}}.P5,}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00061}00061             \textcolor{stringliteral}{"{}.ppm"{}} => \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}}.P6,}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00062}00062             \textcolor{stringliteral}{"{}.pnm"{}} => \mbox{\hyperlink{_picture_type_8cs_a4f37629f775549c508f4c5625ae348b3}{PictureType}}.P6,}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00063}00063             \_ => \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Exception(}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00064}00064                 \textcolor{stringliteral}{"{}Error: This file type is not supported, .ppm .pgm is expected (.pnm will write as p6)"{}})}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00065}00065         \};}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00067}00067         var fileStream = \textcolor{keyword}{new} FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00068}00068         var writer = \mbox{\hyperlink{class_picture_factory}{PictureFactory}}.\mbox{\hyperlink{class_picture_factory_ad0f98d4498a3792c7155e9c336866d48}{GetWriter}}(type);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00070}00070         WriteLine(fileStream, type.ToString());}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00071}00071         WriteLine(fileStream, bitmap.Width + \textcolor{stringliteral}{"{} "{}} + bitmap.Height);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00072}00072         WriteLine(fileStream, \textcolor{stringliteral}{"{}255"{}});}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00074}00074         writer.WriteImageData(fileStream, bitmap);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00075}00075     \}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00084}\mbox{\hyperlink{class_pnm_handler_aa707fc5ba0ee2b22b8bbdc3e309c294b}{00084}}     \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_pnm_handler_aa707fc5ba0ee2b22b8bbdc3e309c294b}{ReadLine}}(Stream fileStream)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00085}00085     \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00086}00086         var binaryReader = \textcolor{keyword}{new} BinaryReader(fileStream);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00087}00087         var stringBuilder = \textcolor{keyword}{new} StringBuilder();}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00088}00088         var current = binaryReader.ReadByte();}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00090}00090         \textcolor{keywordflow}{while} (current != \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00091}00091         \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00092}00092             stringBuilder.Append((\textcolor{keywordtype}{char}) current);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00093}00093             current = binaryReader.ReadByte();}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00094}00094         \}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00096}00096         \textcolor{keywordflow}{return} stringBuilder.ToString();}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00097}00097     \}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00104}\mbox{\hyperlink{class_pnm_handler_ad4cfcd6422d4c0309a56e151ed0227c4}{00104}}     \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_pnm_handler_ad4cfcd6422d4c0309a56e151ed0227c4}{WriteLine}}(Stream fileStream, \textcolor{keywordtype}{string} line)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00105}00105     \{}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00106}00106         var binaryWriter = \textcolor{keyword}{new} BinaryWriter(fileStream);}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00108}00108         binaryWriter.Write(Encoding.ASCII.GetBytes(line + \textcolor{stringliteral}{"{}\(\backslash\)n"{}}));}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00109}00109     \}}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00110}00110 \}}
+
+\end{DoxyCode}
