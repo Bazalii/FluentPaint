@@ -8,11 +8,11 @@ namespace FluentPaint.Core.Reader;
 public interface IPictureReader
 {
     /// <summary>
-    /// Read picture from file
+    /// Read picture from file.
     /// </summary>
-    /// <param name="fileStream"> file with picture</param>
-    /// <param name="width"> picture width, the number of bytes in the row</param>
-    /// <param name="height"> picture height, the number of bytes in the column</param>
-    /// <returns>filled bitmap</returns>
+    /// <param name="fileStream"> file with picture. </param>
+    /// <param name="width"> picture width, the number of bytes in the row. </param>
+    /// <param name="height"> picture height, the number of bytes in the column. </param>
+    /// <returns>filled bitmap. </returns>
     SKBitmap ReadImageData(FileStream fileStream, int width, int height);
 }

@@ -3,7 +3,7 @@ using SkiaSharp;
 namespace FluentPaint.Core.Reader.Implementations;
 
 /// <summary>
-/// Reader for .pgm files
+/// Reader for .pgm files.
 /// </summary>
 public class PgmReader : IPictureReader
 {
