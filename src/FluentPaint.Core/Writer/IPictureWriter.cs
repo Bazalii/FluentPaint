@@ -11,7 +11,7 @@ public interface IPictureWriter
     /// Write picture in a file.
     /// Then close fileStream.
     /// </summary>
-    /// <param name="fileStream"> file into which you want to write the picture</param>
-    /// <param name="bitmap"> bitmap with picture</param>
+    /// <param name="fileStream"> file into which you want to write the picture. </param>
+    /// <param name="bitmap"> bitmap with picture. </param>
     void WriteImageData(FileStream fileStream, SKBitmap bitmap);
 }
