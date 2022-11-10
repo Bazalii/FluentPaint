@@ -14,12 +14,16 @@ public class GammaCorrecter
             {
                 var pixel = bitmap.GetPixel(x, y);
 
-                var redComponent = Math.Pow(pixel.Red, 1 / gamma);
-                var greenComponent = Math.Pow(pixel.Green, 1 / gamma);
-                var blueComponent = Math.Pow(pixel.Blue, 1 / gamma);
+                var redComponent = Math.Pow(pixel.Red / 255f, gamma);
+                var greenComponent = Math.Pow(pixel.Green / 255f, gamma);
+                var blueComponent = Math.Pow(pixel.Blue / 255f, gamma);
 
-                convertedBitmap
-                    .SetPixel(x, y, new SKColor((byte) redComponent, (byte) greenComponent, (byte) blueComponent));
+                convertedBitmap.SetPixel(x, y,
+                    new SKColor(
+                        (byte) (redComponent * 255),
+                        (byte) (greenComponent * 255),
+                        (byte) (blueComponent * 255)
+                    ));
             }
         }
 
