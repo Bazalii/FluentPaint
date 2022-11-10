@@ -5,6 +5,7 @@ using FluentPaint.Core.Channels;
 using FluentPaint.Core.Channels.Implementations;
 using FluentPaint.Core.Converters;
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.GammaCorrectors;
 using FluentPaint.Core.Pnm;
 using ReactiveUI;
 using SkiaSharp;
@@ -18,14 +19,19 @@ public class MainWindowViewModel : ReactiveObject
 {
     private string _loadingFilePath = string.Empty;
     private string _savingFilePath = string.Empty;
+    private string _savingGammaFilePath = string.Empty;
+
+    private float _currentGamma = 2.2f;
 
     private string _selectedSpace = "Space choosing";
 
     private SKBitmap? _rgbFile;
     private SKBitmap _currentColorSpaceFile = new();
+    private SKBitmap _currentGammaFile = new();
 
     private readonly ConverterFactory _converterFactory = new();
     private readonly IChannelGetter _channelGetter = new ChannelGetter();
+    private readonly GammaCorrecter _gammaCorrecter = new();
 
     private readonly List<string> _colorSpaceNames = new()
         { "RGB", "HSL", "HSV", "YCbCr601", "YCbCr709", "YCoCg", "CMY" };
@@ -87,6 +93,17 @@ public class MainWindowViewModel : ReactiveObject
         }
     }
 
+    public string SavingGammaFilePath
+    {
+        get => _savingGammaFilePath;
+        set
+        {
+            _savingGammaFilePath = value;
+
+            PnmHandler.WritePnm(_savingGammaFilePath, CurrentGammaFile);
+        }
+    }
+
     /// <summary>
     /// Represents loaded file in RGB color space.
     /// </summary>
@@ -94,6 +111,23 @@ public class MainWindowViewModel : ReactiveObject
     {
         get => _rgbFile;
         set => this.RaiseAndSetIfChanged(ref _rgbFile, value);
+    }
+
+    public SKBitmap CurrentGammaFile
+    {
+        get => _currentGammaFile;
+        set => _currentGammaFile = value;
+    }
+
+    public float CurrentGamma
+    {
+        get => _currentGamma;
+        set
+        {
+            _currentGamma = value;
+
+            _currentGammaFile = _gammaCorrecter.ToNewGamma(_rgbFile, _currentGamma);
+        }
     }
 
     /// <summary>
