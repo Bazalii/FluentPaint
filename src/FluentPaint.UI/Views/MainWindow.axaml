@@ -3,7 +3,7 @@
         xmlns:vm="using:FluentPaint.UI.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="FluentPaint.UI.Views.MainWindow"
         Icon="/Assets/application-logo.png"
         Title="FluentPaint"
@@ -62,6 +62,63 @@
 
                 Click="OnSaveButtonClickCommand">
             </Button>
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Right"
+
+                Content="Convert"
+
+                Name="ConvertButton"
+
+                Click="OnConvertButtonClickCommand">
+            </Button>
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Right"
+
+                Content="Assign"
+
+                Name="AssignButton"
+
+                Click="OnAssignButtonClickCommand">
+            </Button>
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Right"
+
+                Content="Set gamma"
+
+                Name="SetGammaButton"
+
+                Click="OnSetGammaButtonClickCommand">
+            </Button>
             <ComboBox
                 Width="150"
                 Height="35"
@@ -93,7 +150,7 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
 
                 PlaceholderText="Channels"
 

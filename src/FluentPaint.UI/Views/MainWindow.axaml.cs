@@ -74,6 +74,47 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         }
     }
 
+    private async void OnSetGammaButtonClickCommand(object sender, RoutedEventArgs e)
+    {
+        var dialog = new GammaInputPopupWindow
+        {
+            Width = 700,
+            Height = 300
+        };
+
+        try
+        {
+            ViewModel.CurrentGamma = await dialog.ShowDialog<float>(this);
+        }
+        catch (Exception exception)
+        {
+            ShowException(exception.Message);
+        }
+    }
+
+    private async void OnConvertButtonClickCommand(object sender, RoutedEventArgs e)
+    {
+        var dialog = new GammaFileSavePopupWindow
+        {
+            Width = 700,
+            Height = 300
+        };
+
+        try
+        {
+            ViewModel.SavingGammaFilePath = await dialog.ShowDialog<string>(this);
+        }
+        catch (Exception exception)
+        {
+            ShowException(exception.Message);
+        }
+    }
+
+    private void OnAssignButtonClickCommand(object? sender, RoutedEventArgs e)
+    {
+        MainImage.Source = ViewModel.CurrentGammaFile.ConvertToAvaloniaBitmap();
+    }
+
     /// <summary>
     /// Opens <see cref="ExceptionWindow"/> that contains information about caught exception.
     /// </summary>
