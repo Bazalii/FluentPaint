@@ -1,3 +1,5 @@
+using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures.HeaderWriters.Implementations;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Pictures.Writers.Implementations;
@@ -7,8 +9,12 @@ namespace FluentPaint.Core.Pictures.Writers.Implementations;
 /// </summary>
 public class PpmWriter : IPictureWriter
 {
-    public void WriteImageData(FileStream fileStream, SKBitmap bitmap)
+    private readonly PnmHeaderWriter _pnmHeaderWriter = new();
+    
+    public void WriteImageData(FileStream fileStream, SKBitmap bitmap, PictureType type)
     {
+        _pnmHeaderWriter.Write(fileStream, bitmap, type);
+        
         for (var y = 0; y < bitmap.Height; y++)
         {
             for (var x = 0; x < bitmap.Width; x++)
