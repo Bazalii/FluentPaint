@@ -1,14 +1,13 @@
 using System.Text;
 using FluentPaint.Core.Enums;
-using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
-namespace FluentPaint.Core.Pnm;
+namespace FluentPaint.Core.Pictures.Handlers.Implementations;
 
 /// <summary>
 /// Provides methods to read and write pnm picture using filepath.
 /// </summary>
-public class PnmHandler
+public class PictureHandler : IPictureHandler
 {
     /// <summary>
     /// Reads pnm file using filepath and writes it to Bitmap.
@@ -20,7 +19,7 @@ public class PnmHandler
     /// <returns>
     /// <see cref="SKBitmap"/> with read pixels.
     /// </returns>
-    public static SKBitmap ReadPnm(string filePath)
+    public SKBitmap Read(string filePath)
     {
         var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
@@ -51,7 +50,7 @@ public class PnmHandler
     /// <exception cref="Exception">
     /// Thrown when provided picture format is incorrect.
     /// </exception>
-    public static void WritePnm(string filePath, SKBitmap bitmap)
+    public void Write(string filePath, SKBitmap bitmap)
     {
         var extension = filePath.Substring(filePath.Length - 4, 4).ToLower();
 
