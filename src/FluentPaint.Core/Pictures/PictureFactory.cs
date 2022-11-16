@@ -14,13 +14,25 @@ public static class PictureFactory
     /// <summary>
     /// Picks up correct format of the picture using string.
     /// </summary>
-    /// <param name="line"> contains format of the picture. </param>
+    /// <param name="filePath"> path to some file. </param>
     /// <returns>
     /// Proper type of the picture
     /// </returns>
-    public static PictureType GetType(string line)
+    public static PictureType GetType(string filePath)
     {
-        return line.Equals("P5") ? PictureType.P5 : PictureType.P6;
+        var indexOfDot = filePath.IndexOf(".", StringComparison.Ordinal);
+
+        var extension = filePath.Substring(indexOfDot, filePath.Length - indexOfDot).ToLower();
+
+        return extension switch
+        {
+            ".pgm" => PictureType.P5,
+            ".ppm" => PictureType.P6,
+            ".pnm" => PictureType.P6,
+            ".jpeg" => PictureType.JPEG,
+            _ => throw new Exception(
+                "Error: This file type is not supported! .ppm, .pgm and .jpeg are expected (.pnm will write as p6)")
+        };
     }
 
     /// <summary>
@@ -39,6 +51,7 @@ public static class PictureFactory
         {
             PictureType.P5 => new PgmWriter(),
             PictureType.P6 => new PpmWriter(),
+            PictureType.JPEG => new JpegWriter(),
             _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
@@ -61,6 +74,7 @@ public static class PictureFactory
         {
             PictureType.P5 => new PgmReader(),
             PictureType.P6 => new PpmReader(),
+            PictureType.JPEG => new JpegReader(),
             _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
