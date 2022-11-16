@@ -1,3 +1,4 @@
+using FluentPaint.Core.Pictures.HeaderReaders.Implementations;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Pictures.Readers.Implementations;
@@ -7,15 +8,19 @@ namespace FluentPaint.Core.Pictures.Readers.Implementations;
 /// </summary>
 public class PgmReader : IPictureReader
 {
-    public SKBitmap ReadImageData(FileStream fileStream, int width, int height)
+    private readonly PnmHeaderReader _pnmHeaderReader = new();
+
+    public SKBitmap ReadImageData(FileStream fileStream)
     {
-        var bitmap = new SKBitmap(width, height);
+        var pictureSize = _pnmHeaderReader.Read(fileStream);
+
+        var bitmap = new SKBitmap(pictureSize.Width, pictureSize.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
             for (var x = 0; x < bitmap.Width; x++)
             {
-                var value = (byte)fileStream.ReadByte();
+                var value = (byte) fileStream.ReadByte();
 
                 bitmap.SetPixel(x, y, new SKColor(value, value, value));
             }
