@@ -19,15 +19,18 @@ public class SmoothHorizontalGradient
                 {
                     red = x;
                 }
+
                 if (isGreen)
                 {
                     green = x;
                 }
+
                 if (isBlue)
                 {
                     blue = x;
                 }
-                bitmap.SetPixel(x, y, new SKColor((byte)red, (byte)green, (byte)blue));
+
+                bitmap.SetPixel(x, y, new SKColor((byte) red, (byte) green, (byte) blue));
             }
         }
 
