@@ -115,6 +115,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         MainImage.Source = ViewModel.CurrentGammaFile.ConvertToAvaloniaBitmap();
     }
 
+    private void ApplyDitheringButtonClickCommand(object? sender, RoutedEventArgs e)
+    {
+        MainImage.Source = ViewModel.ApplyDithering().ConvertToAvaloniaBitmap();
+    }
+
     /// <summary>
     /// Opens <see cref="ExceptionWindow"/> that contains information about caught exception.
     /// </summary>
@@ -143,5 +148,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         ViewModel.SelectedChannels = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;
         MainImage.Source = ViewModel.GetBitmapChannels().ConvertToAvaloniaBitmap();
+    }
+
+    private void OnGradientParametersChange(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
+    {
+        ViewModel.SelectedGradientParameters = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;
+        MainImage.Source = ViewModel.CreateGradient().ConvertToAvaloniaBitmap();
     }
 }
