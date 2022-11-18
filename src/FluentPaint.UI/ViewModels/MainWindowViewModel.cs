@@ -4,8 +4,11 @@ using Avalonia.Controls;
 using FluentPaint.Core.Channels;
 using FluentPaint.Core.Channels.Implementations;
 using FluentPaint.Core.Converters;
+using FluentPaint.Core.Dithering;
+using FluentPaint.Core.Dithering.Implementations;
 using FluentPaint.Core.Enums;
 using FluentPaint.Core.GammaCorrectors;
+using FluentPaint.Core.Gradient;
 using FluentPaint.Core.Pictures.Handlers.Implementations;
 using ReactiveUI;
 using SkiaSharp;
@@ -33,6 +36,7 @@ public class MainWindowViewModel : ReactiveObject
     private readonly ConverterFactory _converterFactory = new();
     private readonly IChannelGetter _channelGetter = new ChannelGetter();
     private readonly GammaCorrecter _gammaCorrecter = new();
+    private readonly SmoothHorizontalGradientGenerator _gradientGenerator = new();
 
     private readonly List<string> _colorSpaceNames = new()
         { "RGB", "HSL", "HSV", "YCbCr601", "YCbCr709", "YCoCg", "CMY" };
@@ -40,10 +44,20 @@ public class MainWindowViewModel : ReactiveObject
     private readonly List<string> _channels = new()
         { "First", "Second", "Third", "FirstAndSecond", "FirstAndThird", "SecondAndThird", "All" };
 
+    private readonly List<string> _ditheringAlgorithms = new() { "Aktinson", "FloydSteinberg", "Ordered", "Random" };
+
+    private readonly List<int> _bitDepths = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+    private readonly List<string> _gradientParameters = new()
+        { "First", "Second", "Third", "FirstAndSecond", "FirstAndThird", "SecondAndThird", "All" };
+
     public MainWindowViewModel()
     {
         SetColorSpaces();
         SetChannels();
+        SetDitheringAlgorithms();
+        SetBitDepths();
+        SetGradientParameters();
     }
 
     /// <summary>
@@ -141,6 +155,12 @@ public class MainWindowViewModel : ReactiveObject
     /// </summary>
     public List<ComboBoxItem> Channels { get; set; } = new();
 
+    public List<ComboBoxItem> DitheringAlgorithms { get; set; } = new();
+
+    public List<ComboBoxItem> BitDepths { get; set; } = new();
+
+    public List<ComboBoxItem> GradientParameters { get; set; } = new();
+
     /// <summary>
     /// Color space that is selected by the user.
     /// </summary>
@@ -170,6 +190,12 @@ public class MainWindowViewModel : ReactiveObject
     /// </summary>
     public string SelectedChannels { get; set; } = "Channel";
 
+    public string SelectedDitheringAlgorithm { get; set; } = "Dithering algorithm";
+
+    public int SelectedBitDepth { get; set; }
+
+    public string SelectedGradientParameters { get; set; } = "Gradient parameters";
+
     /// <summary>
     /// Filters image in current color space so that output contains only chosen channels using <see cref="SelectedSpace"/> and <see cref="SelectedChannels"/>.
     /// </summary>
@@ -191,6 +217,35 @@ public class MainWindowViewModel : ReactiveObject
         var modifiedCurrentColorSpaceBitmap = _channelGetter.GetChannels(_currentColorSpaceFile, colorChannels);
 
         return convertor.ToRgb(modifiedCurrentColorSpaceBitmap);
+    }
+
+    public SKBitmap CreateGradient()
+    {
+        _rgbFile = SelectedGradientParameters switch
+        {
+            "First" => _gradientGenerator.CreateGradient(true, false, false),
+            "Second" => _gradientGenerator.CreateGradient(false, true, false),
+            "Third" => _gradientGenerator.CreateGradient(false, false, true),
+            "FirstAndSecond" => _gradientGenerator.CreateGradient(true, true, false),
+            "FirstAndThird" => _gradientGenerator.CreateGradient(true, false, true),
+            "SecondAndThird" => _gradientGenerator.CreateGradient(false, true, true),
+            "All" => _gradientGenerator.CreateGradient(true, true, true)
+        };
+
+        return _rgbFile;
+    }
+
+    public SKBitmap ApplyDithering()
+    {
+        IDithering ditheringAlgorithm = SelectedDitheringAlgorithm switch
+        {
+            "Aktinson" => new AktinsonDithering(),
+            "FloydSteinberg" => new FloydSteinbergDithering(),
+            "Ordered" => new OrderedDithering(),
+            "Random" => new RandomDithering()
+        };
+
+        return ditheringAlgorithm.Dithering(_rgbFile, SelectedBitDepth);
     }
 
     /// <summary>
@@ -222,6 +277,45 @@ public class MainWindowViewModel : ReactiveObject
             };
 
             Channels.Add(comboBoxItem);
+        });
+    }
+
+    private void SetDitheringAlgorithms()
+    {
+        _ditheringAlgorithms.ForEach(name =>
+        {
+            var comboBoxItem = new ComboBoxItem
+            {
+                Content = name
+            };
+
+            DitheringAlgorithms.Add(comboBoxItem);
+        });
+    }
+
+    private void SetBitDepths()
+    {
+        _bitDepths.ForEach(name =>
+        {
+            var comboBoxItem = new ComboBoxItem
+            {
+                Content = name
+            };
+
+            BitDepths.Add(comboBoxItem);
+        });
+    }
+
+    private void SetGradientParameters()
+    {
+        _gradientParameters.ForEach(name =>
+        {
+            var comboBoxItem = new ComboBoxItem
+            {
+                Content = name
+            };
+
+            GradientParameters.Add(comboBoxItem);
         });
     }
 }
