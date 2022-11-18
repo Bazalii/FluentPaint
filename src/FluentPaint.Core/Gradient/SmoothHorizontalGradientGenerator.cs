@@ -6,7 +6,7 @@ public class SmoothHorizontalGradientGenerator
 {
     public SKBitmap CreateGradient(bool isRed, bool isGreen, bool isBlue)
     {
-        var bitmap = new SKBitmap(256, 50);
+        var bitmap = new SKBitmap(256 * 8, 600);
         var red = 0;
         var green = 0;
         var blue = 0;
@@ -17,17 +17,17 @@ public class SmoothHorizontalGradientGenerator
             {
                 if (isRed)
                 {
-                    red = x;
+                    red = x / 8;
                 }
 
                 if (isGreen)
                 {
-                    green = x;
+                    green = x / 8;
                 }
 
                 if (isBlue)
                 {
-                    blue = x;
+                    blue = x / 8;
                 }
 
                 bitmap.SetPixel(x, y, new SKColor((byte) red, (byte) green, (byte) blue));
