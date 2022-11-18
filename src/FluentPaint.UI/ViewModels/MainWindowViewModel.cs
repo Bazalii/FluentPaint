@@ -6,7 +6,7 @@ using FluentPaint.Core.Channels.Implementations;
 using FluentPaint.Core.Converters;
 using FluentPaint.Core.Enums;
 using FluentPaint.Core.GammaCorrectors;
-using FluentPaint.Core.Pnm;
+using FluentPaint.Core.Pictures.Handlers.Implementations;
 using ReactiveUI;
 using SkiaSharp;
 
@@ -29,6 +29,7 @@ public class MainWindowViewModel : ReactiveObject
     private SKBitmap _currentColorSpaceFile = new();
     private SKBitmap _currentGammaFile = new();
 
+    private readonly PictureHandler _pictureHandler = new();
     private readonly ConverterFactory _converterFactory = new();
     private readonly IChannelGetter _channelGetter = new ChannelGetter();
     private readonly GammaCorrecter _gammaCorrecter = new();
@@ -57,7 +58,7 @@ public class MainWindowViewModel : ReactiveObject
         set
         {
             _loadingFilePath = value;
-            var file = PnmHandler.ReadPnm(value);
+            var file = _pictureHandler.Read(value);
 
             Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
@@ -89,7 +90,7 @@ public class MainWindowViewModel : ReactiveObject
 
             Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
 
-            PnmHandler.WritePnm(_savingFilePath, colorSpace == ColorSpace.RGB ? _rgbFile : _currentColorSpaceFile);
+            _pictureHandler.Write(_savingFilePath, colorSpace == ColorSpace.RGB ? _rgbFile : _currentColorSpaceFile);
         }
     }
 
@@ -100,7 +101,7 @@ public class MainWindowViewModel : ReactiveObject
         {
             _savingGammaFilePath = value;
 
-            PnmHandler.WritePnm(_savingGammaFilePath, CurrentGammaFile);
+            _pictureHandler.Write(_savingGammaFilePath, CurrentGammaFile);
         }
     }
 

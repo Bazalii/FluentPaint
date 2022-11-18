@@ -1,3 +1,4 @@
+using FluentPaint.Core.Enums;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Pictures.Writers;
@@ -13,5 +14,6 @@ public interface IPictureWriter
     /// </summary>
     /// <param name="fileStream"> file into which you want to write the picture. </param>
     /// <param name="bitmap"> bitmap with picture. </param>
-    void WriteImageData(FileStream fileStream, SKBitmap bitmap);
+    /// <param name="type"> file type. </param>
+    void WriteImageData(FileStream fileStream, SKBitmap bitmap, PictureType type);
 }
