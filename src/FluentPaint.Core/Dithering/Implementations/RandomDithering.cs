@@ -17,11 +17,13 @@ public class RandomDithering : IDithering
             {
                 var pixel = bitmap.GetPixel(x, y);
 
-                var randomValue = 0 + _random.Next(0, 255);
+                var randomRed = _random.Next(GetLeftColor(pixel.Red, bitDepth), GetRightColor(pixel.Red, bitDepth));
+                var randomGreen = _random.Next(GetLeftColor(pixel.Red, bitDepth), GetRightColor(pixel.Red, bitDepth));
+                var randomBlue = _random.Next(GetLeftColor(pixel.Red, bitDepth), GetRightColor(pixel.Red, bitDepth));
 
-                var red = CalculateNewPixelComponent(randomValue, pixel.Red, bitDepth);
-                var green = CalculateNewPixelComponent(randomValue, pixel.Green, bitDepth);
-                var blue = CalculateNewPixelComponent(randomValue, pixel.Blue, bitDepth);
+                var red = CalculateNewPixelComponent(randomRed, pixel.Red, bitDepth);
+                var green = CalculateNewPixelComponent(randomGreen, pixel.Green, bitDepth);
+                var blue = CalculateNewPixelComponent(randomBlue, pixel.Blue, bitDepth);
 
                 resultBitmap.SetPixel(x, y, new SKColor(red, green, blue));
             }

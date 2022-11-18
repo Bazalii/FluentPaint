@@ -70,7 +70,7 @@ public class OrderedDithering : IDithering
 
     private byte CalculateNewPixelComponent(double matrixElement, byte pixelComponent, int bitDepth)
     {
-        return matrixElement / 64 * 255 > pixelComponent
+        return GetLeftColor(pixelComponent, bitDepth) + matrixElement / 64 * 255 / (Math.Pow(2, bitDepth) - 1) > pixelComponent
             ? GetLeftColor(pixelComponent, bitDepth)
             : GetRightColor(pixelComponent, bitDepth);
     }
