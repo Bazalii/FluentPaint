@@ -20,9 +20,9 @@ public class AktinsonDithering : IDithering
                 var green = GetNearestColor(pixel.Green + errorMatrix[x, y, 1], bitDepth);
                 var blue = GetNearestColor(pixel.Blue + errorMatrix[x, y, 2], bitDepth);
 
-                var redError = pixel.Red - red;
-                var greenError = pixel.Green - green;
-                var blueError = pixel.Blue - blue;
+                var redError = pixel.Red + errorMatrix[x, y, 0] - red;
+                var greenError = pixel.Green + errorMatrix[x, y, 1] - green;
+                var blueError = pixel.Blue + errorMatrix[x, y, 2] - blue;
 
                 if (x < bitmap.Width - 1)
                 {
