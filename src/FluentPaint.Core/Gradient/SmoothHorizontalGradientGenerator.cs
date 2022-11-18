@@ -1,8 +1,8 @@
 using SkiaSharp;
 
-namespace FluentPaint.Core.Generators;
+namespace FluentPaint.Core.Gradient;
 
-public class SmoothHorizontalGradient
+public class SmoothHorizontalGradientGenerator
 {
     public SKBitmap CreateGradient(bool isRed, bool isGreen, bool isBlue)
     {
