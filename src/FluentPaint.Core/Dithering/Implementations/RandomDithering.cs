@@ -34,9 +34,9 @@ public class RandomDithering : IDithering
     {
         double color = 0;
 
-        while (color <= 255)
+        while (color < 255 - 10e-5)
         {
-            if (pixelColor <= color + 255 / (Math.Pow(2, bitDepth) - 1))
+            if (pixelColor < color + 255 / (Math.Pow(2, bitDepth) - 1 - 10e-5))
                 break;
             color += 255 / (Math.Pow(2, bitDepth) - 1);
         }
@@ -48,11 +48,14 @@ public class RandomDithering : IDithering
     {
         double color = 0;
 
-        while (color <= 255)
+        while (color < 255- 10e-5)
         {
-            if (pixelColor <= color + 255 / (Math.Pow(2, bitDepth) - 1))
-                break;
-            color += 255 / (Math.Pow(2, bitDepth) - 1);
+            if (pixelColor > color + 255 / (Math.Pow(2, bitDepth) - 1))
+            {
+                color += 255 / (Math.Pow(2, bitDepth) - 1 - 10e-5);
+                continue;
+            }
+            break;
         }
 
         return (byte) (color + 255 / (Math.Pow(2, bitDepth) - 1));

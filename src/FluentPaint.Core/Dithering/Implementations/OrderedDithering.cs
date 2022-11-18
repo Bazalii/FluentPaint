@@ -26,9 +26,9 @@ public class OrderedDithering : IDithering
             {
                 var pixel = bitmap.GetPixel(x, y);
 
-                var red = CalculateNewPixelComponent(_matrix[x % 7, y % 7], pixel.Red, bitDepth);
-                var green = CalculateNewPixelComponent(_matrix[x % 7, y % 7], pixel.Green, bitDepth);
-                var blue = CalculateNewPixelComponent(_matrix[x % 7, y % 7], pixel.Blue, bitDepth);
+                var red = CalculateNewPixelComponent(_matrix[x % 8, y % 8], pixel.Red, bitDepth);
+                var green = CalculateNewPixelComponent(_matrix[x % 8, y % 8], pixel.Green, bitDepth);
+                var blue = CalculateNewPixelComponent(_matrix[x % 8, y % 8], pixel.Blue, bitDepth);
 
                 resultBitmap.SetPixel(x, y, new SKColor(red, green, blue));
             }
@@ -41,9 +41,9 @@ public class OrderedDithering : IDithering
     {
         double color = 0;
 
-        while (color <= 255)
+        while (color < 255 - 10e-5)
         {
-            if (pixelColor <= color + 255 / (Math.Pow(2, bitDepth) - 1))
+            if (pixelColor < color + 255 / (Math.Pow(2, bitDepth) - 1 - 10e-5))
                 break;
             color += 255 / (Math.Pow(2, bitDepth) - 1);
         }
@@ -55,11 +55,14 @@ public class OrderedDithering : IDithering
     {
         double color = 0;
 
-        while (color <= 255)
+        while (color < 255- 10e-5)
         {
-            if (pixelColor <= color + 255 / (Math.Pow(2, bitDepth) - 1))
-                break;
-            color += 255 / (Math.Pow(2, bitDepth) - 1);
+            if (pixelColor > color + 255 / (Math.Pow(2, bitDepth) - 1))
+            {
+                color += 255 / (Math.Pow(2, bitDepth) - 1 - 10e-5);
+                continue;
+            }
+            break;
         }
 
         return (byte) (color + 255 / (Math.Pow(2, bitDepth) - 1));
