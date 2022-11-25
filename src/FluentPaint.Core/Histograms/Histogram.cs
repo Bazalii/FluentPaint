@@ -5,191 +5,257 @@ namespace FluentPaint.Core.Histograms;
 
 public class Histogram
 {
-    public ColorChannels Channels { get; }
-
-    public int StartIndex { get; private set; }
-    public int EndIndex { get; private set; }
-
-    public int[]? RedHistogram;
-    public int[]? GreenHistogram;
-    public int[]? BlueHistogram;
+    private int[]? _redHistogram;
+    private int[]? _greenHistogram;
+    private int[]? _blueHistogram;
 
     private SKBitmap _bitmap;
+    private List<(int, int)> _ignorePixels = new();
 
-    public Histogram(ColorChannels channels, int startIndex = 0, int endIndex = 255)
+    public Histogram(ColorChannels channels, SKBitmap bitmap)
     {
-        Channels = channels;
-        StartIndex = startIndex;
-        EndIndex = endIndex;
+        _bitmap = bitmap;
 
         switch (channels)
         {
             case ColorChannels.First:
-                RedHistogram = new int[256];
+                _redHistogram = new int[256];
                 break;
             case ColorChannels.Second:
-                GreenHistogram = new int[256];
+                _greenHistogram = new int[256];
                 break;
             case ColorChannels.Third:
-                BlueHistogram = new int[256];
+                _blueHistogram = new int[256];
                 break;
             case ColorChannels.FirstAndSecond:
-                RedHistogram = new int[256];
-                GreenHistogram = new int[256];
+                _redHistogram = new int[256];
+                _greenHistogram = new int[256];
                 break;
             case ColorChannels.FirstAndThird:
-                RedHistogram = new int[256];
-                BlueHistogram = new int[256];
+                _redHistogram = new int[256];
+                _blueHistogram = new int[256];
                 break;
             case ColorChannels.SecondAndThird:
-                GreenHistogram = new int[256];
-                BlueHistogram = new int[256];
+                _greenHistogram = new int[256];
+                _blueHistogram = new int[256];
                 break;
             case ColorChannels.All:
-                RedHistogram = new int[256];
-                GreenHistogram = new int[256];
-                BlueHistogram = new int[256];
+                _redHistogram = new int[256];
+                _greenHistogram = new int[256];
+                _blueHistogram = new int[256];
                 break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(channels), channels, null);
         }
     }
 
-    public void CreateHistograms(SKBitmap bitmap, double ignorePercent)
+    public void CreateHistograms(double ignorePercent)
     {
-        _bitmap = bitmap;
-        
-        StartIndex = (int)(256 * ignorePercent);
-        EndIndex = (int)(255 - 256 * ignorePercent);
+        var pixelsValue = CreatePixelsValue();
 
-        for (var y = 0; y < bitmap.Height; y++)
+        if (ignorePercent != 0)
+            SetIgnorePixel(pixelsValue, ignorePercent);
+
+        for (var y = 0; y < _bitmap.Height; y++)
         {
-            for (var x = 0; x < bitmap.Width; x++)
+            for (var x = 0; x < _bitmap.Width; x++)
             {
-                var pixel = bitmap.GetPixel(x, y);
+                var pixel = _bitmap.GetPixel(x, y);
 
-                if (RedHistogram != null && StartIndex <= pixel.Red && pixel.Red <= EndIndex)
-                    RedHistogram[pixel.Red]++;
-                if (GreenHistogram != null && StartIndex <= pixel.Green && pixel.Green <= EndIndex)
-                    GreenHistogram[pixel.Green]++;
-                if (BlueHistogram != null && StartIndex <= pixel.Blue && pixel.Blue <= EndIndex)
-                    BlueHistogram[pixel.Blue]++;
+                if (_redHistogram != null && _ignorePixels.All(tuple => tuple != (x, y)))
+                    _redHistogram[pixel.Red]++;
+                if (_greenHistogram != null && _ignorePixels.All(tuple => tuple != (x, y)))
+                    _greenHistogram[pixel.Green]++;
+                if (_blueHistogram != null && _ignorePixels.All(tuple => tuple != (x, y)))
+                    _blueHistogram[pixel.Blue]++;
             }
         }
     }
-    
+
     public SKBitmap AutomaticCorrection()
     {
-        var resultHistogram = new Histogram(Channels, StartIndex, EndIndex);
+        var resultBitmap = new SKBitmap(_bitmap.Width, _bitmap.Height);
+        var redHistogram = _redHistogram == null ? null : new int[256];
+        var greenHistogram = _greenHistogram == null ? null : new int[256];
+        var blueHistogram = _blueHistogram == null ? null : new int[256];
 
-        var unusedValues = new List<int>();
+        var min = GetMinValue();
+        var max = GetMaxValue();
 
-        for (var i = StartIndex; i <= EndIndex; i++)
-        {
-            if (IsUnused(i))
-            {
-                unusedValues.Add(i);
-            }
-        }
-
-        var redIndex = 0;
-        var greenIndex = 0;
-        var blueIndex = 0;
-        var compressionHistogram = new Histogram(Channels, StartIndex, EndIndex);
-
-        for (var i = StartIndex; i <= EndIndex; i++)
-        {
-            if (unusedValues.Any(value => value == i)) continue;
-
-            if (RedHistogram != null)
-                compressionHistogram.RedHistogram![redIndex++] = RedHistogram[i];
-            if (GreenHistogram != null)
-                compressionHistogram.GreenHistogram![greenIndex++] = GreenHistogram[i];
-            if (BlueHistogram != null)
-                compressionHistogram.BlueHistogram![blueIndex++] = BlueHistogram[i];
-        }
-
-        var index = StartIndex;
-        var compressionIndex = StartIndex;
-        var size = EndIndex - StartIndex + 1;
+        var oldIndex = min;
+        var newIndex = 0;
+        var unusedCount = min + 255 - max;
         double correction = 0;
 
-        while (index <= EndIndex)
+        while (newIndex < 256)
         {
-            correction += (size - unusedValues.Count) / (unusedValues.Count + 1);
-            while (correction > 1)
+            correction += (double)(256 - unusedCount) / (unusedCount + 1);
+
+            while (correction >= 1)
             {
-                if (compressionHistogram.RedHistogram != null)
-                    resultHistogram.RedHistogram![index++] = compressionHistogram.RedHistogram[compressionIndex++];
-                if (compressionHistogram.GreenHistogram != null)
-                    resultHistogram.GreenHistogram![index++] = compressionHistogram.GreenHistogram[compressionIndex++];
-                if (compressionHistogram.BlueHistogram != null)
-                    resultHistogram.BlueHistogram![index++] = compressionHistogram.BlueHistogram[compressionIndex++];
+                if (_redHistogram != null)
+                    redHistogram![newIndex] = _redHistogram[oldIndex];
+                if (_greenHistogram != null)
+                    greenHistogram![newIndex] = _greenHistogram[oldIndex];
+                if (_blueHistogram != null)
+                    blueHistogram![newIndex] = _blueHistogram[oldIndex];
+                oldIndex = Increment(oldIndex);
+                newIndex = Increment(newIndex);
                 correction -= 1;
             }
 
-            if (index == EndIndex && correction > 0)
-            {
-                if (compressionHistogram.RedHistogram != null)
-                    resultHistogram.RedHistogram![index++] = compressionHistogram.RedHistogram[compressionIndex++];
-                if (compressionHistogram.GreenHistogram != null)
-                    resultHistogram.GreenHistogram![index++] = compressionHistogram.GreenHistogram[compressionIndex++];
-                if (compressionHistogram.BlueHistogram != null)
-                    resultHistogram.BlueHistogram![index++] = compressionHistogram.BlueHistogram[compressionIndex++];
-            }
-            else
-            {
-                if (compressionHistogram.RedHistogram != null)
-                    resultHistogram.RedHistogram![index++] = 0;
-                if (compressionHistogram.GreenHistogram != null)
-                    resultHistogram.GreenHistogram![index++] = 0;
-                if (compressionHistogram.BlueHistogram != null)
-                    resultHistogram.BlueHistogram![index++] = 0;
-            }
+            if (newIndex == 256)
+                break;
+            
+            if (redHistogram != null)
+                redHistogram[newIndex] = 0;
+            if (greenHistogram != null)
+                greenHistogram[newIndex] = 0;
+            if (blueHistogram != null)
+                blueHistogram[newIndex] = 0;
+            newIndex = Increment(newIndex);
         }
 
-        var resultBitmap = new SKBitmap();
-        
-        var oldIndex = StartIndex;
-        var newIndex = StartIndex;
+        oldIndex = min;
 
-        while (oldIndex <= EndIndex || newIndex <= EndIndex)
+        for (var i = 0; i < 256; i++)
         {
-            while (IsUnused(oldIndex))
-                oldIndex++;
-            while (resultHistogram.IsUnused(newIndex))
-                newIndex++;
+            if(!((redHistogram != null && redHistogram[i] != 0) ||
+               (greenHistogram != null && greenHistogram[i] != 0) ||
+               (blueHistogram != null && blueHistogram[i] != 0)))
+                continue;
+            
+            for (var y = 0; y < _bitmap.Height; y++)
+            {
+                for (var x = 0; x < _bitmap.Width; x++)
+                {
+                    if(_ignorePixels.Any(tuple => tuple == (x, y)))
+                        continue;
+                    
+                    var pixel = _bitmap.GetPixel(x, y);
+                    var newPixel = resultBitmap.GetPixel(x, y);
 
-            SetNewPixels(_bitmap, ref resultBitmap, oldIndex, newIndex);
+                    if (pixel.Red == oldIndex)
+                    {
+                        resultBitmap.SetPixel(x, y, new SKColor((byte)i, newPixel.Green, newPixel.Blue));
+                        newPixel = resultBitmap.GetPixel(x, y);
+                    }
+                    if(pixel.Green == oldIndex)
+                    {
+                        resultBitmap.SetPixel(x, y, new SKColor(newPixel.Red, (byte)i, newPixel.Blue));
+                        newPixel = resultBitmap.GetPixel(x, y);
+                    }
+                    if(pixel.Blue == oldIndex)
+                        resultBitmap.SetPixel(x, y, new SKColor(newPixel.Red, newPixel.Green, (byte)i));
+                }
+            }
+
+            oldIndex++;
         }
-        
-        RedHistogram = resultHistogram.RedHistogram;
-        BlueHistogram = resultHistogram.BlueHistogram;
-        GreenHistogram = resultHistogram.GreenHistogram;
+
+        _redHistogram = redHistogram;
+        _greenHistogram = greenHistogram;
+        _blueHistogram = blueHistogram;
         _bitmap = resultBitmap;
-        return _bitmap;
+
+        return resultBitmap;
     }
 
-    private bool IsUnused(int index)
+    private List<(int, int)>[] CreatePixelsValue()
     {
-        return (RedHistogram == null || RedHistogram[index] == 0) &&
-               (GreenHistogram == null || GreenHistogram[index] == 0) &&
-               (BlueHistogram == null || BlueHistogram[index] == 0);
-    }
-    
-    private void SetNewPixels(SKBitmap oldBitmap, ref SKBitmap newBitmap, int oldValue, int newValue)
-    {
-        for (var y = 0; y < oldBitmap.Height; y++)
+        var pixelsValue = new List<(int, int)>[766];
+
+        for (var i = 0; i < 766; i++)
         {
-            for (var x = 0; x < oldBitmap.Width; x++)
-            {
-                var pixel = oldBitmap.GetPixel(x, y);
+            pixelsValue[i] = new List<(int, int)>();
+        }
 
-                if (pixel.Red == oldValue)
-                    newBitmap.SetPixel(x, y, new SKColor((byte)newValue, pixel.Green, pixel.Blue));
-                if(pixel.Green == oldValue)
-                    newBitmap.SetPixel(x, y, new SKColor(pixel.Red, (byte)newValue, pixel.Blue));
-                if(pixel.Blue == oldValue)
-                    newBitmap.SetPixel(x, y, new SKColor(pixel.Red, pixel.Green, (byte)newValue));
+        for (var y = 0; y < _bitmap.Height; y++)
+        {
+            for (var x = 0; x < _bitmap.Width; x++)
+            {
+                var pixel = _bitmap.GetPixel(x, y);
+
+                pixelsValue[pixel.Red + pixel.Green + pixel.Blue].Add((x, y));
             }
         }
+
+        return pixelsValue;
+    }
+
+    private void SetIgnorePixel(IReadOnlyList<List<(int, int)>> pixelsValue, double ignorePercent)
+    {
+        _ignorePixels = new List<(int, int)>();
+        var ignorePixelsCount = (int)(_bitmap.Height * _bitmap.Width * ignorePercent);
+
+        for (var i = 0; i < 766; i++)
+        {
+            for (var j = 0; j < pixelsValue[i].Count; j++)
+            {
+                if (ignorePixelsCount == 0)
+                    break;
+
+                _ignorePixels.Add(pixelsValue[i][j]);
+                ignorePixelsCount--;
+            }
+
+            if (ignorePixelsCount == 0)
+                break;
+        }
+
+        ignorePixelsCount = (int)(_bitmap.Height * _bitmap.Width * ignorePercent);
+
+        for (var i = 765; i >= 0; i--)
+        {
+            for (var j = 0; j < pixelsValue[i].Count; j++)
+            {
+                if (ignorePixelsCount == 0)
+                    break;
+
+                _ignorePixels.Add(pixelsValue[i][j]);
+                ignorePixelsCount--;
+            }
+
+            if (ignorePixelsCount == 0)
+                break;
+        }
+    }
+
+    private int GetMinValue()
+    {
+        for (var i = 0; i < 256; i++)
+        {
+            if ((_redHistogram != null && _redHistogram[i] != 0) ||
+                (_greenHistogram != null && _greenHistogram[i] != 0) ||
+                (_blueHistogram != null && _blueHistogram[i] != 0))
+            {
+                return i;
+            }
+        }
+
+        throw new Exception("Data Error");
+    }
+
+    private int GetMaxValue()
+    {
+        for (var i = 255; i >= 0; i--)
+        {
+            if ((_redHistogram != null && _redHistogram[i] != 0) ||
+                (_greenHistogram != null && _greenHistogram[i] != 0) ||
+                (_blueHistogram != null && _blueHistogram[i] != 0))
+            {
+                return i;
+            }
+        }
+
+        throw new Exception("Data Error");
+    }
+
+    private int Increment(int index)
+    {
+        if (_redHistogram != null || _greenHistogram != null || _blueHistogram != null)
+            return index + 1;
+
+        return index;
     }
 }
