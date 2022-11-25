@@ -472,4 +472,47 @@ public class JpegReader : IPictureReader
             }
         }
     }
+    
+    private void ProcessCosineTransform()
+    {
+        foreach (var currentMatrix in _dcAcCoefficientsTables)
+        {
+            var matrix = new int[8, 8];
+
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    var currentValue = 0.0;
+
+                    for (var u = 0; u < 8; u++)
+                    {
+                        for (var v = 0; v < 8; v++)
+                        {
+                            var firstCoefficient = 1.0;
+                            var secondCoefficient = 1.0;
+
+                            if (u == 0)
+                            {
+                                firstCoefficient = 1 / Math.Sqrt(2);
+                            }
+
+                            if (v == 0)
+                            {
+                                secondCoefficient = 1 / Math.Sqrt(2);
+                            }
+
+                            currentValue += firstCoefficient * secondCoefficient * currentMatrix[v, u] *
+                                            Math.Cos((2 * j + 1) * u * Math.PI / 16) *
+                                            Math.Cos((2 * i + 1) * v * Math.PI / 16);
+                        }
+                    }
+                    
+                    matrix[i, j] = Math.Min(Math.Max(0, (int) (currentValue / 4) + 128), 255);
+                }
+            }
+
+            _yCbCrMatrices.Add(matrix);
+        }
+    }
 }
