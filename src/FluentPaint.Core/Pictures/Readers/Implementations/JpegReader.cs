@@ -242,4 +242,180 @@ public class JpegReader : IPictureReader
             });
         }
     }
+    
+    private void ReadFileInformation(byte[] section)
+    {
+        var bits = new List<int>();
+
+        foreach (var element in section)
+        {
+            var currentByte = element;
+
+            for (var i = 0; i < 8; i++)
+            {
+                bits.Add((currentByte & 128) >> 7 == 1 ? 1 : 0);
+
+                currentByte = (byte) (currentByte << 1);
+            }
+        }
+
+        // for (int currentMatrix = 0; currentMatrix < ; currentMatrix++)
+        // {
+        //     for (var i = 0; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
+        //     {
+        //         bits = ReadTable(bits, _DcAcCoefficients[0]);
+        //     }
+        //
+        //     bits = ReadTable(bits, _DcAcCoefficients[1]);
+        //     bits = ReadTable(bits, _DcAcCoefficients[2]);
+        // }
+
+        var allTablesNumber = _width * _height / 256 * 6;
+
+        var yTablesNumber = allTablesNumber * 2 / 3;
+        var cbTablesNumber = allTablesNumber * 1 / 6;
+        var crTablesNumber = allTablesNumber * 1 / 6;
+
+        for (int currentMatrix = 0; currentMatrix < yTablesNumber; currentMatrix++)
+        {
+            bits = ReadTable(bits, _dcAcCoefficients[0]);
+            // for (var i = 0; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
+            // {
+            //     bits = ReadTable(bits, _DcAcCoefficients[0]);
+            // }
+        }
+
+        for (int i = 0; i < cbTablesNumber; i++)
+        {
+            bits = ReadTable(bits, _dcAcCoefficients[1]);
+        }
+
+        for (int i = 0; i < crTablesNumber; i++)
+        {
+            bits = ReadTable(bits, _dcAcCoefficients[2]);
+        }
+    }
+    
+    private List<int> ReadTable(List<int> bits, CoefficientsTable coefficientsTable)
+    {
+        _isTopSideMatrix = true;
+        var bitsPointer = 0;
+        var coefficientTable = new int[8, 8];
+
+        var huffmanTree = _huffmanTrees[coefficientsTable.DcCoefficientsTable + coefficientsTable.AcCoefficientsTable];
+        var currentNode = huffmanTree.Root;
+
+        (bitsPointer, currentNode) = GetNodeCode(currentNode, bitsPointer, bits);
+
+        if (currentNode.Code == 0)
+        {
+            coefficientTable[0, 0] = currentNode.Code;
+        }
+        else
+        {
+            var currentCoefficientInBinarySystem = new List<int>();
+
+            for (var bit = 0; bit < currentNode.Code; bit++)
+            {
+                currentCoefficientInBinarySystem.Add(bits[bitsPointer]);
+                bitsPointer += 1;
+            }
+
+            var currentCoefficient = 0;
+
+            for (var i = 0; i < currentCoefficientInBinarySystem.Count; i++)
+            {
+                currentCoefficient += (int) (currentCoefficientInBinarySystem[i] *
+                                             Math.Pow(2, currentCoefficientInBinarySystem.Count - i - 1));
+            }
+
+            var currentCoefficientLength = currentCoefficientInBinarySystem.Count;
+
+            if (currentCoefficientInBinarySystem[0] != 1)
+            {
+                currentCoefficient = currentCoefficient - (int) Math.Pow(2, currentCoefficientLength) + 1;
+            }
+
+            coefficientTable[0, 0] = currentCoefficient;
+        }
+
+        var currentPoint = new Point
+        {
+            Row = 0,
+            Column = 0,
+            DiagonalVector = false
+        };
+
+        huffmanTree = _huffmanTrees[coefficientsTable.DcCoefficientsTable + coefficientsTable.AcCoefficientsTable + 1];
+        currentNode = huffmanTree.Root;
+
+        currentPoint = GetNewPoint(currentPoint);
+
+        while (currentPoint.Row < 7 && currentPoint.Column < 7)
+        {
+            (bitsPointer, currentNode) = GetNodeCode(currentNode, bitsPointer, bits);
+
+            var currentCoefficient = 0;
+
+            if (currentNode.Code == 0)
+            {
+                break;
+            }
+            else
+            {
+                var lengthOfCoefficient = currentNode.Code & 15;
+                var lengthOfZeros = currentNode.Code >> 4;
+
+                var currentCoefficientInBinarySystem = new List<int>();
+
+                for (var bit = 0; bit < lengthOfCoefficient; bit++)
+                {
+                    currentCoefficientInBinarySystem.Add(bits[bitsPointer]);
+                    bitsPointer += 1;
+                }
+
+                for (var i = 0; i < currentCoefficientInBinarySystem.Count; i++)
+                {
+                    currentCoefficient += (int) (currentCoefficientInBinarySystem[i] *
+                                                 Math.Pow(2, currentCoefficientInBinarySystem.Count - i - 1));
+                }
+
+                for (var i = 0; i < lengthOfZeros; i++)
+                {
+                    coefficientTable[currentPoint.Row, currentPoint.Column] = 0;
+
+                    currentPoint = GetNewPoint(currentPoint);
+                }
+
+                var currentCoefficientLength = currentCoefficientInBinarySystem.Count;
+
+                if (currentCoefficientInBinarySystem[0] != 1)
+                {
+                    currentCoefficient = currentCoefficient - (int) Math.Pow(2, currentCoefficientLength) + 1;
+                }
+
+                coefficientTable[currentPoint.Row, currentPoint.Column] = currentCoefficient;
+
+                currentPoint = GetNewPoint(currentPoint);
+            }
+
+            currentNode = huffmanTree.Root;
+        }
+
+        _dcAcCoefficientsTables.Add(coefficientTable);
+
+        return bits.GetRange(bitsPointer, bits.Count - bitsPointer);
+    }
+    
+    private (int, Node) GetNodeCode(Node node, int bitsPointer, List<int> bits)
+    {
+        while (node.Left is not null || node.Right is not null)
+        {
+            node = bits[bitsPointer] == 1 ? node.Right : node.Left;
+
+            bitsPointer += 1;
+        }
+
+        return (bitsPointer, node);
+    }
 }
