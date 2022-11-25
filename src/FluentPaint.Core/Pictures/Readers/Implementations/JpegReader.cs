@@ -230,4 +230,16 @@ public class JpegReader : IPictureReader
 
         return newPoint;
     }
+    
+    private void ReadStartOfScanSection(IReadOnlyList<byte> section)
+    {
+        for (var i = 0; i < 3; i++)
+        {
+            _dcAcCoefficients.Add(new CoefficientsTable
+            {
+                DcCoefficientsTable = section[2 + i * 2] >> 4,
+                AcCoefficientsTable = section[2 + i * 2] & 15
+            });
+        }
+    }
 }
