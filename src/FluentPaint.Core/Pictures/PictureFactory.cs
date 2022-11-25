@@ -30,6 +30,7 @@ public static class PictureFactory
             ".ppm" => PictureType.P6,
             ".pnm" => PictureType.P6,
             ".jpeg" => PictureType.JPEG,
+            ".jpg" => PictureType.JPEG,
             _ => throw new Exception(
                 "Error: This file type is not supported! .ppm, .pgm and .jpeg are expected (.pnm will write as p6)")
         };
