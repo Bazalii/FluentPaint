@@ -418,4 +418,12 @@ public class JpegReader : IPictureReader
 
         return (bitsPointer, node);
     }
+    
+    private void CorrectDcCoefficients()
+    {
+        for (var i = 1; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
+        {
+            _dcAcCoefficientsTables[i][0, 0] += _dcAcCoefficientsTables[i - 1][0, 0];
+        }
+    }
 }
