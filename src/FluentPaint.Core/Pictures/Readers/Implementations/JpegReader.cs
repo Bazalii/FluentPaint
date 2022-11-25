@@ -515,4 +515,278 @@ public class JpegReader : IPictureReader
             _yCbCrMatrices.Add(matrix);
         }
     }
+    
+    private SKBitmap ConvertYCbCrToRgb()
+    {
+        var bitmap = new SKBitmap(_width, _height);
+        
+        var cbTablePointer = 0;
+        var crTablePointer = 0;
+
+        var yTableRow = 0;
+        var yTableColumn = 0;
+        var cbTableRow = 0;
+        var cbTableColumn = 0;
+        var crTableRow = 0;
+        var crTableColumn = 0;
+        
+        var mcuRow = 0;
+        var mcuColumn = 0;
+
+        var brightnessTableNumber = _width * _height / 64;
+        var cbTablesNumber = brightnessTableNumber / 4;
+        // var crTablesNumber = brightnessTableNumber / 2;
+
+        for (var brightnessTable = 0; brightnessTable < brightnessTableNumber; brightnessTable++)
+        {
+            if (brightnessTable != 0 && brightnessTable % 4 == 0)
+            {
+                cbTablePointer += 1;
+                crTablePointer += 1;
+            }
+            
+            if (mcuColumn == _width / 8)
+            {
+                mcuColumn = 0;
+                mcuRow += 1;
+            }
+
+            // if (cbTableRow == 4 && cbTableColumn == 8)
+            // {
+            //     cbTableRow = 4;
+            //     cbTableColumn = 0;
+            // }
+            //
+            // if (crTableRow == 4 && crTableColumn == 8)
+            // {
+            //     crTableRow = 4;
+            //     crTableColumn = 0;
+            // }
+
+            var currentYBlockRow = 0;
+            var currentYBlockColumn = 0;
+
+            for (var currentYBlock = 0; currentYBlock < 16; currentYBlock++)
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    bitmap.SetPixel(mcuRow * 8 + currentYBlockRow * 2 + yTableRow , mcuColumn * 8  + currentYBlockColumn * 2 + yTableColumn,
+                        ConvertPixelYCbCrToRgb(_yCbCrMatrices[brightnessTable][yTableRow + currentYBlockRow * 2, yTableColumn + currentYBlockColumn * 2],
+                            _yCbCrMatrices[brightnessTableNumber + cbTablePointer][cbTableRow, cbTableColumn],
+                            _yCbCrMatrices[brightnessTableNumber + cbTablesNumber + crTablePointer][crTableRow, crTableColumn]));
+
+                    switch (yTableRow)
+                    {
+                        case 0 when yTableColumn == 0:
+                            yTableColumn = 1;
+                            break;
+                        case 0 when yTableColumn == 1:
+                            yTableRow = 1;
+                            yTableColumn = 0;
+                            break;
+                        case 1 when yTableColumn == 0:
+                            yTableColumn = 1;
+                            break;
+                        case 1 when yTableColumn == 1:
+                            yTableRow = 0;
+                            yTableColumn = 0;
+                            break;
+                    }
+                }
+                
+                currentYBlockColumn += 1;
+
+                if (currentYBlockColumn == 4)
+                {
+                    currentYBlockColumn = 0;
+                    currentYBlockRow += 1;
+                    
+                    if (brightnessTable % 4 == 0)
+                    {
+                        if (cbTableRow == 3)
+                        {
+                            cbTableRow = 0;
+                            cbTableColumn = 4;
+                        }
+                        else
+                        {
+                            cbTableColumn = 0;
+                            cbTableRow += 1;
+                        }
+                        
+                        if (crTableRow == 3)
+                        {
+                            crTableRow = 0;
+                            crTableColumn = 4;
+                        }
+                        else
+                        {
+                            crTableColumn = 0;
+                            crTableRow += 1;
+                        }
+                    }
+                    else if (brightnessTable % 4 == 1)
+                    {
+                        if (cbTableRow == 3)
+                        {
+                            cbTableRow = 4;
+                            cbTableColumn = 0;
+                        }
+                        else
+                        {
+                            cbTableColumn = 4;
+                            cbTableRow += 1;
+                        }
+                        
+                        if (crTableRow == 3)
+                        {
+                            crTableRow = 4;
+                            crTableColumn = 0;
+                        }
+                        else
+                        {
+                            crTableColumn = 4;
+                            crTableRow += 1;
+                        }
+                    }
+                    else if (brightnessTable % 4 == 2)
+                    {
+                        if (cbTableRow == 7)
+                        {
+                            cbTableRow = 4;
+                            cbTableColumn = 4;
+                        }
+                        else
+                        {
+                            cbTableColumn = 0;
+                            cbTableRow += 1;
+                        }
+                        
+                        if (crTableRow == 7)
+                        {
+                            crTableRow = 4;
+                            crTableColumn = 4;
+                        }
+                        else
+                        {
+                            crTableColumn = 0;
+                            crTableRow += 1;
+                        }
+                    }
+                    else if (brightnessTable % 4 == 3)
+                    {
+                        if (cbTableColumn == 7)
+                        {
+                            cbTableColumn = 4;
+                            cbTableRow += 1;
+                        }
+
+                        if (crTableColumn == 7)
+                        {
+                            crTableColumn = 4;
+                            crTableRow += 1;
+                        }
+                    }
+                }
+                else
+                {
+                    cbTableColumn += 1;
+                    crTableColumn += 1;
+                }
+            }
+
+            mcuColumn += 1;
+        }
+
+        // var blockRow = 0;
+        // var blockColumn = 0;
+        //
+        // var yMatrixCounter = 0;
+        // var yMatrixPointer = 0;
+        // var cbMatrixPointer = 0;
+        // var crMatrixPointer = 0;
+        //
+        // for (var brightnessTable = 0; brightnessTable < _width * _height / 64; brightnessTable++)
+        // {
+        //     if (yMatrixCounter == 4)
+        //     {
+        //         yMatrixPointer += 2;
+        //         yMatrixCounter = 0;
+        //         cbMatrixPointer += 1;
+        //         crMatrixPointer += 1;
+        //     }
+        //
+        //     if (blockColumn == _width / 8)
+        //     {
+        //         blockColumn = 0;
+        //         blockRow += 1;
+        //     }
+        //
+        //     for (var i = 0; i < 8; i++)
+        //     {
+        //         for (var j = 0; j < 8; j++)
+        //         {
+        //             // var yValue = _yCbCrMatrices[yMatrixPointer][i, j];
+        //             // var cbValue = _yCbCrMatrices[yMatrixPointer - yMatrixCounter + 4][i, j];
+        //             // var crValue = _yCbCrMatrices[yMatrixPointer - yMatrixCounter + 5][i, j];
+        //             
+        //             var allTablesNumber = _width * _height / 256 * 6;
+        //
+        //             var yTablesNumber = allTablesNumber * 2 / 3;
+        //             var cbTablesNumber = allTablesNumber * 1 / 6;
+        //
+        //             var yValue = _yCbCrMatrices[brightnessTable][i, j];
+        //             var cbValue = _yCbCrMatrices[yTablesNumber + cbMatrixPointer][i, j];
+        //             var crValue = _yCbCrMatrices[yTablesNumber + cbTablesNumber + crMatrixPointer][i, j];
+        //
+        //             var redComponent = yValue + 1.402 * (crValue - 128);
+        //             var greenComponent = yValue - 0.34414 * (cbValue - 128) - 0.71414 * (crValue - 128);
+        //             var blueComponent = yValue + 1.772 * (cbValue - 128);
+        //
+        //             redComponent = Math.Min(Math.Max(0, redComponent), 255);
+        //             greenComponent = Math.Min(Math.Max(0, greenComponent), 255);
+        //             blueComponent = Math.Min(Math.Max(0, blueComponent), 255);
+        //
+        //
+        //             var pixel =
+        //                 new SKColor(
+        //                     (byte) redComponent,
+        //                     (byte) greenComponent,
+        //                     (byte) blueComponent
+        //                 );
+        //
+        //             bitmap.SetPixel(i + 8 * blockRow, j + 8 * blockColumn, pixel);
+        //         }
+        //     }
+        //
+        //     yMatrixPointer += 1;
+        //     yMatrixCounter += 1;
+        //     blockColumn += 1;
+        // }
+
+        var finalBitmap = new SKBitmap(_width, _height);
+        
+        for (int i = 0; i < _height; i++)
+        {
+            for (int j = 0; j < _width; j++)
+            {
+                finalBitmap.SetPixel(i, j, bitmap.GetPixel(j , i));
+            }
+        }
+        
+        return finalBitmap;
+    }
+
+    private SKColor ConvertPixelYCbCrToRgb(int yValue, int cbValue, int crValue)
+    {
+        var redComponent = yValue + 1.402 * (crValue - 128);
+        var greenComponent = yValue - 0.34414 * (cbValue - 128) - 0.71414 * (crValue - 128);
+        var blueComponent = yValue + 1.772 * (cbValue - 128);
+
+        redComponent = Math.Min(Math.Max(0, redComponent), 255);
+        greenComponent = Math.Min(Math.Max(0, greenComponent), 255);
+        blueComponent = Math.Min(Math.Max(0, blueComponent), 255);
+
+        return new SKColor((byte) redComponent, (byte) greenComponent, (byte) blueComponent);
+    }
 }
