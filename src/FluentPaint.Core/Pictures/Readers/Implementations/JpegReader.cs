@@ -61,6 +61,18 @@ public class JpegReader : IPictureReader
                         ReadQuantizationTable(sectionBuffer);
                         pointer += currentSectionLength;
                         break;
+                    case "FFE0":
+                        pointer += currentSectionLength;
+                        break;
+                    case "FFE1":
+                        pointer += currentSectionLength;
+                        break;
+                    case "FFED":
+                        pointer += currentSectionLength;
+                        break;
+                    case "FFDD":
+                        pointer += currentSectionLength;
+                        break;
                     case "FFC0":
                         CalculateBaselineDct(sectionBuffer);
                         pointer += currentSectionLength;
@@ -84,7 +96,7 @@ public class JpegReader : IPictureReader
 
         return bitmap;
     }
-    
+
     private void ReadHuffmanTree(byte[] section)
     {
         var offset = 0;
@@ -100,7 +112,7 @@ public class JpegReader : IPictureReader
 
         _huffmanTrees.Add(huffmanTree);
     }
-    
+
     private void CalculateBaselineDct(byte[] section)
     {
         _height = int.Parse(Convert.ToHexString(section[1..3]), System.Globalization.NumberStyles.HexNumber);
@@ -114,7 +126,7 @@ public class JpegReader : IPictureReader
             _quantMapping.Add(section[8 + i * 3]);
         }
     }
-    
+
     private void ReadQuantizationTable(IReadOnlyList<byte> section)
     {
         var quantizationTable = new byte[8, 8];
@@ -137,7 +149,7 @@ public class JpegReader : IPictureReader
 
         _quantizationTables.Add(quantizationTable);
     }
-    
+
     private Point GetNewPoint(Point currentPoint)
     {
         var newPoint = new Point();
@@ -230,7 +242,7 @@ public class JpegReader : IPictureReader
 
         return newPoint;
     }
-    
+
     private void ReadStartOfScanSection(IReadOnlyList<byte> section)
     {
         for (var i = 0; i < 3; i++)
@@ -242,7 +254,7 @@ public class JpegReader : IPictureReader
             });
         }
     }
-    
+
     private void ReadFileInformation(byte[] section)
     {
         var bits = new List<int>();
@@ -265,13 +277,13 @@ public class JpegReader : IPictureReader
             {
                 bits = ReadTable(bits, _dcAcCoefficients[0]);
             }
-            
+
             bits = ReadTable(bits, _dcAcCoefficients[1]);
-            
+
             bits = ReadTable(bits, _dcAcCoefficients[2]);
         }
     }
-    
+
     private List<int> ReadTable(List<int> bits, CoefficientsTable coefficientsTable)
     {
         _isTopSideMatrix = true;
@@ -365,7 +377,7 @@ public class JpegReader : IPictureReader
 
                 var currentCoefficientLength = currentCoefficientInBinarySystem.Count;
 
-                if (currentCoefficientInBinarySystem[0] != 1)
+                if (currentCoefficientLength != 0 && currentCoefficientInBinarySystem[0] != 1)
                 {
                     currentCoefficient = currentCoefficient - (int) Math.Pow(2, currentCoefficientLength) + 1;
                 }
@@ -382,7 +394,7 @@ public class JpegReader : IPictureReader
 
         return bits.GetRange(bitsPointer, bits.Count - bitsPointer);
     }
-    
+
     private (int, Node) GetNodeCode(Node node, int bitsPointer, List<int> bits)
     {
         while (node.Left is not null || node.Right is not null)
@@ -394,7 +406,7 @@ public class JpegReader : IPictureReader
 
         return (bitsPointer, node);
     }
-    
+
     private void CorrectDcCoefficients()
     {
         for (var i = 1; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
@@ -402,7 +414,7 @@ public class JpegReader : IPictureReader
             _dcAcCoefficientsTables[i][0, 0] += _dcAcCoefficientsTables[i - 1][0, 0];
         }
     }
-    
+
     private void QuantizeCoefficientTables()
     {
         var firstChannelTablesNumber = _thinning[0].Item1 + _thinning[0].Item2;
@@ -448,7 +460,7 @@ public class JpegReader : IPictureReader
             }
         }
     }
-    
+
     private void ProcessCosineTransform()
     {
         foreach (var currentMatrix in _dcAcCoefficientsTables)
@@ -483,7 +495,7 @@ public class JpegReader : IPictureReader
                                             Math.Cos((2 * i + 1) * v * Math.PI / 16);
                         }
                     }
-                    
+
                     matrix[i, j] = Math.Min(Math.Max(0, (int) (currentValue / 4) + 128), 255);
                 }
             }
@@ -491,187 +503,171 @@ public class JpegReader : IPictureReader
             _yCbCrMatrices.Add(matrix);
         }
     }
-    
+
     private SKBitmap ConvertYCbCrToRgb()
     {
         var bitmap = new SKBitmap(_width, _height);
-        
-        var cbTablePointer = 0;
-        var crTablePointer = 0;
 
         var yTableRow = 0;
         var yTableColumn = 0;
-        var cbTableRow = 0;
-        var cbTableColumn = 0;
-        var crTableRow = 0;
-        var crTableColumn = 0;
-        
+
         var mcuRow = 0;
         var mcuColumn = 0;
 
         var brightnessTableNumber = _width * _height / 64;
-        var cbTablesNumber = brightnessTableNumber / 4;
-        // var crTablesNumber = brightnessTableNumber / 2;
 
-        for (var brightnessTable = 0; brightnessTable < brightnessTableNumber; brightnessTable++)
+        for (var tableSectionStart = 0; tableSectionStart < brightnessTableNumber; tableSectionStart += 6)
         {
-            if (brightnessTable != 0 && brightnessTable % 4 == 0)
-            {
-                cbTablePointer += 1;
-                crTablePointer += 1;
-            }
-            
-            if (mcuColumn == _width / 8)
-            {
-                mcuColumn = 0;
-                mcuRow += 1;
-            }
+            var cbTableRow = 0;
+            var cbTableColumn = 0;
+            var crTableRow = 0;
+            var crTableColumn = 0;
 
-            // if (cbTableRow == 4 && cbTableColumn == 8)
-            // {
-            //     cbTableRow = 4;
-            //     cbTableColumn = 0;
-            // }
-            //
-            // if (crTableRow == 4 && crTableColumn == 8)
-            // {
-            //     crTableRow = 4;
-            //     crTableColumn = 0;
-            // }
-
-            var currentYBlockRow = 0;
-            var currentYBlockColumn = 0;
-
-            for (var currentYBlock = 0; currentYBlock < 16; currentYBlock++)
+            for (var brightnessTable = 0; brightnessTable < 4; brightnessTable++)
             {
-                for (var i = 0; i < 4; i++)
+                if (mcuColumn == _width / 8)
                 {
-                    bitmap.SetPixel(mcuRow * 8 + currentYBlockRow * 2 + yTableRow , mcuColumn * 8  + currentYBlockColumn * 2 + yTableColumn,
-                        ConvertPixelYCbCrToRgb(_yCbCrMatrices[brightnessTable][yTableRow + currentYBlockRow * 2, yTableColumn + currentYBlockColumn * 2],
-                            _yCbCrMatrices[brightnessTableNumber + cbTablePointer][cbTableRow, cbTableColumn],
-                            _yCbCrMatrices[brightnessTableNumber + cbTablesNumber + crTablePointer][crTableRow, crTableColumn]));
+                    mcuColumn = 0;
+                    mcuRow += 1;
+                }
 
-                    switch (yTableRow)
+                var currentYBlockRow = 0;
+                var currentYBlockColumn = 0;
+
+                for (var currentYBlock = 0; currentYBlock < 16; currentYBlock++)
+                {
+                    for (var i = 0; i < 4; i++)
                     {
-                        case 0 when yTableColumn == 0:
-                            yTableColumn = 1;
-                            break;
-                        case 0 when yTableColumn == 1:
-                            yTableRow = 1;
-                            yTableColumn = 0;
-                            break;
-                        case 1 when yTableColumn == 0:
-                            yTableColumn = 1;
-                            break;
-                        case 1 when yTableColumn == 1:
-                            yTableRow = 0;
-                            yTableColumn = 0;
-                            break;
+                        bitmap.SetPixel(mcuRow * 8 + currentYBlockRow * 2 + yTableRow,
+                            mcuColumn * 8 + currentYBlockColumn * 2 + yTableColumn,
+                            ConvertPixelYCbCrToRgb(
+                                _yCbCrMatrices[tableSectionStart + brightnessTable][yTableRow + currentYBlockRow * 2,
+                                    yTableColumn + currentYBlockColumn * 2],
+                                _yCbCrMatrices[tableSectionStart + 4][cbTableRow, cbTableColumn],
+                                _yCbCrMatrices[tableSectionStart + 5][crTableRow, crTableColumn]));
+
+                        switch (yTableRow)
+                        {
+                            case 0 when yTableColumn == 0:
+                                yTableColumn = 1;
+                                break;
+                            case 0 when yTableColumn == 1:
+                                yTableRow = 1;
+                                yTableColumn = 0;
+                                break;
+                            case 1 when yTableColumn == 0:
+                                yTableColumn = 1;
+                                break;
+                            case 1 when yTableColumn == 1:
+                                yTableRow = 0;
+                                yTableColumn = 0;
+                                break;
+                        }
+                    }
+
+                    currentYBlockColumn += 1;
+
+                    if (currentYBlockColumn == 4)
+                    {
+                        currentYBlockColumn = 0;
+                        currentYBlockRow += 1;
+
+                        if (brightnessTable % 4 == 0)
+                        {
+                            if (cbTableRow == 3)
+                            {
+                                cbTableRow = 0;
+                                cbTableColumn = 4;
+                            }
+                            else
+                            {
+                                cbTableColumn = 0;
+                                cbTableRow += 1;
+                            }
+
+                            if (crTableRow == 3)
+                            {
+                                crTableRow = 0;
+                                crTableColumn = 4;
+                            }
+                            else
+                            {
+                                crTableColumn = 0;
+                                crTableRow += 1;
+                            }
+                        }
+                        else if (brightnessTable % 4 == 1)
+                        {
+                            if (cbTableRow == 3)
+                            {
+                                cbTableRow = 4;
+                                cbTableColumn = 0;
+                            }
+                            else
+                            {
+                                cbTableColumn = 4;
+                                cbTableRow += 1;
+                            }
+
+                            if (crTableRow == 3)
+                            {
+                                crTableRow = 4;
+                                crTableColumn = 0;
+                            }
+                            else
+                            {
+                                crTableColumn = 4;
+                                crTableRow += 1;
+                            }
+                        }
+                        else if (brightnessTable % 4 == 2)
+                        {
+                            if (cbTableRow == 7)
+                            {
+                                cbTableRow = 4;
+                                cbTableColumn = 4;
+                            }
+                            else
+                            {
+                                cbTableColumn = 0;
+                                cbTableRow += 1;
+                            }
+
+                            if (crTableRow == 7)
+                            {
+                                crTableRow = 4;
+                                crTableColumn = 4;
+                            }
+                            else
+                            {
+                                crTableColumn = 0;
+                                crTableRow += 1;
+                            }
+                        }
+                        else if (brightnessTable % 4 == 3)
+                        {
+                            if (cbTableColumn == 7)
+                            {
+                                cbTableColumn = 4;
+                                cbTableRow += 1;
+                            }
+
+                            if (crTableColumn == 7)
+                            {
+                                crTableColumn = 4;
+                                crTableRow += 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        cbTableColumn += 1;
+                        crTableColumn += 1;
                     }
                 }
-                
-                currentYBlockColumn += 1;
 
-                if (currentYBlockColumn == 4)
-                {
-                    currentYBlockColumn = 0;
-                    currentYBlockRow += 1;
-                    
-                    if (brightnessTable % 4 == 0)
-                    {
-                        if (cbTableRow == 3)
-                        {
-                            cbTableRow = 0;
-                            cbTableColumn = 4;
-                        }
-                        else
-                        {
-                            cbTableColumn = 0;
-                            cbTableRow += 1;
-                        }
-                        
-                        if (crTableRow == 3)
-                        {
-                            crTableRow = 0;
-                            crTableColumn = 4;
-                        }
-                        else
-                        {
-                            crTableColumn = 0;
-                            crTableRow += 1;
-                        }
-                    }
-                    else if (brightnessTable % 4 == 1)
-                    {
-                        if (cbTableRow == 3)
-                        {
-                            cbTableRow = 4;
-                            cbTableColumn = 0;
-                        }
-                        else
-                        {
-                            cbTableColumn = 4;
-                            cbTableRow += 1;
-                        }
-                        
-                        if (crTableRow == 3)
-                        {
-                            crTableRow = 4;
-                            crTableColumn = 0;
-                        }
-                        else
-                        {
-                            crTableColumn = 4;
-                            crTableRow += 1;
-                        }
-                    }
-                    else if (brightnessTable % 4 == 2)
-                    {
-                        if (cbTableRow == 7)
-                        {
-                            cbTableRow = 4;
-                            cbTableColumn = 4;
-                        }
-                        else
-                        {
-                            cbTableColumn = 0;
-                            cbTableRow += 1;
-                        }
-                        
-                        if (crTableRow == 7)
-                        {
-                            crTableRow = 4;
-                            crTableColumn = 4;
-                        }
-                        else
-                        {
-                            crTableColumn = 0;
-                            crTableRow += 1;
-                        }
-                    }
-                    else if (brightnessTable % 4 == 3)
-                    {
-                        if (cbTableColumn == 7)
-                        {
-                            cbTableColumn = 4;
-                            cbTableRow += 1;
-                        }
-
-                        if (crTableColumn == 7)
-                        {
-                            crTableColumn = 4;
-                            crTableRow += 1;
-                        }
-                    }
-                }
-                else
-                {
-                    cbTableColumn += 1;
-                    crTableColumn += 1;
-                }
+                mcuColumn += 1;
             }
-
-            mcuColumn += 1;
         }
 
         // var blockRow = 0;
@@ -741,15 +737,15 @@ public class JpegReader : IPictureReader
         // }
 
         var finalBitmap = new SKBitmap(_width, _height);
-        
+
         for (int i = 0; i < _height; i++)
         {
             for (int j = 0; j < _width; j++)
             {
-                finalBitmap.SetPixel(i, j, bitmap.GetPixel(j , i));
+                finalBitmap.SetPixel(i, j, bitmap.GetPixel(j, i));
             }
         }
-        
+
         return finalBitmap;
     }
 
