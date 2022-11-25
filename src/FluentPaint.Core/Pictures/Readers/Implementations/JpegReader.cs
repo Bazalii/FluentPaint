@@ -84,4 +84,20 @@ public class JpegReader : IPictureReader
 
         return bitmap;
     }
+    
+    private void ReadHuffmanTree(byte[] section)
+    {
+        var offset = 0;
+        var header = section[offset];
+        offset += 1;
+
+        var numbersOfSymbols = section[offset..(offset + 16)];
+        offset += 16;
+
+        var symbolCodes = section[offset..];
+
+        var huffmanTree = new HuffmanTree(header, numbersOfSymbols, symbolCodes);
+
+        _huffmanTrees.Add(huffmanTree);
+    }
 }
