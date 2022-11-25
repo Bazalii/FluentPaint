@@ -259,39 +259,15 @@ public class JpegReader : IPictureReader
             }
         }
 
-        // for (int currentMatrix = 0; currentMatrix < ; currentMatrix++)
-        // {
-        //     for (var i = 0; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
-        //     {
-        //         bits = ReadTable(bits, _DcAcCoefficients[0]);
-        //     }
-        //
-        //     bits = ReadTable(bits, _DcAcCoefficients[1]);
-        //     bits = ReadTable(bits, _DcAcCoefficients[2]);
-        // }
-
-        var allTablesNumber = _width * _height / 256 * 6;
-
-        var yTablesNumber = allTablesNumber * 2 / 3;
-        var cbTablesNumber = allTablesNumber * 1 / 6;
-        var crTablesNumber = allTablesNumber * 1 / 6;
-
-        for (int currentMatrix = 0; currentMatrix < yTablesNumber; currentMatrix++)
+        for (var currentMatrix = 0; currentMatrix < _height * _width / 64; currentMatrix += 6)
         {
-            bits = ReadTable(bits, _dcAcCoefficients[0]);
-            // for (var i = 0; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
-            // {
-            //     bits = ReadTable(bits, _DcAcCoefficients[0]);
-            // }
-        }
-
-        for (int i = 0; i < cbTablesNumber; i++)
-        {
+            for (var i = 0; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
+            {
+                bits = ReadTable(bits, _dcAcCoefficients[0]);
+            }
+            
             bits = ReadTable(bits, _dcAcCoefficients[1]);
-        }
-
-        for (int i = 0; i < crTablesNumber; i++)
-        {
+            
             bits = ReadTable(bits, _dcAcCoefficients[2]);
         }
     }
