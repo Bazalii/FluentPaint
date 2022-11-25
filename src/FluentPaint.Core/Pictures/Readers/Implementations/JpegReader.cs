@@ -114,4 +114,120 @@ public class JpegReader : IPictureReader
             _quantMapping.Add(section[8 + i * 3]);
         }
     }
+    
+    private void ReadQuantizationTable(IReadOnlyList<byte> section)
+    {
+        var quantizationTable = new byte[8, 8];
+
+        var currentPoint = new Point
+        {
+            Row = 0,
+            Column = 0,
+            DiagonalVector = false
+        };
+
+        for (var i = 1; i < 65; i++)
+        {
+            quantizationTable[currentPoint.Row, currentPoint.Column] = section[i];
+
+            currentPoint = GetNewPoint(currentPoint);
+        }
+
+        _isTopSideMatrix = true;
+
+        _quantizationTables.Add(quantizationTable);
+    }
+    
+    private Point GetNewPoint(Point currentPoint)
+    {
+        var newPoint = new Point();
+
+        if (_isTopSideMatrix)
+        {
+            if (currentPoint.Row == 0 && currentPoint.Column == 0)
+            {
+                newPoint.Row = 0;
+                newPoint.Column = 1;
+
+                return newPoint;
+            }
+
+            if (currentPoint.Row == 0 && currentPoint.Column == 1)
+            {
+                newPoint.Row = 1;
+                newPoint.Column = 0;
+
+                return newPoint;
+            }
+
+            if (currentPoint.Row == 0 && currentPoint.DiagonalVector)
+            {
+                newPoint.Column = currentPoint.Column + 1;
+                newPoint.DiagonalVector = false;
+            }
+            else if (currentPoint.Column == 0 && !currentPoint.DiagonalVector)
+            {
+                newPoint.Row = currentPoint.Row + 1;
+                newPoint.DiagonalVector = true;
+            }
+            else
+            {
+                if (currentPoint.DiagonalVector)
+                {
+                    newPoint.Row = currentPoint.Row - 1;
+                    newPoint.Column = currentPoint.Column + 1;
+                    newPoint.DiagonalVector = true;
+                }
+                else
+                {
+                    newPoint.Row = currentPoint.Row + 1;
+                    newPoint.Column = currentPoint.Column - 1;
+                }
+            }
+
+            if (newPoint.Row == 7 && newPoint.Column == 0)
+            {
+                _isTopSideMatrix = false;
+            }
+        }
+        else
+        {
+            if (currentPoint.Row == 7 && currentPoint.Column == 6)
+            {
+                newPoint.Row = 7;
+                newPoint.Column = 7;
+
+                return newPoint;
+            }
+
+            if (currentPoint.Row == 7 && !currentPoint.DiagonalVector)
+            {
+                newPoint.Row = currentPoint.Row;
+                newPoint.Column = currentPoint.Column + 1;
+                newPoint.DiagonalVector = true;
+            }
+            else if (currentPoint.Column == 7 && currentPoint.DiagonalVector)
+            {
+                newPoint.Row = currentPoint.Row + 1;
+                newPoint.Column = currentPoint.Column;
+                newPoint.DiagonalVector = false;
+            }
+            else
+            {
+                if (currentPoint.DiagonalVector)
+                {
+                    newPoint.Row = currentPoint.Row - 1;
+                    newPoint.Column = currentPoint.Column + 1;
+                    newPoint.DiagonalVector = true;
+                }
+                else
+                {
+                    newPoint.Row = currentPoint.Row + 1;
+                    newPoint.Column = currentPoint.Column - 1;
+                }
+            }
+        }
+
+        return newPoint;
+    }
 }
