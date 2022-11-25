@@ -426,4 +426,50 @@ public class JpegReader : IPictureReader
             _dcAcCoefficientsTables[i][0, 0] += _dcAcCoefficientsTables[i - 1][0, 0];
         }
     }
+    
+    private void QuantizeCoefficientTables()
+    {
+        var firstChannelTablesNumber = _thinning[0].Item1 + _thinning[0].Item2;
+        var secondChannelTablesNumber = _thinning[1].Item1;
+        var thirdChannelTablesNumber = _thinning[2].Item1;
+
+        var tableIndex = 0;
+
+        for (; tableIndex < firstChannelTablesNumber; tableIndex++)
+        {
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    _dcAcCoefficientsTables[tableIndex][i, j] *= _quantizationTables[_quantMapping[0]][i, j];
+                }
+            }
+        }
+
+        var cbTableIndex = tableIndex + secondChannelTablesNumber;
+
+        for (; tableIndex < cbTableIndex; tableIndex++)
+        {
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    _dcAcCoefficientsTables[tableIndex][i, j] *= _quantizationTables[_quantMapping[1]][i, j];
+                }
+            }
+        }
+
+        var crTableIndex = tableIndex + thirdChannelTablesNumber;
+
+        for (; tableIndex < crTableIndex; tableIndex++)
+        {
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    _dcAcCoefficientsTables[tableIndex][i, j] *= _quantizationTables[_quantMapping[2]][i, j];
+                }
+            }
+        }
+    }
 }
