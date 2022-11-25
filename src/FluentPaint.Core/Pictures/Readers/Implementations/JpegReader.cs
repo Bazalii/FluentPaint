@@ -100,4 +100,18 @@ public class JpegReader : IPictureReader
 
         _huffmanTrees.Add(huffmanTree);
     }
+    
+    private void CalculateBaselineDct(byte[] section)
+    {
+        _height = int.Parse(Convert.ToHexString(section[1..3]), System.Globalization.NumberStyles.HexNumber);
+        _width = int.Parse(Convert.ToHexString(section[3..5]), System.Globalization.NumberStyles.HexNumber);
+
+        var components = section[5];
+
+        for (var i = 0; i < components; i++)
+        {
+            _thinning.Add((section[7 + i * 3] >> 4, section[7 + i * 3] & 15));
+            _quantMapping.Add(section[8 + i * 3]);
+        }
+    }
 }
