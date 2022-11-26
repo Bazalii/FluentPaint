@@ -81,7 +81,7 @@ public class JpegReader : IPictureReader
                         ReadStartOfScanSection(sectionBuffer);
                         pointer += currentSectionLength;
 
-                        sectionBuffer = new byte[fileStream.Length - pointer - 4];
+                        sectionBuffer = new byte[fileStream.Length - pointer - 2];
                         fileStream.Read(sectionBuffer);
 
                         ReadFileInformation(sectionBuffer);
