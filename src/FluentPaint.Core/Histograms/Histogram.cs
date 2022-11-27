@@ -9,7 +9,7 @@ public class Histogram
     private List<(int, int)>[]? _greenHistogram;
     private List<(int, int)>[]? _blueHistogram;
 
-    private SKBitmap _bitmap;
+    private readonly SKBitmap _bitmap;
 
     public Histogram(ColorChannels channels, SKBitmap bitmap)
     {
@@ -46,7 +46,7 @@ public class Histogram
             default:
                 throw new ArgumentOutOfRangeException(nameof(channels), channels, null);
         }
-        
+
         for (var i = 0; i < 256; i++)
         {
             if (_redHistogram != null)
@@ -61,10 +61,12 @@ public class Histogram
     public void CreateHistograms(double ignorePercent)
     {
         var pixelsValue = CreatePixelsValue();
-        List<(int, int)> ignorePixels = new();
+        List<Coordinates> ignorePixels = new();
 
         if (ignorePercent != 0)
+        {
             ignorePixels = GetIgnorePixel(pixelsValue, ignorePercent);
+        }
 
         for (var y = 0; y < _bitmap.Height; y++)
         {
@@ -72,8 +74,8 @@ public class Histogram
             {
                 var pixel = _bitmap.GetPixel(x, y);
 
-                if (ignorePixels.Any(tuple => tuple == (x, y))) continue;
-                
+                if (ignorePixels.Any(coordinate => coordinate.X == x && coordinate.Y == y)) continue;
+
                 _redHistogram?[pixel.Red].Add((x, y));
                 _greenHistogram?[pixel.Green].Add((x, y));
                 _blueHistogram?[pixel.Blue].Add((x, y));
@@ -83,7 +85,7 @@ public class Histogram
 
     public SKBitmap AutomaticCorrection()
     {
-        var redHistogram = _redHistogram == null ? null : new List<(int, int)>[256];
+        var redHistogram = _redHistogram ?? new List<(int, int)>[256];
         var greenHistogram = _greenHistogram == null ? null : new List<(int, int)>[256];
         var blueHistogram = _blueHistogram == null ? null : new List<(int, int)>[256];
 
@@ -102,57 +104,82 @@ public class Histogram
             while (correction >= 1)
             {
                 if (_redHistogram != null)
+                {
                     redHistogram![newIndex] = _redHistogram[oldIndex];
+                }
+
                 if (_greenHistogram != null)
+                {
                     greenHistogram![newIndex] = _greenHistogram[oldIndex];
+                }
+
                 if (_blueHistogram != null)
+                {
                     blueHistogram![newIndex] = _blueHistogram[oldIndex];
+                }
+
                 oldIndex = Increment(oldIndex);
                 newIndex = Increment(newIndex);
                 correction -= 1;
             }
 
-            if (newIndex == 256)
-                break;
+            if (newIndex == 256) break;
 
             if (redHistogram != null)
+            {
                 redHistogram[newIndex] = new List<(int, int)>();
+            }
+
             if (greenHistogram != null)
+            {
                 greenHistogram[newIndex] = new List<(int, int)>();
+            }
+
             if (blueHistogram != null)
+            {
                 blueHistogram[newIndex] = new List<(int, int)>();
+            }
+
             newIndex = Increment(newIndex);
         }
 
         for (var i = 0; i < 256; i++)
         {
             if (redHistogram != null)
+            {
                 for (var j = 0; j < redHistogram[i].Count; j++)
                 {
                     var x = redHistogram[i][j].Item1;
                     var y = redHistogram[i][j].Item2;
                     var pixel = _bitmap.GetPixel(x, y);
-                    
+
                     _bitmap.SetPixel(x, y, new SKColor((byte)i, pixel.Green, pixel.Blue));
                 }
+            }
+
             if (greenHistogram != null)
+            {
                 for (var j = 0; j < greenHistogram[i].Count; j++)
                 {
                     var x = greenHistogram[i][j].Item1;
                     var y = greenHistogram[i][j].Item2;
                     var pixel = _bitmap.GetPixel(x, y);
-                    
+
                     _bitmap.SetPixel(x, y, new SKColor(pixel.Red, (byte)i, pixel.Blue));
                 }
+            }
+
             if (blueHistogram != null)
+            {
                 for (var j = 0; j < blueHistogram[i].Count; j++)
                 {
                     var x = blueHistogram[i][j].Item1;
                     var y = blueHistogram[i][j].Item2;
                     var pixel = _bitmap.GetPixel(x, y);
-                    
+
                     _bitmap.SetPixel(x, y, new SKColor(pixel.Red, pixel.Green, (byte)i));
                 }
+            }
         }
 
         _redHistogram = redHistogram;
@@ -162,13 +189,13 @@ public class Histogram
         return _bitmap;
     }
 
-    private List<(int, int)>[] CreatePixelsValue()
+    private List<Coordinates>[] CreatePixelsValue()
     {
-        var pixelsValue = new List<(int, int)>[766];
+        var pixelsValue = new List<Coordinates>[766];
 
         for (var i = 0; i < 766; i++)
         {
-            pixelsValue[i] = new List<(int, int)>();
+            pixelsValue[i] = new List<Coordinates>();
         }
 
         for (var y = 0; y < _bitmap.Height; y++)
@@ -177,31 +204,29 @@ public class Histogram
             {
                 var pixel = _bitmap.GetPixel(x, y);
 
-                pixelsValue[pixel.Red + pixel.Green + pixel.Blue].Add((x, y));
+                pixelsValue[pixel.Red + pixel.Green + pixel.Blue].Add(new Coordinates(x, y));
             }
         }
 
         return pixelsValue;
     }
 
-    private List<(int, int)> GetIgnorePixel(IReadOnlyList<List<(int, int)>> pixelsValue, double ignorePercent)
+    private List<Coordinates> GetIgnorePixel(IReadOnlyList<List<Coordinates>> pixelsValue, double ignorePercent)
     {
-        var ignorePixels = new List<(int, int)>();
+        var ignorePixels = new List<Coordinates>();
         var ignorePixelsCount = (int)(_bitmap.Height * _bitmap.Width * ignorePercent);
 
         for (var i = 0; i < 766; i++)
         {
             for (var j = 0; j < pixelsValue[i].Count; j++)
             {
-                if (ignorePixelsCount == 0)
-                    break;
+                if (ignorePixelsCount == 0) break;
 
                 ignorePixels.Add(pixelsValue[i][j]);
                 ignorePixelsCount--;
             }
 
-            if (ignorePixelsCount == 0)
-                break;
+            if (ignorePixelsCount == 0) break;
         }
 
         ignorePixelsCount = (int)(_bitmap.Height * _bitmap.Width * ignorePercent);
@@ -210,15 +235,13 @@ public class Histogram
         {
             for (var j = 0; j < pixelsValue[i].Count; j++)
             {
-                if (ignorePixelsCount == 0)
-                    break;
+                if (ignorePixelsCount == 0) break;
 
                 ignorePixels.Add(pixelsValue[i][j]);
                 ignorePixelsCount--;
             }
 
-            if (ignorePixelsCount == 0)
-                break;
+            if (ignorePixelsCount == 0) break;
         }
 
         return ignorePixels;
@@ -257,7 +280,9 @@ public class Histogram
     private int Increment(int index)
     {
         if (_redHistogram != null || _greenHistogram != null || _blueHistogram != null)
+        {
             return index + 1;
+        }
 
         return index;
     }
