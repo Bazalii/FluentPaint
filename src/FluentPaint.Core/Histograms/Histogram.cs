@@ -5,9 +5,9 @@ namespace FluentPaint.Core.Histograms;
 
 public class Histogram
 {
-    private List<(int, int)>[]? _redHistogram;
-    private List<(int, int)>[]? _greenHistogram;
-    private List<(int, int)>[]? _blueHistogram;
+    private List<Coordinates>[]? _redHistogram;
+    private List<Coordinates>[]? _greenHistogram;
+    private List<Coordinates>[]? _blueHistogram;
 
     private readonly SKBitmap _bitmap;
 
@@ -18,30 +18,30 @@ public class Histogram
         switch (channels)
         {
             case ColorChannels.First:
-                _redHistogram = new List<(int, int)>[256];
+                _redHistogram = new List<Coordinates>[256];
                 break;
             case ColorChannels.Second:
-                _greenHistogram = new List<(int, int)>[256];
+                _greenHistogram = new List<Coordinates>[256];
                 break;
             case ColorChannels.Third:
-                _blueHistogram = new List<(int, int)>[256];
+                _blueHistogram = new List<Coordinates>[256];
                 break;
             case ColorChannels.FirstAndSecond:
-                _redHistogram = new List<(int, int)>[256];
-                _greenHistogram = new List<(int, int)>[256];
+                _redHistogram = new List<Coordinates>[256];
+                _greenHistogram = new List<Coordinates>[256];
                 break;
             case ColorChannels.FirstAndThird:
-                _redHistogram = new List<(int, int)>[256];
-                _blueHistogram = new List<(int, int)>[256];
+                _redHistogram = new List<Coordinates>[256];
+                _blueHistogram = new List<Coordinates>[256];
                 break;
             case ColorChannels.SecondAndThird:
-                _greenHistogram = new List<(int, int)>[256];
-                _blueHistogram = new List<(int, int)>[256];
+                _greenHistogram = new List<Coordinates>[256];
+                _blueHistogram = new List<Coordinates>[256];
                 break;
             case ColorChannels.All:
-                _redHistogram = new List<(int, int)>[256];
-                _greenHistogram = new List<(int, int)>[256];
-                _blueHistogram = new List<(int, int)>[256];
+                _redHistogram = new List<Coordinates>[256];
+                _greenHistogram = new List<Coordinates>[256];
+                _blueHistogram = new List<Coordinates>[256];
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(channels), channels, null);
@@ -49,12 +49,12 @@ public class Histogram
 
         for (var i = 0; i < 256; i++)
         {
-            if (_redHistogram != null)
-                _redHistogram[i] = new List<(int, int)>();
-            if (_greenHistogram != null)
-                _greenHistogram[i] = new List<(int, int)>();
-            if (_blueHistogram != null)
-                _blueHistogram[i] = new List<(int, int)>();
+            if (_redHistogram is not null)
+                _redHistogram[i] = new List<Coordinates>();
+            if (_greenHistogram is not null)
+                _greenHistogram[i] = new List<Coordinates>();
+            if (_blueHistogram is not null)
+                _blueHistogram[i] = new List<Coordinates>();
         }
     }
 
@@ -76,18 +76,18 @@ public class Histogram
 
                 if (ignorePixels.Any(coordinate => coordinate.X == x && coordinate.Y == y)) continue;
 
-                _redHistogram?[pixel.Red].Add((x, y));
-                _greenHistogram?[pixel.Green].Add((x, y));
-                _blueHistogram?[pixel.Blue].Add((x, y));
+                _redHistogram?[pixel.Red].Add(new Coordinates(x, y));
+                _greenHistogram?[pixel.Green].Add(new Coordinates(x, y));
+                _blueHistogram?[pixel.Blue].Add(new Coordinates(x, y));
             }
         }
     }
 
     public SKBitmap AutomaticCorrection()
     {
-        var redHistogram = _redHistogram ?? new List<(int, int)>[256];
-        var greenHistogram = _greenHistogram == null ? null : new List<(int, int)>[256];
-        var blueHistogram = _blueHistogram == null ? null : new List<(int, int)>[256];
+        var redHistogram = _redHistogram is null ? null : new List<Coordinates>[256];
+        var greenHistogram = _greenHistogram is null ? null : new List<Coordinates>[256];
+        var blueHistogram = _blueHistogram is null ? null : new List<Coordinates>[256];
 
         var min = GetMinValue();
         var max = GetMaxValue();
@@ -103,17 +103,17 @@ public class Histogram
 
             while (correction >= 1)
             {
-                if (_redHistogram != null)
+                if (_redHistogram is not null)
                 {
                     redHistogram![newIndex] = _redHistogram[oldIndex];
                 }
 
-                if (_greenHistogram != null)
+                if (_greenHistogram is not null)
                 {
                     greenHistogram![newIndex] = _greenHistogram[oldIndex];
                 }
 
-                if (_blueHistogram != null)
+                if (_blueHistogram is not null)
                 {
                     blueHistogram![newIndex] = _blueHistogram[oldIndex];
                 }
@@ -125,19 +125,19 @@ public class Histogram
 
             if (newIndex == 256) break;
 
-            if (redHistogram != null)
+            if (redHistogram is not null)
             {
-                redHistogram[newIndex] = new List<(int, int)>();
+                redHistogram[newIndex] = new List<Coordinates>();
             }
 
-            if (greenHistogram != null)
+            if (greenHistogram is not null)
             {
-                greenHistogram[newIndex] = new List<(int, int)>();
+                greenHistogram[newIndex] = new List<Coordinates>();
             }
 
-            if (blueHistogram != null)
+            if (blueHistogram is not null)
             {
-                blueHistogram[newIndex] = new List<(int, int)>();
+                blueHistogram[newIndex] = new List<Coordinates>();
             }
 
             newIndex = Increment(newIndex);
@@ -145,36 +145,36 @@ public class Histogram
 
         for (var i = 0; i < 256; i++)
         {
-            if (redHistogram != null)
+            if (redHistogram is not null)
             {
                 for (var j = 0; j < redHistogram[i].Count; j++)
                 {
-                    var x = redHistogram[i][j].Item1;
-                    var y = redHistogram[i][j].Item2;
+                    var x = redHistogram[i][j].X;
+                    var y = redHistogram[i][j].Y;
                     var pixel = _bitmap.GetPixel(x, y);
 
                     _bitmap.SetPixel(x, y, new SKColor((byte)i, pixel.Green, pixel.Blue));
                 }
             }
 
-            if (greenHistogram != null)
+            if (greenHistogram is not null)
             {
                 for (var j = 0; j < greenHistogram[i].Count; j++)
                 {
-                    var x = greenHistogram[i][j].Item1;
-                    var y = greenHistogram[i][j].Item2;
+                    var x = greenHistogram[i][j].X;
+                    var y = greenHistogram[i][j].Y;
                     var pixel = _bitmap.GetPixel(x, y);
 
                     _bitmap.SetPixel(x, y, new SKColor(pixel.Red, (byte)i, pixel.Blue));
                 }
             }
 
-            if (blueHistogram != null)
+            if (blueHistogram is not null)
             {
                 for (var j = 0; j < blueHistogram[i].Count; j++)
                 {
-                    var x = blueHistogram[i][j].Item1;
-                    var y = blueHistogram[i][j].Item2;
+                    var x = blueHistogram[i][j].X;
+                    var y = blueHistogram[i][j].Y;
                     var pixel = _bitmap.GetPixel(x, y);
 
                     _bitmap.SetPixel(x, y, new SKColor(pixel.Red, pixel.Green, (byte)i));
@@ -251,9 +251,9 @@ public class Histogram
     {
         for (var i = 0; i < 256; i++)
         {
-            if ((_redHistogram != null && _redHistogram[i].Count != 0) ||
-                (_greenHistogram != null && _greenHistogram[i].Count != 0) ||
-                (_blueHistogram != null && _blueHistogram[i].Count != 0))
+            if ((_redHistogram is not null && _redHistogram[i].Count != 0) ||
+                (_greenHistogram is not null && _greenHistogram[i].Count != 0) ||
+                (_blueHistogram is not null && _blueHistogram[i].Count != 0))
             {
                 return i;
             }
@@ -266,9 +266,9 @@ public class Histogram
     {
         for (var i = 255; i >= 0; i--)
         {
-            if ((_redHistogram != null && _redHistogram[i].Count != 0) ||
-                (_greenHistogram != null && _greenHistogram[i].Count != 0) ||
-                (_blueHistogram != null && _blueHistogram[i].Count != 0))
+            if ((_redHistogram is not null && _redHistogram[i].Count != 0) ||
+                (_greenHistogram is not null && _greenHistogram[i].Count != 0) ||
+                (_blueHistogram is not null && _blueHistogram[i].Count != 0))
             {
                 return i;
             }
@@ -279,7 +279,7 @@ public class Histogram
 
     private int Increment(int index)
     {
-        if (_redHistogram != null || _greenHistogram != null || _blueHistogram != null)
+        if (_redHistogram is not null || _greenHistogram is not null || _blueHistogram is not null)
         {
             return index + 1;
         }
