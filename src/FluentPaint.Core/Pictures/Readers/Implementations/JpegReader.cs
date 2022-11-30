@@ -271,7 +271,7 @@ public class JpegReader : IPictureReader
                 currentByte = (byte) (currentByte << 1);
             }
         }
-        
+
         bits = RemoveZeros(bits);
 
         for (var currentMatrix = 0; currentMatrix < _height * _width / 64; currentMatrix += 6)
@@ -286,22 +286,26 @@ public class JpegReader : IPictureReader
             bits = ReadTable(bits, _dcAcCoefficients[2]);
         }
     }
-    
+
     private List<int> RemoveZeros(List<int> bits)
     {
-        var result = new List<int>();
-        for (int i = 0; i < bits.Count - 16; i += 16)
+        for (int i = 0; i < bits.Count - 16; i += 8)
         {
             var range = bits.GetRange(i, 16);
+
             var builder = new StringBuilder();
             foreach (var b in range)
             {
                 builder.Append(b);
             }
-            result.AddRange(builder.ToString().Equals("1111111100000000") ? range.GetRange(0, 8) : range);
+
+            if (builder.ToString().Equals("1111111100000000"))
+            {
+                bits.RemoveRange(i + 8, 8);
+            }
         }
 
-        return result;
+        return bits;
     }
 
     private List<int> ReadTable(List<int> bits, CoefficientsTable coefficientsTable)
@@ -391,7 +395,7 @@ public class JpegReader : IPictureReader
                 for (var i = 0; i < lengthOfZeros; i++)
                 {
                     coefficientTable[currentPoint.Row, currentPoint.Column] = 0;
-                    
+
                     if (currentPoint.Column == 7 && currentPoint.Row == 7)
                     {
                         break;
@@ -563,8 +567,8 @@ public class JpegReader : IPictureReader
                 {
                     for (var i = 0; i < 4; i++)
                     {
-                        bitmap.SetPixel(mcuRow * 8 + currentYBlockRow * 2 + yTableRow,
-                            mcuColumn * 8 + currentYBlockColumn * 2 + yTableColumn,
+                        bitmap.SetPixel(mcuColumn * 8 + currentYBlockColumn * 2 + yTableColumn,
+                            mcuRow * 8 + currentYBlockRow * 2 + yTableRow,
                             ConvertPixelYCbCrToRgb(
                                 _yCbCrMatrices[tableSectionStart + brightnessTable][yTableRow + currentYBlockRow * 2,
                                     yTableColumn + currentYBlockColumn * 2],
@@ -695,83 +699,7 @@ public class JpegReader : IPictureReader
             }
         }
 
-        // var blockRow = 0;
-        // var blockColumn = 0;
-        //
-        // var yMatrixCounter = 0;
-        // var yMatrixPointer = 0;
-        // var cbMatrixPointer = 0;
-        // var crMatrixPointer = 0;
-        //
-        // for (var brightnessTable = 0; brightnessTable < _width * _height / 64; brightnessTable++)
-        // {
-        //     if (yMatrixCounter == 4)
-        //     {
-        //         yMatrixPointer += 2;
-        //         yMatrixCounter = 0;
-        //         cbMatrixPointer += 1;
-        //         crMatrixPointer += 1;
-        //     }
-        //
-        //     if (blockColumn == _width / 8)
-        //     {
-        //         blockColumn = 0;
-        //         blockRow += 1;
-        //     }
-        //
-        //     for (var i = 0; i < 8; i++)
-        //     {
-        //         for (var j = 0; j < 8; j++)
-        //         {
-        //             // var yValue = _yCbCrMatrices[yMatrixPointer][i, j];
-        //             // var cbValue = _yCbCrMatrices[yMatrixPointer - yMatrixCounter + 4][i, j];
-        //             // var crValue = _yCbCrMatrices[yMatrixPointer - yMatrixCounter + 5][i, j];
-        //             
-        //             var allTablesNumber = _width * _height / 256 * 6;
-        //
-        //             var yTablesNumber = allTablesNumber * 2 / 3;
-        //             var cbTablesNumber = allTablesNumber * 1 / 6;
-        //
-        //             var yValue = _yCbCrMatrices[brightnessTable][i, j];
-        //             var cbValue = _yCbCrMatrices[yTablesNumber + cbMatrixPointer][i, j];
-        //             var crValue = _yCbCrMatrices[yTablesNumber + cbTablesNumber + crMatrixPointer][i, j];
-        //
-        //             var redComponent = yValue + 1.402 * (crValue - 128);
-        //             var greenComponent = yValue - 0.34414 * (cbValue - 128) - 0.71414 * (crValue - 128);
-        //             var blueComponent = yValue + 1.772 * (cbValue - 128);
-        //
-        //             redComponent = Math.Min(Math.Max(0, redComponent), 255);
-        //             greenComponent = Math.Min(Math.Max(0, greenComponent), 255);
-        //             blueComponent = Math.Min(Math.Max(0, blueComponent), 255);
-        //
-        //
-        //             var pixel =
-        //                 new SKColor(
-        //                     (byte) redComponent,
-        //                     (byte) greenComponent,
-        //                     (byte) blueComponent
-        //                 );
-        //
-        //             bitmap.SetPixel(i + 8 * blockRow, j + 8 * blockColumn, pixel);
-        //         }
-        //     }
-        //
-        //     yMatrixPointer += 1;
-        //     yMatrixCounter += 1;
-        //     blockColumn += 1;
-        // }
-
-        var finalBitmap = new SKBitmap(_width, _height);
-
-        for (int i = 0; i < _height; i++)
-        {
-            for (int j = 0; j < _width; j++)
-            {
-                finalBitmap.SetPixel(i, j, bitmap.GetPixel(j, i));
-            }
-        }
-
-        return finalBitmap;
+        return bitmap;
     }
 
     private SKColor ConvertPixelYCbCrToRgb(int yValue, int cbValue, int crValue)
