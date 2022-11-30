@@ -358,7 +358,7 @@ public class JpegReader : IPictureReader
 
         currentPoint = GetNewPoint(currentPoint);
 
-        while (currentPoint.Row < 7 && currentPoint.Column < 7)
+        while (currentPoint.Row < 8 && currentPoint.Column < 8)
         {
             (bitsPointer, currentNode) = GetNodeCode(currentNode, bitsPointer, bits);
 
@@ -390,6 +390,11 @@ public class JpegReader : IPictureReader
                 for (var i = 0; i < lengthOfZeros; i++)
                 {
                     coefficientTable[currentPoint.Row, currentPoint.Column] = 0;
+                    
+                    if (currentPoint.Column == 7 && currentPoint.Row == 7)
+                    {
+                        break;
+                    }
 
                     currentPoint = GetNewPoint(currentPoint);
                 }
