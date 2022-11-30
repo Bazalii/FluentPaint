@@ -1,4 +1,5 @@
-﻿using FluentPaint.Core.Huffman;
+﻿using System.Text;
+using FluentPaint.Core.Huffman;
 using FluentPaint.Core.Pictures.Readers.Models;
 using SkiaSharp;
 
