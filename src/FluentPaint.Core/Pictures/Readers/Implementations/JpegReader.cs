@@ -270,6 +270,8 @@ public class JpegReader : IPictureReader
                 currentByte = (byte) (currentByte << 1);
             }
         }
+        
+        bits = RemoveZeros(bits);
 
         for (var currentMatrix = 0; currentMatrix < _height * _width / 64; currentMatrix += 6)
         {
@@ -282,6 +284,23 @@ public class JpegReader : IPictureReader
 
             bits = ReadTable(bits, _dcAcCoefficients[2]);
         }
+    }
+    
+    private List<int> RemoveZeros(List<int> bits)
+    {
+        var result = new List<int>();
+        for (int i = 0; i < bits.Count - 16; i += 16)
+        {
+            var range = bits.GetRange(i, 16);
+            var builder = new StringBuilder();
+            foreach (var b in range)
+            {
+                builder.Append(b);
+            }
+            result.AddRange(builder.ToString().Equals("1111111100000000") ? range.GetRange(0, 8) : range);
+        }
+
+        return result;
     }
 
     private List<int> ReadTable(List<int> bits, CoefficientsTable coefficientsTable)
