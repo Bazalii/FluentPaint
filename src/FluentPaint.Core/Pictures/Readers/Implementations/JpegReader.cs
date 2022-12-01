@@ -82,7 +82,7 @@ public class JpegReader : IPictureReader
                         ReadStartOfScanSection(sectionBuffer);
                         pointer += currentSectionLength;
 
-                        sectionBuffer = new byte[fileStream.Length - pointer - 2];
+                        sectionBuffer = new byte[fileStream.Length - pointer - 1];
                         fileStream.Read(sectionBuffer);
 
                         ReadFileInformation(sectionBuffer);
@@ -274,7 +274,7 @@ public class JpegReader : IPictureReader
 
         bits = RemoveZeros(bits);
 
-        for (var currentMatrix = 0; currentMatrix < _height * _width / 64; currentMatrix += 6)
+        for (var currentMatrix = 0; currentMatrix < _height * _width / 64; currentMatrix += 4)
         {
             for (var i = 0; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
             {
@@ -438,9 +438,13 @@ public class JpegReader : IPictureReader
 
     private void CorrectDcCoefficients()
     {
-        for (var i = 1; i < _thinning[0].Item1 + _thinning[0].Item2; i++)
+        for (var tableSectionStart = 0; tableSectionStart < _dcAcCoefficientsTables.Count; tableSectionStart += 6)
         {
-            _dcAcCoefficientsTables[i][0, 0] += _dcAcCoefficientsTables[i - 1][0, 0];
+            for (var j = 1; j < 4; j++)
+            {
+                _dcAcCoefficientsTables[tableSectionStart + j][0, 0] +=
+                    _dcAcCoefficientsTables[tableSectionStart + j - 1][0, 0];
+            }
         }
     }
 
@@ -450,41 +454,47 @@ public class JpegReader : IPictureReader
         var secondChannelTablesNumber = _thinning[1].Item1;
         var thirdChannelTablesNumber = _thinning[2].Item1;
 
-        var tableIndex = 0;
-
-        for (; tableIndex < firstChannelTablesNumber; tableIndex++)
+        for (var tableSectionStart = 0; tableSectionStart < _dcAcCoefficientsTables.Count; tableSectionStart += 6)
         {
-            for (var i = 0; i < 8; i++)
+            var tableIndex = 0;
+
+            for (; tableIndex < firstChannelTablesNumber; tableIndex++)
             {
-                for (var j = 0; j < 8; j++)
+                for (var i = 0; i < 8; i++)
                 {
-                    _dcAcCoefficientsTables[tableIndex][i, j] *= _quantizationTables[_quantMapping[0]][i, j];
+                    for (var j = 0; j < 8; j++)
+                    {
+                        _dcAcCoefficientsTables[tableSectionStart + tableIndex][i, j] *=
+                            _quantizationTables[_quantMapping[0]][i, j];
+                    }
                 }
             }
-        }
 
-        var cbTableIndex = tableIndex + secondChannelTablesNumber;
+            var cbTableIndex = tableIndex + secondChannelTablesNumber;
 
-        for (; tableIndex < cbTableIndex; tableIndex++)
-        {
-            for (var i = 0; i < 8; i++)
+            for (; tableIndex < cbTableIndex; tableIndex++)
             {
-                for (var j = 0; j < 8; j++)
+                for (var i = 0; i < 8; i++)
                 {
-                    _dcAcCoefficientsTables[tableIndex][i, j] *= _quantizationTables[_quantMapping[1]][i, j];
+                    for (var j = 0; j < 8; j++)
+                    {
+                        _dcAcCoefficientsTables[tableSectionStart + tableIndex][i, j] *=
+                            _quantizationTables[_quantMapping[1]][i, j];
+                    }
                 }
             }
-        }
 
-        var crTableIndex = tableIndex + thirdChannelTablesNumber;
+            var crTableIndex = tableIndex + thirdChannelTablesNumber;
 
-        for (; tableIndex < crTableIndex; tableIndex++)
-        {
-            for (var i = 0; i < 8; i++)
+            for (; tableIndex < crTableIndex; tableIndex++)
             {
-                for (var j = 0; j < 8; j++)
+                for (var i = 0; i < 8; i++)
                 {
-                    _dcAcCoefficientsTables[tableIndex][i, j] *= _quantizationTables[_quantMapping[2]][i, j];
+                    for (var j = 0; j < 8; j++)
+                    {
+                        _dcAcCoefficientsTables[tableSectionStart + tableIndex][i, j] *=
+                            _quantizationTables[_quantMapping[2]][i, j];
+                    }
                 }
             }
         }
@@ -543,9 +553,7 @@ public class JpegReader : IPictureReader
         var mcuRow = 0;
         var mcuColumn = 0;
 
-        var brightnessTableNumber = _width * _height / 64;
-
-        for (var tableSectionStart = 0; tableSectionStart < brightnessTableNumber; tableSectionStart += 6)
+        for (var tableSectionStart = 0; tableSectionStart < _yCbCrMatrices.Count; tableSectionStart += 6)
         {
             var cbTableRow = 0;
             var cbTableColumn = 0;
