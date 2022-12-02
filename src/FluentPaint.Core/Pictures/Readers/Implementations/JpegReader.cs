@@ -438,13 +438,28 @@ public class JpegReader : IPictureReader
 
     private void CorrectDcCoefficients()
     {
-        for (var tableSectionStart = 0; tableSectionStart < _dcAcCoefficientsTables.Count; tableSectionStart += 6)
+        for (var i = 1; i < 4; i++)
         {
-            for (var j = 1; j < 4; j++)
+            _dcAcCoefficientsTables[i][0, 0] += _dcAcCoefficientsTables[i - 1][0, 0];
+        }
+
+        var previousLuminanceDcValue = _dcAcCoefficientsTables[3][0, 0];
+        var previousBlueComponentDcValue = _dcAcCoefficientsTables[4][0, 0];
+        var previousRedComponentDcValue = _dcAcCoefficientsTables[5][0, 0];
+        
+        for (var tableSectionStart = 6; tableSectionStart < _dcAcCoefficientsTables.Count; tableSectionStart += 6)
+        {
+            for (var j = 0; j < 4; j++)
             {
-                _dcAcCoefficientsTables[tableSectionStart + j][0, 0] +=
-                    _dcAcCoefficientsTables[tableSectionStart + j - 1][0, 0];
+                _dcAcCoefficientsTables[tableSectionStart + j][0, 0] += previousLuminanceDcValue;
+                previousLuminanceDcValue = _dcAcCoefficientsTables[tableSectionStart + j][0, 0];
             }
+            
+            _dcAcCoefficientsTables[tableSectionStart + 4][0, 0] += previousBlueComponentDcValue;
+            previousBlueComponentDcValue = _dcAcCoefficientsTables[tableSectionStart + 4][0, 0];
+            
+            _dcAcCoefficientsTables[tableSectionStart + 5][0, 0] += previousRedComponentDcValue;
+            previousRedComponentDcValue = _dcAcCoefficientsTables[tableSectionStart + 5][0, 0];
         }
     }
 
