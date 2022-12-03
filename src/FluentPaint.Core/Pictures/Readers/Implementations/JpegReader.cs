@@ -446,7 +446,7 @@ public class JpegReader : IPictureReader
         var previousLuminanceDcValue = _dcAcCoefficientsTables[3][0, 0];
         var previousBlueComponentDcValue = _dcAcCoefficientsTables[4][0, 0];
         var previousRedComponentDcValue = _dcAcCoefficientsTables[5][0, 0];
-        
+
         for (var tableSectionStart = 6; tableSectionStart < _dcAcCoefficientsTables.Count; tableSectionStart += 6)
         {
             for (var j = 0; j < 4; j++)
@@ -454,10 +454,10 @@ public class JpegReader : IPictureReader
                 _dcAcCoefficientsTables[tableSectionStart + j][0, 0] += previousLuminanceDcValue;
                 previousLuminanceDcValue = _dcAcCoefficientsTables[tableSectionStart + j][0, 0];
             }
-            
+
             _dcAcCoefficientsTables[tableSectionStart + 4][0, 0] += previousBlueComponentDcValue;
             previousBlueComponentDcValue = _dcAcCoefficientsTables[tableSectionStart + 4][0, 0];
-            
+
             _dcAcCoefficientsTables[tableSectionStart + 5][0, 0] += previousRedComponentDcValue;
             previousRedComponentDcValue = _dcAcCoefficientsTables[tableSectionStart + 5][0, 0];
         }
@@ -567,6 +567,7 @@ public class JpegReader : IPictureReader
 
         var mcuRow = 0;
         var mcuColumn = 0;
+        var previousColumnValue = 0;
 
         for (var tableSectionStart = 0; tableSectionStart < _yCbCrMatrices.Count; tableSectionStart += 6)
         {
@@ -577,10 +578,35 @@ public class JpegReader : IPictureReader
 
             for (var brightnessTable = 0; brightnessTable < 4; brightnessTable++)
             {
-                if (mcuColumn == _width / 8)
+                // if (mcuColumn == _width / 8)
+                // {
+                //     mcuColumn = 0;
+                //     mcuRow += 1;
+                // }
+
+                if (mcuColumn % (_width / 8) == 0 && mcuRow % 2 == 1)
                 {
                     mcuColumn = 0;
                     mcuRow += 1;
+                }
+                else if (mcuColumn % (_width / 8) == 0 && mcuRow % 2 == 0 && mcuColumn != 0)
+                {
+                    mcuColumn -= _width / 8 - previousColumnValue;
+                    mcuRow += 1;
+                }
+                else if (mcuColumn % (_height / 16) == 0 && mcuRow % 2 == 0 && mcuColumn != 0)
+                {
+                    mcuColumn -= _height / 16;
+                    mcuRow += 1;
+                }
+                else if (mcuColumn % (_height / 16) == 0 && mcuRow % 2 == 1)
+                {
+                    if (mcuColumn != 0)
+                    {
+                        previousColumnValue = mcuColumn;
+                    }
+
+                    mcuRow -= 1;
                 }
 
                 var currentYBlockRow = 0;
