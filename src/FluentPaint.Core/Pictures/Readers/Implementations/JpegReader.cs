@@ -7,16 +7,16 @@ namespace FluentPaint.Core.Pictures.Readers.Implementations;
 
 public class JpegReader : IPictureReader
 {
-    private List<byte[,]> _quantizationTables = new();
-    private List<int[,]> _dcAcCoefficientsTables = new();
+    private readonly List<byte[,]> _quantizationTables = new();
+    private readonly List<int[,]> _dcAcCoefficientsTables = new();
     private int _width;
     private int _height;
-    private List<(int, int)> _thinning = new();
-    private List<byte> _quantMapping = new();
-    private List<HuffmanTree> _huffmanTrees = new();
-    private List<CoefficientsTable> _dcAcCoefficients = new();
+    private readonly List<(int, int)> _thinning = new();
+    private readonly List<byte> _quantMapping = new();
+    private readonly List<HuffmanTree> _huffmanTrees = new();
+    private readonly List<CoefficientsTable> _dcAcCoefficients = new();
     private bool _isTopSideMatrix = true;
-    private List<int[,]> _yCbCrMatrices = new();
+    private readonly List<int[,]> _yCbCrMatrices = new();
 
     public SKBitmap ReadImageData(FileStream fileStream)
     {
@@ -333,13 +333,8 @@ public class JpegReader : IPictureReader
                 bitsPointer += 1;
             }
 
-            var currentCoefficient = 0;
-
-            for (var i = 0; i < currentCoefficientInBinarySystem.Count; i++)
-            {
-                currentCoefficient += (int) (currentCoefficientInBinarySystem[i] *
-                                             Math.Pow(2, currentCoefficientInBinarySystem.Count - i - 1));
-            }
+            var currentCoefficient = currentCoefficientInBinarySystem.Select((bit, i) =>
+                (int) (bit * Math.Pow(2, currentCoefficientInBinarySystem.Count - i - 1))).Sum();
 
             var currentCoefficientLength = currentCoefficientInBinarySystem.Count;
 
@@ -367,54 +362,47 @@ public class JpegReader : IPictureReader
         {
             (bitsPointer, currentNode) = GetNodeCode(currentNode, bitsPointer, bits);
 
-            var currentCoefficient = 0;
-
             if (currentNode.Code == 0)
             {
                 break;
             }
-            else
+
+            var lengthOfCoefficient = currentNode.Code & 15;
+            var lengthOfZeros = currentNode.Code >> 4;
+
+            var currentCoefficientInBinarySystem = new List<int>();
+
+            for (var bit = 0; bit < lengthOfCoefficient; bit++)
             {
-                var lengthOfCoefficient = currentNode.Code & 15;
-                var lengthOfZeros = currentNode.Code >> 4;
+                currentCoefficientInBinarySystem.Add(bits[bitsPointer]);
+                bitsPointer += 1;
+            }
 
-                var currentCoefficientInBinarySystem = new List<int>();
+            var currentCoefficient = currentCoefficientInBinarySystem.Select((bit, i) =>
+                (int) (bit * Math.Pow(2, currentCoefficientInBinarySystem.Count - i - 1))).Sum();
 
-                for (var bit = 0; bit < lengthOfCoefficient; bit++)
+            for (var i = 0; i < lengthOfZeros; i++)
+            {
+                coefficientTable[currentPoint.Row, currentPoint.Column] = 0;
+
+                if (currentPoint.Column == 7 && currentPoint.Row == 7)
                 {
-                    currentCoefficientInBinarySystem.Add(bits[bitsPointer]);
-                    bitsPointer += 1;
+                    break;
                 }
-
-                for (var i = 0; i < currentCoefficientInBinarySystem.Count; i++)
-                {
-                    currentCoefficient += (int) (currentCoefficientInBinarySystem[i] *
-                                                 Math.Pow(2, currentCoefficientInBinarySystem.Count - i - 1));
-                }
-
-                for (var i = 0; i < lengthOfZeros; i++)
-                {
-                    coefficientTable[currentPoint.Row, currentPoint.Column] = 0;
-
-                    if (currentPoint.Column == 7 && currentPoint.Row == 7)
-                    {
-                        break;
-                    }
-
-                    currentPoint = GetNewPoint(currentPoint);
-                }
-
-                var currentCoefficientLength = currentCoefficientInBinarySystem.Count;
-
-                if (currentCoefficientLength != 0 && currentCoefficientInBinarySystem[0] != 1)
-                {
-                    currentCoefficient = currentCoefficient - (int) Math.Pow(2, currentCoefficientLength) + 1;
-                }
-
-                coefficientTable[currentPoint.Row, currentPoint.Column] = currentCoefficient;
 
                 currentPoint = GetNewPoint(currentPoint);
             }
+
+            var currentCoefficientLength = currentCoefficientInBinarySystem.Count;
+
+            if (currentCoefficientLength != 0 && currentCoefficientInBinarySystem[0] != 1)
+            {
+                currentCoefficient = currentCoefficient - (int) Math.Pow(2, currentCoefficientLength) + 1;
+            }
+
+            coefficientTable[currentPoint.Row, currentPoint.Column] = currentCoefficient;
+
+            currentPoint = GetNewPoint(currentPoint);
 
             currentNode = huffmanTree.Root;
         }
