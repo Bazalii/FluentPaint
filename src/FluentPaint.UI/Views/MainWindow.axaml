@@ -132,6 +132,25 @@
                 HorizontalContentAlignment="Center"
                 DockPanel.Dock="Right"
 
+                Content="Set ignored percent"
+
+                Name="SetIgnoredPercentButton"
+
+                Click="OnSetIgnoredPercentButtonClickCommand">
+            </Button>
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Right"
+
                 Content="Set gamma"
 
                 Name="SetGammaButton"
