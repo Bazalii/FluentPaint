@@ -9,6 +9,7 @@ using FluentPaint.Core.Dithering.Implementations;
 using FluentPaint.Core.Enums;
 using FluentPaint.Core.GammaCorrectors;
 using FluentPaint.Core.Gradient;
+using FluentPaint.Core.Histograms;
 using FluentPaint.Core.Pictures.Handlers.Implementations;
 using ReactiveUI;
 using SkiaSharp;
@@ -37,6 +38,8 @@ public class MainWindowViewModel : ReactiveObject
     private readonly IChannelGetter _channelGetter = new ChannelGetter();
     private readonly GammaCorrecter _gammaCorrecter = new();
     private readonly SmoothHorizontalGradientGenerator _gradientGenerator = new();
+
+    private Histogram _histogram;
 
     private readonly List<string> _colorSpaceNames = new()
         { "RGB", "HSL", "HSV", "YCbCr601", "YCbCr709", "YCoCg", "CMY" };
@@ -193,6 +196,8 @@ public class MainWindowViewModel : ReactiveObject
     public string SelectedDitheringAlgorithm { get; set; } = "Dithering algorithm";
 
     public int SelectedBitDepth { get; set; }
+    
+    public double SelectedIgnoredPercent { get; set; }
 
     public string SelectedGradientParameters { get; set; } = "Gradient parameters";
 
@@ -246,6 +251,20 @@ public class MainWindowViewModel : ReactiveObject
         };
 
         return ditheringAlgorithm.Dithering(_rgbFile, SelectedBitDepth);
+    }
+
+    public List<List<int>> CreateHistogram()
+    {
+        Enum.TryParse(SelectedChannels, out ColorChannels colorChannels);
+        
+        _histogram = new Histogram(colorChannels, _rgbFile);
+        
+        return _histogram.CreateHistograms(SelectedIgnoredPercent);
+    }
+    
+    public SKBitmap CorrectHistogram()
+    {
+        return _histogram.AutomaticCorrection();
     }
 
     /// <summary>
