@@ -50,22 +50,28 @@ public class Histogram
         for (var i = 0; i < 256; i++)
         {
             if (_redHistogram is not null)
+            {
                 _redHistogram[i] = new List<Coordinates>();
+            }
             if (_greenHistogram is not null)
+            {
                 _greenHistogram[i] = new List<Coordinates>();
+            }
             if (_blueHistogram is not null)
+            {
                 _blueHistogram[i] = new List<Coordinates>();
+            }
         }
     }
 
     public List<List<int>> CreateHistograms(double ignoredPercent)
     {
         var pixelsValue = CreatePixelsValue();
-        List<Coordinates> ignorePixels = new();
+        List<Coordinates> ignoredPixels = new();
 
         if (ignoredPercent != 0)
         {
-            ignorePixels = GetIgnorePixel(pixelsValue, ignoredPercent);
+            ignoredPixels = GetIgnorePixel(pixelsValue, ignoredPercent);
         }
 
         for (var y = 0; y < _bitmap.Height; y++)
@@ -74,26 +80,26 @@ public class Histogram
             {
                 var pixel = _bitmap.GetPixel(x, y);
 
-                if (ignorePixels.Any(coordinate => coordinate.X == x && coordinate.Y == y)) continue;
+                if (ignoredPixels.Any(coordinate => coordinate.X == x && coordinate.Y == y)) continue;
 
                 _redHistogram?[pixel.Red].Add(new Coordinates(x, y));
                 _greenHistogram?[pixel.Green].Add(new Coordinates(x, y));
                 _blueHistogram?[pixel.Blue].Add(new Coordinates(x, y));
             }
         }
-        
+
         var resultingHistograms = new List<List<int>>();
-        
+
         if (_redHistogram is not null)
         {
             resultingHistograms.Add(_redHistogram.Select(list => list.Count).ToList());
         }
-        
+
         if (_greenHistogram is not null)
         {
             resultingHistograms.Add(_greenHistogram.Select(list => list.Count).ToList());
         }
-        
+
         if (_blueHistogram is not null)
         {
             resultingHistograms.Add(_blueHistogram.Select(list => list.Count).ToList());
@@ -102,7 +108,7 @@ public class Histogram
         return resultingHistograms;
     }
 
-    public SKBitmap AutomaticCorrection()
+    public SKBitmap Correct()
     {
         var redHistogram = _redHistogram is null ? null : new List<Coordinates>[256];
         var greenHistogram = _greenHistogram is null ? null : new List<Coordinates>[256];
@@ -210,11 +216,11 @@ public class Histogram
 
     private List<Coordinates>[] CreatePixelsValue()
     {
-        var pixelsValue = new List<Coordinates>[766];
+        var pixels = new List<Coordinates>[766];
 
         for (var i = 0; i < 766; i++)
         {
-            pixelsValue[i] = new List<Coordinates>();
+            pixels[i] = new List<Coordinates>();
         }
 
         for (var y = 0; y < _bitmap.Height; y++)
@@ -223,47 +229,47 @@ public class Histogram
             {
                 var pixel = _bitmap.GetPixel(x, y);
 
-                pixelsValue[pixel.Red + pixel.Green + pixel.Blue].Add(new Coordinates(x, y));
+                pixels[pixel.Red + pixel.Green + pixel.Blue].Add(new Coordinates(x, y));
             }
         }
 
-        return pixelsValue;
+        return pixels;
     }
 
     private List<Coordinates> GetIgnorePixel(IReadOnlyList<List<Coordinates>> pixelsValue, double ignorePercent)
     {
-        var ignorePixels = new List<Coordinates>();
-        var ignorePixelsCount = (int) (_bitmap.Height * _bitmap.Width * ignorePercent);
+        var ignoredPixels = new List<Coordinates>();
+        var ignoredPixelsAmount = (int) (_bitmap.Height * _bitmap.Width * ignorePercent);
 
         for (var i = 0; i < 766; i++)
         {
             for (var j = 0; j < pixelsValue[i].Count; j++)
             {
-                if (ignorePixelsCount == 0) break;
+                if (ignoredPixelsAmount == 0) break;
 
-                ignorePixels.Add(pixelsValue[i][j]);
-                ignorePixelsCount--;
+                ignoredPixels.Add(pixelsValue[i][j]);
+                ignoredPixelsAmount--;
             }
 
-            if (ignorePixelsCount == 0) break;
+            if (ignoredPixelsAmount == 0) break;
         }
 
-        ignorePixelsCount = (int) (_bitmap.Height * _bitmap.Width * ignorePercent);
+        ignoredPixelsAmount = (int) (_bitmap.Height * _bitmap.Width * ignorePercent);
 
         for (var i = 765; i >= 0; i--)
         {
             for (var j = 0; j < pixelsValue[i].Count; j++)
             {
-                if (ignorePixelsCount == 0) break;
+                if (ignoredPixelsAmount == 0) break;
 
-                ignorePixels.Add(pixelsValue[i][j]);
-                ignorePixelsCount--;
+                ignoredPixels.Add(pixelsValue[i][j]);
+                ignoredPixelsAmount--;
             }
 
-            if (ignorePixelsCount == 0) break;
+            if (ignoredPixelsAmount == 0) break;
         }
 
-        return ignorePixels;
+        return ignoredPixels;
     }
 
     private int GetMinValue()

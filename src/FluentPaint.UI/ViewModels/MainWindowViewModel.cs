@@ -264,7 +264,7 @@ public class MainWindowViewModel : ReactiveObject
     
     public SKBitmap CorrectHistogram()
     {
-        return _histogram.AutomaticCorrection();
+        return _histogram.Correct();
     }
 
     /// <summary>
