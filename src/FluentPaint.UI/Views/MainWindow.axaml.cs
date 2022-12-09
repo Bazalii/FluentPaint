@@ -97,6 +97,29 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         }
     }
 
+    private async void OnSetIgnoredPercentButtonClickCommand(object sender, RoutedEventArgs e)
+    {
+        var dialog = new IgnoredPercentInputPopupWindow
+        {
+            Width = 700,
+            Height = 300
+        };
+
+        try
+        {
+            ViewModel.SelectedIgnoredPercent = await dialog.ShowDialog<double>(this);
+        }
+        catch (Exception exception)
+        {
+            ShowException(exception.Message);
+        }
+    }
+
+    private void OnCorrectHistogramButtonClickCommand(object sender, RoutedEventArgs e)
+    {
+        MainImage.Source = ViewModel.CorrectHistogram().ConvertToAvaloniaBitmap();
+    }
+
     private async void OnSetGammaButtonClickCommand(object sender, RoutedEventArgs e)
     {
         var dialog = new GammaInputPopupWindow
