@@ -75,6 +75,25 @@
                 HorizontalContentAlignment="Center"
                 DockPanel.Dock="Right"
 
+                Content="Show histogram"
+
+                Name="ShowHistogramButton"
+
+                Click="OnShowHistogramButtonClickCommand">
+            </Button>
+            <Button
+                Width="100"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                DockPanel.Dock="Right"
+
                 Content="Convert"
 
                 Name="ConvertButton"
