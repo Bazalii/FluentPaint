@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
+using FluentPaint.Core.Parsers;
 using FluentPaint.UI.ViewModels;
 
 namespace FluentPaint.UI.Views;
@@ -14,6 +15,8 @@ namespace FluentPaint.UI.Views;
 /// </remarks>
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
+    private ColorChannelsParser _colorChannelsParser = new();
+
     public MainWindow()
     {
         InitializeComponent();
@@ -71,6 +74,26 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         catch (Exception exception)
         {
             ShowException(exception.Message);
+        }
+    }
+
+    private void OnShowHistogramButtonClickCommand(object sender, RoutedEventArgs e)
+    {
+        var histograms = ViewModel.CreateHistogram();
+
+        var histogramNames = _colorChannelsParser.Parse(ViewModel.SelectedChannels);
+
+        for (var i = 0; i < histograms.Count; i++)
+        {
+            var window = new HistogramPopupWindow
+            {
+                Width = 700,
+                Height = 300
+            };
+
+            window.AddHistogram(histograms[i], histogramNames[i]);
+
+            window.Show();
         }
     }
 
