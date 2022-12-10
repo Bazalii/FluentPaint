@@ -264,7 +264,11 @@ public class MainWindowViewModel : ReactiveObject
     
     public SKBitmap CorrectHistogram()
     {
-        return _histogram.Correct();
+        var correctedHistogram = _histogram.Correct();
+        
+        Enum.TryParse(SelectedChannels, out ColorChannels colorChannels);
+        
+        return _channelGetter.GetChannels(correctedHistogram, colorChannels);
     }
 
     /// <summary>
