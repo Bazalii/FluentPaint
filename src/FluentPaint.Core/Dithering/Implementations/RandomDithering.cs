@@ -18,8 +18,8 @@ public class RandomDithering : IDithering
                 var pixel = bitmap.GetPixel(x, y);
 
                 var randomRed = _random.Next(GetLeftColor(pixel.Red, bitDepth), GetRightColor(pixel.Red, bitDepth));
-                var randomGreen = _random.Next(GetLeftColor(pixel.Red, bitDepth), GetRightColor(pixel.Red, bitDepth));
-                var randomBlue = _random.Next(GetLeftColor(pixel.Red, bitDepth), GetRightColor(pixel.Red, bitDepth));
+                var randomGreen = _random.Next(GetLeftColor(pixel.Green, bitDepth), GetRightColor(pixel.Green, bitDepth));
+                var randomBlue = _random.Next(GetLeftColor(pixel.Blue, bitDepth), GetRightColor(pixel.Blue, bitDepth));
 
                 var red = CalculateNewPixelComponent(randomRed, pixel.Red, bitDepth);
                 var green = CalculateNewPixelComponent(randomGreen, pixel.Green, bitDepth);
