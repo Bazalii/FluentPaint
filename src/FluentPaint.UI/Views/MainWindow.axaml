@@ -8,8 +8,8 @@
         Icon="/Assets/application-logo.png"
         Title="FluentPaint"
         Background="#FFFFFF"
-        Width="1500"
-        Height="650">
+        Width="1200"
+        Height="700">
 
     <Design.DataContext>
         <vm:MainWindowViewModel />
@@ -23,9 +23,14 @@
             Source="{Binding RgbFile}">
         </Image>
 
-        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="#565656">
+        <Grid
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Stretch"
+            Background="#565656"
+            ColumnDefinitions="150*,150*,150*,150*,150*"
+            RowDefinitions="Auto,Auto,Auto">
             <Button
-                Width="100"
+                Width="150"
                 Height="35"
                 Margin="10"
                 CornerRadius="10"
@@ -35,7 +40,10 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                DockPanel.Dock="Left"
+                HorizontalAlignment="Center"
+
+                Grid.Column="0"
+                Grid.Row="0"
 
                 Content="Load"
 
@@ -44,7 +52,7 @@
                 Click="OnLoadButtonClickCommand">
             </Button>
             <Button
-                Width="100"
+                Width="150"
                 Height="35"
                 Margin="10"
                 CornerRadius="10"
@@ -54,7 +62,10 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                DockPanel.Dock="Right"
+                HorizontalAlignment="Center"
+
+                Grid.Column="0"
+                Grid.Row="1"
 
                 Content="Save"
 
@@ -62,82 +73,7 @@
 
                 Click="OnSaveButtonClickCommand">
             </Button>
-            <Button
-                Width="100"
-                Height="35"
-                Margin="10"
-                CornerRadius="10"
 
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                DockPanel.Dock="Right"
-
-                Content="Convert"
-
-                Name="ConvertButton"
-
-                Click="OnConvertButtonClickCommand">
-            </Button>
-            <Button
-                Width="100"
-                Height="35"
-                Margin="10"
-                CornerRadius="10"
-
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                DockPanel.Dock="Right"
-
-                Content="Assign"
-
-                Name="AssignButton"
-
-                Click="OnAssignButtonClickCommand">
-            </Button>
-            <Button
-                Width="100"
-                Height="35"
-                Margin="10"
-                CornerRadius="10"
-
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                DockPanel.Dock="Right"
-
-                Content="Set gamma"
-
-                Name="SetGammaButton"
-
-                Click="OnSetGammaButtonClickCommand">
-            </Button>
-            <Button
-                Width="120"
-                Height="35"
-                Margin="10"
-                CornerRadius="10"
-
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                DockPanel.Dock="Right"
-
-                Content="Apply dithering"
-
-                Name="ApplyDitheringButton"
-
-                Click="ApplyDitheringButtonClickCommand">
-            </Button>
             <ComboBox
                 Width="150"
                 Height="35"
@@ -149,7 +85,10 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
+
+                Grid.Column="1"
+                Grid.Row="0"
 
                 PlaceholderText="Space choosing"
 
@@ -159,7 +98,7 @@
                 SelectionBoxItem="{Binding SelectedSpace, Mode=OneWayToSource}">
             </ComboBox>
             <ComboBox
-                Width="130"
+                Width="150"
                 Height="35"
                 Margin="10"
                 CornerRadius="10"
@@ -169,7 +108,10 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
+
+                Grid.Column="1"
+                Grid.Row="1"
 
                 PlaceholderText="Channels"
 
@@ -180,7 +122,7 @@
                 SelectionChanged="OnChannelsChange">
             </ComboBox>
             <ComboBox
-                Width="130"
+                Width="150"
                 Height="35"
                 Margin="10"
                 CornerRadius="10"
@@ -190,47 +132,10 @@
                 FontFamily="Roboto"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
 
-                PlaceholderText="Dithering"
-
-                Name="DitheringAlgorithmChoosing"
-
-                Items="{Binding DitheringAlgorithms}"
-                SelectionBoxItem="{Binding SelectedDitheringAlgorithm, Mode=OneWayToSource}">
-            </ComboBox>
-            <ComboBox
-                Width="110"
-                Height="35"
-                Margin="10"
-                CornerRadius="10"
-
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                HorizontalAlignment="Left"
-
-                PlaceholderText="Bit depth"
-
-                Name="BitDepthChoosing"
-
-                Items="{Binding BitDepths}"
-                SelectionBoxItem="{Binding SelectedBitDepth, Mode=OneWayToSource}">
-            </ComboBox>
-            <ComboBox
-                Width="130"
-                Height="35"
-                Margin="10"
-                CornerRadius="10"
-
-                Background="White"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                HorizontalAlignment="Left"
+                Grid.Column="1"
+                Grid.Row="2"
 
                 PlaceholderText="Gradient"
 
@@ -240,7 +145,210 @@
                 SelectionBoxItem="{Binding SelectedGradientParameters, Mode=OneWayToSource}"
                 SelectionChanged="OnGradientParametersChange">
             </ComboBox>
-        </DockPanel>
+
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="2"
+                Grid.Row="0"
+
+                Content="Set ignored percent"
+
+                Name="SetIgnoredPercentButton"
+
+                Click="OnSetIgnoredPercentButtonClickCommand">
+            </Button>
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="2"
+                Grid.Row="1"
+
+                Content="Correct histogram"
+
+                Name="CorrectHistogramButton"
+
+                Click="OnCorrectHistogramButtonClickCommand">
+            </Button>
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="2"
+                Grid.Row="2"
+
+                Content="Show histogram"
+
+                Name="ShowHistogramButton"
+
+                Click="OnShowHistogramButtonClickCommand">
+            </Button>
+
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="3"
+                Grid.Row="0"
+
+                Content="Set gamma"
+
+                Name="SetGammaButton"
+
+                Click="OnSetGammaButtonClickCommand">
+            </Button>
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="3"
+                Grid.Row="1"
+
+                Content="Convert"
+
+                Name="ConvertButton"
+
+                Click="OnConvertButtonClickCommand">
+            </Button>
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="3"
+                Grid.Row="2"
+
+                Content="Assign"
+
+                Name="AssignButton"
+
+                Click="OnAssignButtonClickCommand">
+            </Button>
+
+            <ComboBox
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="4"
+                Grid.Row="0"
+
+                PlaceholderText="Dithering"
+
+                Name="DitheringAlgorithmChoosing"
+
+                Items="{Binding DitheringAlgorithms}"
+                SelectionBoxItem="{Binding SelectedDitheringAlgorithm, Mode=OneWayToSource}">
+            </ComboBox>
+            <ComboBox
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="4"
+                Grid.Row="1"
+
+                PlaceholderText="Bit depth"
+
+                Name="BitDepthChoosing"
+
+                Items="{Binding BitDepths}"
+                SelectionBoxItem="{Binding SelectedBitDepth, Mode=OneWayToSource}">
+            </ComboBox>
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="4"
+                Grid.Row="2"
+
+                Content="Apply dithering"
+
+                Name="ApplyDitheringButton"
+
+                Click="ApplyDitheringButtonClickCommand">
+            </Button>
+        </Grid>
     </Panel>
 
 
