@@ -77,6 +77,7 @@ public static class PictureFactory
         {
             PictureType.P5 => new PgmReader(),
             PictureType.P6 => new PpmReader(),
+            PictureType.PNG => new PngReader(),
             PictureType.JPEG => new JpegReader(),
             _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
