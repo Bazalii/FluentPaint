@@ -18,24 +18,26 @@ public class PngReader : IPictureReader
     public SKBitmap ReadImageData(FileStream fileStream)
     {
         var buffer = new byte[8];
-        fileStream.Read(buffer);
-
+        var pointer = 0;
+        
+        pointer += fileStream.Read(buffer);
+        
         buffer = new byte[4];
 
-        while (true)
+        while (pointer < fileStream.Length)
         {
-            fileStream.Read(buffer);
+            pointer += fileStream.Read(buffer);
             var currentSectionLength = int.Parse(Convert.ToHexString(buffer),
                 System.Globalization.NumberStyles.HexNumber);
 
-            fileStream.Read(buffer);
+            pointer += fileStream.Read(buffer);
             var currentSection = new ASCIIEncoding().GetString(buffer);
 
             var sectionBuffer = new byte[currentSectionLength];
-            fileStream.Read(sectionBuffer);
+            pointer += fileStream.Read(sectionBuffer);
 
             var cyclicRedundancyCodeBuffer = new byte[4];
-            fileStream.Read(cyclicRedundancyCodeBuffer);
+            pointer += fileStream.Read(cyclicRedundancyCodeBuffer);
 
             switch (currentSection)
             {
@@ -48,11 +50,38 @@ public class PngReader : IPictureReader
                 case "gAMA":
                     break;
                 case "IEND":
-                    break;
+                    _stride = _width * _bytesPerPixel;
+
+                    var outputStream = new MemoryStream();
+                    var compressedStream = new MemoryStream(_encodedImage.ToArray());
+                    var inputStream = new InflaterInputStream(compressedStream);
+                    inputStream.CopyTo(outputStream);
+
+                    GetImage(outputStream.ToArray());
+
+                    var imagePointer = 0;
+
+                    var bitmap = new SKBitmap(_width, _height);
+                    
+                    for (var y = 0; y < _height; y++)
+                    {
+                        for (var x = 0; x < _width; x++)
+                        {
+                            bitmap.SetPixel(x, y, new SKColor(
+                                _decodedImage[imagePointer],
+                                _decodedImage[imagePointer + 1],
+                                _decodedImage[imagePointer + 2])
+                            );
+
+                            imagePointer += 3;
+                        }
+                    }
+
+                    return bitmap;
             }
         }
 
-        return null;
+        throw new Exception("Something went wrong with png file!");
     }
 
     private void ReadHeader(byte[] section)
@@ -106,10 +135,10 @@ public class PngReader : IPictureReader
                 var reconstructedPixel = filter switch
                 {
                     0 => filteredByte,
-                    1 => filteredByte + ProcessFirstReconstruction(i, j),
-                    2 => filteredByte + ProcessSecondReconstruction(i, j),
-                    3 => filteredByte + (ProcessFirstReconstruction(i, j) + ProcessSecondReconstruction(i, j)) / 2,
-                    4 => filteredByte + Predict(ProcessFirstReconstruction(i, j), ProcessSecondReconstruction(i, j), ProcessThirdReconstruction(i, j)),
+                    1 => filteredByte + ReconstructionA(i, j),
+                    2 => filteredByte + ReconstructionB(i, j),
+                    3 => filteredByte + (ReconstructionA(i, j) + ReconstructionB(i, j)) / 2,
+                    4 => filteredByte + Predict(ReconstructionA(i, j), ReconstructionB(i, j), ReconstructionC(i, j)),
                     _ => throw new Exception("Filter is not supported!")
                 };
 
@@ -118,21 +147,21 @@ public class PngReader : IPictureReader
         }
     }
 
-    private byte ProcessFirstReconstruction(int reconstructedIndex, int alongScanlineIndex)
+    private byte ReconstructionA(int reconstructedIndex, int alongScanlineIndex)
     {
         return alongScanlineIndex >= _bytesPerPixel
             ? _decodedImage[reconstructedIndex * _stride + alongScanlineIndex - _bytesPerPixel]
             : (byte) 0;
     }
 
-    private byte ProcessSecondReconstruction(int reconstructedIndex, int alongScanlineIndex)
+    private byte ReconstructionB(int reconstructedIndex, int alongScanlineIndex)
     {
         return reconstructedIndex > 0
             ? _decodedImage[(reconstructedIndex - 1) * _stride + alongScanlineIndex]
             : (byte) 0;
     }
 
-    private byte ProcessThirdReconstruction(int reconstructedIndex, int alongScanlineIndex)
+    private byte ReconstructionC(int reconstructedIndex, int alongScanlineIndex)
     {
         return reconstructedIndex > 0 && alongScanlineIndex >= _bytesPerPixel
             ? _decodedImage[(reconstructedIndex - 1) * _stride + alongScanlineIndex - _bytesPerPixel]
