@@ -17,7 +17,7 @@
 
     <Panel>
         <Image
-            Margin="20"
+            Margin="10 10 10 170"
             Name="MainImage"
 
             Source="{Binding RgbFile}">
