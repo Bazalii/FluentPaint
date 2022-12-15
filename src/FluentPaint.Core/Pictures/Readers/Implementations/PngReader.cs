@@ -89,6 +89,35 @@ public class PngReader : IPictureReader
         }
     }
 
+    private void GetImage(byte[] imageData)
+    {
+        var imagePointer = 0;
+
+        for (var i = 0; i < _height; i++)
+        {
+            var filter = imageData[imagePointer];
+            imagePointer += 1;
+
+            for (var j = 0; j < _stride; j++)
+            {
+                var filteredByte = imageData[imagePointer];
+                imagePointer += 1;
+
+                var reconstructedPixel = filter switch
+                {
+                    0 => filteredByte,
+                    1 => filteredByte + ProcessFirstReconstruction(i, j),
+                    2 => filteredByte + ProcessSecondReconstruction(i, j),
+                    3 => filteredByte + (ProcessFirstReconstruction(i, j) + ProcessSecondReconstruction(i, j)) / 2,
+                    4 => filteredByte + Predict(ProcessFirstReconstruction(i, j), ProcessSecondReconstruction(i, j), ProcessThirdReconstruction(i, j)),
+                    _ => throw new Exception("Filter is not supported!")
+                };
+
+                _decodedImage.Add((byte) (reconstructedPixel & 0xff));
+            }
+        }
+    }
+
     private byte ProcessFirstReconstruction(int reconstructedIndex, int alongScanlineIndex)
     {
         return alongScanlineIndex >= _bytesPerPixel
