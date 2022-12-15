@@ -1,14 +1,19 @@
 ﻿using System.Text;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Pictures.Readers.Implementations;
 
 public class PngReader : IPictureReader
 {
+    private int _bytesPerPixel = 3;
     private int _width;
     private int _height;
     private int _bitDepth;
     private int _colorType;
+    private int _stride;
+    private List<byte> _encodedImage = new();
+    private List<byte> _decodedImage = new();
 
     public SKBitmap ReadImageData(FileStream fileStream)
     {
@@ -16,11 +21,8 @@ public class PngReader : IPictureReader
         fileStream.Read(buffer);
 
         buffer = new byte[4];
-        var pointer = 8;
 
-        var bitmap = new SKBitmap();
-
-        while (pointer < fileStream.Length)
+        while (true)
         {
             fileStream.Read(buffer);
             var currentSectionLength = int.Parse(Convert.ToHexString(buffer),
@@ -29,18 +31,19 @@ public class PngReader : IPictureReader
             fileStream.Read(buffer);
             var currentSection = new ASCIIEncoding().GetString(buffer);
 
+            var sectionBuffer = new byte[currentSectionLength];
+            fileStream.Read(sectionBuffer);
+
+            var cyclicRedundancyCodeBuffer = new byte[4];
+            fileStream.Read(cyclicRedundancyCodeBuffer);
+
             switch (currentSection)
             {
                 case "IHDR":
-                    var sectionBuffer = new byte[currentSectionLength];
-
-                    fileStream.Read(sectionBuffer);
-
                     ReadHeader(sectionBuffer);
                     break;
-                case "PLTE":
-                    break;
                 case "IDAT":
+                    _encodedImage.AddRange(sectionBuffer);
                     break;
                 case "gAMA":
                     break;
@@ -49,7 +52,7 @@ public class PngReader : IPictureReader
             }
         }
 
-        return bitmap;
+        return null;
     }
 
     private void ReadHeader(byte[] section)
@@ -58,28 +61,68 @@ public class PngReader : IPictureReader
         _height = int.Parse(Convert.ToHexString(section[4..8]), System.Globalization.NumberStyles.HexNumber);
         _bitDepth = int.Parse(Convert.ToHexString(new[] { section[8] }), System.Globalization.NumberStyles.HexNumber);
         _colorType = int.Parse(Convert.ToHexString(new[] { section[9] }), System.Globalization.NumberStyles.HexNumber);
-        var compressionMethod = int.Parse(Convert.ToHexString(new[] { section[10] }), System.Globalization.NumberStyles.HexNumber);
-        var filterMethod = int.Parse(Convert.ToHexString(new[] { section[10] }), System.Globalization.NumberStyles.HexNumber);
-        var interlaceMethod = int.Parse(Convert.ToHexString(new[] { section[10] }), System.Globalization.NumberStyles.HexNumber);
+        var compressionMethod = int.Parse(Convert.ToHexString(new[] { section[10] }),
+            System.Globalization.NumberStyles.HexNumber);
+        var filterMethod = int.Parse(Convert.ToHexString(new[] { section[10] }),
+            System.Globalization.NumberStyles.HexNumber);
+        var interlaceMethod = int.Parse(Convert.ToHexString(new[] { section[10] }),
+            System.Globalization.NumberStyles.HexNumber);
 
         if (_bitDepth != 8)
         {
             throw new Exception("Bit depth should be 8!");
         }
-        
+
         if (compressionMethod != 0)
         {
             throw new Exception("Only deflate is allowed!");
         }
-        
+
         if (filterMethod != 0)
         {
             throw new Exception("Only adaptive filtering is allowed!");
         }
-        
+
         if (interlaceMethod != 0)
         {
             throw new Exception("Interlacing is not allowed!");
         }
+    }
+
+    private byte ProcessFirstReconstruction(int reconstructedIndex, int alongScanlineIndex)
+    {
+        return alongScanlineIndex >= _bytesPerPixel
+            ? _decodedImage[reconstructedIndex * _stride + alongScanlineIndex - _bytesPerPixel]
+            : (byte) 0;
+    }
+
+    private byte ProcessSecondReconstruction(int reconstructedIndex, int alongScanlineIndex)
+    {
+        return reconstructedIndex > 0
+            ? _decodedImage[(reconstructedIndex - 1) * _stride + alongScanlineIndex]
+            : (byte) 0;
+    }
+
+    private byte ProcessThirdReconstruction(int reconstructedIndex, int alongScanlineIndex)
+    {
+        return reconstructedIndex > 0 && alongScanlineIndex >= _bytesPerPixel
+            ? _decodedImage[(reconstructedIndex - 1) * _stride + alongScanlineIndex - _bytesPerPixel]
+            : (byte) 0;
+    }
+
+    private byte Predict(byte firstByte, byte secondByte, byte thirdByte)
+    {
+        var intermediateResult = firstByte + secondByte - thirdByte;
+
+        var firstIntermediateResult = Math.Abs(intermediateResult - firstByte);
+        var secondIntermediateResult = Math.Abs(intermediateResult - secondByte);
+        var thirdIntermediateResult = Math.Abs(intermediateResult - thirdByte);
+
+        if (firstIntermediateResult <= secondIntermediateResult && firstIntermediateResult <= thirdIntermediateResult)
+        {
+            return firstByte;
+        }
+
+        return secondIntermediateResult <= thirdIntermediateResult ? secondByte : thirdByte;
     }
 }
