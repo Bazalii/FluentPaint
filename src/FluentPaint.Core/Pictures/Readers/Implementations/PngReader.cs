@@ -12,6 +12,9 @@ public class PngReader : IPictureReader
     private int _bitDepth;
     private int _colorType;
     private int _stride;
+
+    private byte[,]? _palette;
+
     private List<byte> _encodedImage = new();
     private List<byte> _decodedImage = new();
 
@@ -19,9 +22,9 @@ public class PngReader : IPictureReader
     {
         var buffer = new byte[8];
         var pointer = 0;
-        
+
         pointer += fileStream.Read(buffer);
-        
+
         buffer = new byte[4];
 
         while (pointer < fileStream.Length)
@@ -49,7 +52,18 @@ public class PngReader : IPictureReader
                     break;
                 case "gAMA":
                     break;
+                case "PLTE":
+                    ReadPalette(sectionBuffer);
+                    break;
                 case "IEND":
+                    _bytesPerPixel = _colorType switch
+                    {
+                        0 => 1,
+                        2 => 3,
+                        3 => 1,
+                        _ => throw new ArgumentException("Color type is not supported!")
+                    };
+
                     _stride = _width * _bytesPerPixel;
 
                     var outputStream = new MemoryStream();
@@ -59,25 +73,13 @@ public class PngReader : IPictureReader
 
                     GetImage(outputStream.ToArray());
 
-                    var imagePointer = 0;
-
-                    var bitmap = new SKBitmap(_width, _height);
-                    
-                    for (var y = 0; y < _height; y++)
+                    return _colorType switch
                     {
-                        for (var x = 0; x < _width; x++)
-                        {
-                            bitmap.SetPixel(x, y, new SKColor(
-                                _decodedImage[imagePointer],
-                                _decodedImage[imagePointer + 1],
-                                _decodedImage[imagePointer + 2])
-                            );
-
-                            imagePointer += 3;
-                        }
-                    }
-
-                    return bitmap;
+                        0 => WriteGrayScaleImage(),
+                        2 => WriteTrueColorImage(),
+                        3 => WriteIndexedColorImage(),
+                        _ => throw new ArgumentException("Color type is not supported!")
+                    };
             }
         }
 
@@ -115,6 +117,22 @@ public class PngReader : IPictureReader
         if (interlaceMethod != 0)
         {
             throw new Exception("Interlacing is not allowed!");
+        }
+    }
+
+    private void ReadPalette(byte[] section)
+    {
+        _palette = new byte[(int) Math.Pow(2, _bitDepth), 3];
+
+        var rowPointer = 0;
+
+        for (var i = 0; i < section.Length; i += 3)
+        {
+            _palette[rowPointer, 0] = section[i];
+            _palette[rowPointer, 1] = section[i + 1];
+            _palette[rowPointer, 2] = section[i + 2];
+
+            rowPointer += 1;
         }
     }
 
@@ -182,5 +200,74 @@ public class PngReader : IPictureReader
         }
 
         return secondIntermediateResult <= thirdIntermediateResult ? secondByte : thirdByte;
+    }
+
+    private SKBitmap WriteGrayScaleImage()
+    {
+        var bitmap = new SKBitmap(_width, _height);
+
+        var imagePointer = 0;
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                var color = _decodedImage[imagePointer];
+
+                bitmap.SetPixel(x, y, new SKColor(color, color, color));
+
+                imagePointer += 1;
+            }
+        }
+
+        return bitmap;
+    }
+
+    private SKBitmap WriteTrueColorImage()
+    {
+        var bitmap = new SKBitmap(_width, _height);
+
+        var imagePointer = 0;
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                bitmap.SetPixel(x, y, new SKColor(
+                    _decodedImage[imagePointer],
+                    _decodedImage[imagePointer + 1],
+                    _decodedImage[imagePointer + 2])
+                );
+
+                imagePointer += 3;
+            }
+        }
+
+        return bitmap;
+    }
+
+    private SKBitmap WriteIndexedColorImage()
+    {
+        var bitmap = new SKBitmap(_width, _height);
+
+        var imagePointer = 0;
+
+        for (var y = 0; y < _height; y++)
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                var paletteRowIndex = _decodedImage[imagePointer];
+
+                bitmap.SetPixel(x, y, new SKColor(
+                    _palette[paletteRowIndex, 0],
+                    _palette[paletteRowIndex, 1],
+                    _palette[paletteRowIndex, 2])
+                );
+
+                imagePointer += 1;
+            }
+        }
+
+        return bitmap;
     }
 }
