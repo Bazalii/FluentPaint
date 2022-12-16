@@ -12,13 +12,14 @@ public class PngReader : IPictureReader
     private int _bitDepth;
     private int _colorType;
     private int _stride;
+    private float _gamma = 1.0f;
 
     private byte[,]? _palette;
 
     private List<byte> _encodedImage = new();
     private List<byte> _decodedImage = new();
 
-    public SKBitmap ReadImageData(FileStream fileStream)
+    public FluentBitmap ReadImageData(FileStream fileStream)
     {
         var buffer = new byte[8];
         var pointer = 0;
@@ -30,8 +31,9 @@ public class PngReader : IPictureReader
         while (pointer < fileStream.Length)
         {
             pointer += fileStream.Read(buffer);
-            var currentSectionLength = int.Parse(Convert.ToHexString(buffer),
-                System.Globalization.NumberStyles.HexNumber);
+
+            Array.Reverse(buffer);
+            var currentSectionLength = BitConverter.ToInt32(buffer, 0);
 
             pointer += fileStream.Read(buffer);
             var currentSection = new ASCIIEncoding().GetString(buffer);
@@ -51,6 +53,8 @@ public class PngReader : IPictureReader
                     _encodedImage.AddRange(sectionBuffer);
                     break;
                 case "gAMA":
+                    Array.Reverse(sectionBuffer);
+                    _gamma = (float) BitConverter.ToInt32(sectionBuffer, 0) / 100000;
                     break;
                 case "PLTE":
                     ReadPalette(sectionBuffer);
@@ -88,16 +92,13 @@ public class PngReader : IPictureReader
 
     private void ReadHeader(byte[] section)
     {
-        _width = int.Parse(Convert.ToHexString(section[..4]), System.Globalization.NumberStyles.HexNumber);
-        _height = int.Parse(Convert.ToHexString(section[4..8]), System.Globalization.NumberStyles.HexNumber);
-        _bitDepth = int.Parse(Convert.ToHexString(new[] { section[8] }), System.Globalization.NumberStyles.HexNumber);
-        _colorType = int.Parse(Convert.ToHexString(new[] { section[9] }), System.Globalization.NumberStyles.HexNumber);
-        var compressionMethod = int.Parse(Convert.ToHexString(new[] { section[10] }),
-            System.Globalization.NumberStyles.HexNumber);
-        var filterMethod = int.Parse(Convert.ToHexString(new[] { section[10] }),
-            System.Globalization.NumberStyles.HexNumber);
-        var interlaceMethod = int.Parse(Convert.ToHexString(new[] { section[10] }),
-            System.Globalization.NumberStyles.HexNumber);
+        _width = BitConverter.ToInt32(section[..4].Reverse().ToArray(), 0);
+        _height = BitConverter.ToInt32(section[4..8].Reverse().ToArray(), 0);
+        _bitDepth = BitConverter.ToInt32(new byte[] { section[8], 0, 0, 0 }, 0);
+        _colorType = BitConverter.ToInt32(new byte[] { section[9], 0, 0, 0 }, 0);
+        var compressionMethod = BitConverter.ToInt32(new byte[] { section[10], 0, 0, 0 }, 0);
+        var filterMethod = BitConverter.ToInt32(new byte[] { section[11], 0, 0, 0 }, 0);
+        var interlaceMethod = BitConverter.ToInt32(new byte[] { section[12], 0, 0, 0 }, 0);
 
         if (_bitDepth != 8)
         {
@@ -202,9 +203,9 @@ public class PngReader : IPictureReader
         return secondIntermediateResult <= thirdIntermediateResult ? secondByte : thirdByte;
     }
 
-    private SKBitmap WriteGrayScaleImage()
+    private FluentBitmap WriteGrayScaleImage()
     {
-        var bitmap = new SKBitmap(_width, _height);
+        var bitmap = new FluentBitmap(_width, _height);
 
         var imagePointer = 0;
 
@@ -220,12 +221,14 @@ public class PngReader : IPictureReader
             }
         }
 
+        bitmap.Gamma = _gamma;
+
         return bitmap;
     }
 
-    private SKBitmap WriteTrueColorImage()
+    private FluentBitmap WriteTrueColorImage()
     {
-        var bitmap = new SKBitmap(_width, _height);
+        var bitmap = new FluentBitmap(_width, _height);
 
         var imagePointer = 0;
 
@@ -243,12 +246,14 @@ public class PngReader : IPictureReader
             }
         }
 
+        bitmap.Gamma = _gamma;
+
         return bitmap;
     }
 
-    private SKBitmap WriteIndexedColorImage()
+    private FluentBitmap WriteIndexedColorImage()
     {
-        var bitmap = new SKBitmap(_width, _height);
+        var bitmap = new FluentBitmap(_width, _height);
 
         var imagePointer = 0;
 
@@ -267,6 +272,8 @@ public class PngReader : IPictureReader
                 imagePointer += 1;
             }
         }
+
+        bitmap.Gamma = _gamma;
 
         return bitmap;
     }
