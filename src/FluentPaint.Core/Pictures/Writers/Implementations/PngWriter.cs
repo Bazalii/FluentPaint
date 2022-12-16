@@ -16,22 +16,23 @@ public class PngWriter : IPictureWriter
     private const byte BytesPerPixel = 3;
 
     private FileStream _fileStream;
-    private SKBitmap _bitmap;
+    private FluentBitmap _bitmap;
 
-    public void WriteImageData(FileStream fileStream, SKBitmap bitmap, PictureType type)
+    public void WriteImageData(FileStream fileStream, FluentBitmap bitmap, PictureType type)
     {
         _fileStream = fileStream;
         _bitmap = bitmap;
 
         WriteSignature();
         WriteHeader();
+        WriteGamma();
         WriteImage();
     }
 
     private void WriteSignature()
     {
         var signature = new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 };
-        
+
         _fileStream.Write(signature);
     }
 
@@ -51,6 +52,27 @@ public class PngWriter : IPictureWriter
         section.Add(InterlaceMethod);
 
         var sectionLength = BitConverter.GetBytes(section.Count - 4).Reverse();
+
+        var cyclicRedundancyCodeCalculator = new Crc32();
+        cyclicRedundancyCodeCalculator.Update(section.ToArray());
+
+        var cyclicRedundancyCode = BitConverter.GetBytes((int) cyclicRedundancyCodeCalculator.Value).Reverse();
+
+        _fileStream.Write(sectionLength.ToArray());
+        _fileStream.Write(section.ToArray());
+        _fileStream.Write(cyclicRedundancyCode.ToArray());
+    }
+
+    private void WriteGamma()
+    {
+        var sectionName = new ASCIIEncoding().GetBytes("gAMA");
+
+        var section = new List<byte>();
+
+        section.AddRange(sectionName);
+        section.AddRange(BitConverter.GetBytes((int) (_bitmap.Gamma * 100000)).Reverse());
+
+        var sectionLength = BitConverter.GetBytes(4).Reverse();
 
         var cyclicRedundancyCodeCalculator = new Crc32();
         cyclicRedundancyCodeCalculator.Update(section.ToArray());
@@ -105,10 +127,10 @@ public class PngWriter : IPictureWriter
         imageSectionCyclicRedundancyCodeCalculator.Update(section.ToArray());
         var imageSectionRedundancyCode =
             BitConverter.GetBytes((int) imageSectionCyclicRedundancyCodeCalculator.Value).Reverse();
-        
+
         var endFileSectionName = new ASCIIEncoding().GetBytes("IEND");
         var endFileSectionLength = BitConverter.GetBytes(0);
-        
+
         var endFileSectionCyclicRedundancyCodeCalculator = new Crc32();
         endFileSectionCyclicRedundancyCodeCalculator.Update(endFileSectionName);
         var endFileSectionCyclicRedundancyCode =
@@ -121,7 +143,7 @@ public class PngWriter : IPictureWriter
         _fileStream.Write(endFileSectionLength);
         _fileStream.Write(endFileSectionName);
         _fileStream.Write(endFileSectionCyclicRedundancyCode.ToArray());
-        
+
         _fileStream.Close();
     }
 }
