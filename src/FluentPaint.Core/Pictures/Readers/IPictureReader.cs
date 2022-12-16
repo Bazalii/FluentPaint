@@ -14,5 +14,5 @@ public interface IPictureReader
     /// <returns>
     /// Filled bitmap.
     /// </returns>
-    SKBitmap ReadImageData(FileStream fileStream);
+    FluentBitmap ReadImageData(FileStream fileStream);
 }

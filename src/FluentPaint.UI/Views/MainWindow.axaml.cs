@@ -43,6 +43,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         try
         {
             ViewModel.LoadingFilePath = await dialog.ShowDialog<string>(this);
+            ViewModel.CurrentGamma = ViewModel.RgbFile.Gamma;
             MainImage.Source = ViewModel.RgbFile.ConvertToAvaloniaBitmap();
         }
         catch (Exception exception)

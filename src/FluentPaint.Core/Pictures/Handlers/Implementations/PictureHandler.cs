@@ -15,9 +15,9 @@ public class PictureHandler : IPictureHandler
     /// Thrown when brightness value not equal to 255.
     /// </exception>
     /// <returns>
-    /// <see cref="SKBitmap"/> with read pixels.
+    /// <see cref="FluentBitmap"/> with read pixels.
     /// </returns>
-    public SKBitmap Read(string filePath)
+    public FluentBitmap Read(string filePath)
     {
         var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
@@ -36,7 +36,7 @@ public class PictureHandler : IPictureHandler
     /// <exception cref="Exception">
     /// Thrown when provided picture format is incorrect.
     /// </exception>
-    public void Write(string filePath, SKBitmap bitmap)
+    public void Write(string filePath, FluentBitmap bitmap)
     {
         var type = PictureFactory.GetType(filePath);
 

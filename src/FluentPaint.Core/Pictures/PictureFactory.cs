@@ -54,7 +54,6 @@ public static class PictureFactory
             PictureType.P5 => new PgmWriter(),
             PictureType.P6 => new PpmWriter(),
             PictureType.PNG => new PngWriter(),
-            PictureType.JPEG => new JpegWriter(),
             _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
 

@@ -1,3 +1,4 @@
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Converters.Implementations;
@@ -17,13 +18,13 @@ public class YCbCr601Converter : IConverter
     /// <summary>
     /// Converts picture from RGB to YCbCr601.
     /// </summary>
-    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <param name="bitmap"> <see cref="FluentBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
-    public SKBitmap FromRgb(SKBitmap bitmap)
+    public FluentBitmap FromRgb(FluentBitmap bitmap)
     {
-        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var convertedBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -55,13 +56,13 @@ public class YCbCr601Converter : IConverter
     /// <summary>
     /// Converts picture from YCbCr601 to RGB.
     /// </summary>
-    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <param name="bitmap"> <see cref="FluentBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
-    public SKBitmap ToRgb(SKBitmap bitmap)
+    public FluentBitmap ToRgb(FluentBitmap bitmap)
     {
-        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var convertedBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {

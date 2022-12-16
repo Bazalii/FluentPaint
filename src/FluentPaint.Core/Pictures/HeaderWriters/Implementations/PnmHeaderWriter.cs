@@ -6,7 +6,7 @@ namespace FluentPaint.Core.Pictures.HeaderWriters.Implementations;
 
 public class PnmHeaderWriter : IHeaderWriter
 {
-    public void Write(FileStream fileStream, SKBitmap bitmap, PictureType type)
+    public void Write(FileStream fileStream, FluentBitmap bitmap, PictureType type)
     {
         WriteLine(fileStream, type.ToString());
         WriteLine(fileStream, bitmap.Width + " " + bitmap.Height);
