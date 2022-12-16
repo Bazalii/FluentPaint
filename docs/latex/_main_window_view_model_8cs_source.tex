@@ -22,8 +22,8 @@
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00021}00021 }
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00022}\mbox{\hyperlink{class_main_window_view_model_ae1fc1a5ae74ea3be38c48edd20e1a92b}{00022}}     \textcolor{keyword}{private} \textcolor{keywordtype}{string} \_selectedSpace = \textcolor{stringliteral}{"{}Space choosing"{}};}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00023}00023 }
-\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00024}\mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{00024}}     \textcolor{keyword}{private} SKBitmap? \mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{\_rgbFile}};}
-\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00025}\mbox{\hyperlink{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}{00025}}     \textcolor{keyword}{private} SKBitmap \_currentColorSpaceFile = \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00024}\mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{00024}}     \textcolor{keyword}{private} FluentBitmap? \mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{\_rgbFile}};}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00025}\mbox{\hyperlink{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}{00025}}     \textcolor{keyword}{private} FluentBitmap \_currentColorSpaceFile = \textcolor{keyword}{new}();}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00026}00026 }
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00027}\mbox{\hyperlink{class_main_window_view_model_a7e46d3718f59fea20534098e4452dee0}{00027}}     \textcolor{keyword}{private} readonly \mbox{\hyperlink{class_converter_factory}{ConverterFactory}} \_converterFactory = \textcolor{keyword}{new}();}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00028}\mbox{\hyperlink{class_main_window_view_model_a17a6cd5107e4ddd35882d9d00f6cbe45}{00028}}     \textcolor{keyword}{private} readonly \mbox{\hyperlink{interface_i_channel_getter}{IChannelGetter}} \_channelGetter = \textcolor{keyword}{new} \mbox{\hyperlink{class_channel_getter}{ChannelGetter}}();}
@@ -76,7 +76,7 @@
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00087}00087         \}}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00088}00088     \}}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00089}00089 }
-\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00093}\mbox{\hyperlink{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}{00093}}     \textcolor{keyword}{public} SKBitmap RgbFile}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00093}\mbox{\hyperlink{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}{00093}}     \textcolor{keyword}{public} FluentBitmap RgbFile}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00094}00094     \{}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00095}00095         \textcolor{keyword}{get} => \_rgbFile;}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00096}00096         \textcolor{keyword}{set} => this.RaiseAndSetIfChanged(ref \_rgbFile, value);}
@@ -106,7 +106,7 @@
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00132}00132 }
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00136}\mbox{\hyperlink{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}{00136}}     \textcolor{keyword}{public} \textcolor{keywordtype}{string} SelectedChannels \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{stringliteral}{"{}Channel"{}};}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00137}00137 }
-\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00144}\mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{00144}}     \textcolor{keyword}{public} SKBitmap \mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{GetBitmapChannels}}()}
+\DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00144}\mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{00144}}     \textcolor{keyword}{public} FluentBitmap \mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{GetBitmapChannels}}()}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00145}00145     \{}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00146}00146         Enum.TryParse(SelectedSpace, out \mbox{\hyperlink{_color_space_8cs_a20f8d042a293f7b8c87f2992d183ceb9}{ColorSpace}} colorSpace);}
 \DoxyCodeLine{\Hypertarget{_main_window_view_model_8cs_source_l00147}00147         Enum.TryParse(SelectedChannels, out \mbox{\hyperlink{_color_channels_8cs_ac569eab2005f707e337b82bf4a98ef2f}{ColorChannels}} colorChannels);}

@@ -10,7 +10,7 @@ var searchData=
   ['setchannels_7',['SetChannels',['../class_main_window_view_model.html#ad6ec976d7e2dee70b6d61178f9b5a914',1,'MainWindowViewModel']]],
   ['setcolorspaces_8',['SetColorSpaces',['../class_main_window_view_model.html#aaf22605dadc47c3f8e30a1802a235d94',1,'MainWindowViewModel']]],
   ['showexception_9',['ShowException',['../class_main_window.html#a243fac365d8cadb9723e45b8d3b18b6f',1,'MainWindow']]],
-  ['skbitmapextensions_10',['SKBitmapExtensions',['../class_s_k_bitmap_extensions.html',1,'']]],
-  ['skbitmapextensions_2ecs_11',['SKBitmapExtensions.cs',['../_s_k_bitmap_extensions_8cs.html',1,'']]],
+  ['FluentBitmapextensions_10',['FluentBitmapExtensions',['../class_s_k_bitmap_extensions.html',1,'']]],
+  ['FluentBitmapextensions_2ecs_11',['FluentBitmapExtensions.cs',['../_s_k_bitmap_extensions_8cs.html',1,'']]],
   ['spaces_12',['Spaces',['../class_main_window_view_model.html#a645226638cb9baedf207395f5001a632',1,'MainWindowViewModel']]]
 ];

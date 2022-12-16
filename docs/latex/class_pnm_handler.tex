@@ -8,9 +8,9 @@ Provides methods to read and write pnm picture using filepath.
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static SKBitmap \mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{Read\+Pnm}} (string file\+Path)
+static FluentBitmap \mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{Read\+Pnm}} (string file\+Path)
 \begin{DoxyCompactList}\small\item\em Reads pnm file using filepath and writes it to Bitmap.  \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{Write\+Pnm}} (string file\+Path, SKBitmap bitmap)
+static void \mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{Write\+Pnm}} (string file\+Path, FluentBitmap bitmap)
 \begin{DoxyCompactList}\small\item\em Writes pnm file from bitmap in file using provided filepath.  \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Private Member Functions}
 \begin{DoxyCompactItemize}
@@ -55,7 +55,7 @@ Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00084}{84}} of file
 \index{PnmHandler@{PnmHandler}!ReadPnm@{ReadPnm}}
 \index{ReadPnm@{ReadPnm}!PnmHandler@{PnmHandler}}
 \doxysubsubsection{\texorpdfstring{ReadPnm()}{ReadPnm()}}
-{\footnotesize\ttfamily static SKBitmap Pnm\+Handler.\+Read\+Pnm (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static FluentBitmap Pnm\+Handler.\+Read\+Pnm (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -72,7 +72,7 @@ Reads pnm file using filepath and writes it to Bitmap.
 \hline
 \end{DoxyExceptions}
 \begin{DoxyReturn}{Returns}
-SKBitmap with read pixels. 
+FluentBitmap with read pixels. 
 \end{DoxyReturn}
 
 
@@ -103,7 +103,7 @@ Definition at line \mbox{\hyperlink{_pnm_handler_8cs_source_l00104}{104}} of fil
 \index{PnmHandler@{PnmHandler}!WritePnm@{WritePnm}}
 \index{WritePnm@{WritePnm}!PnmHandler@{PnmHandler}}
 \doxysubsubsection{\texorpdfstring{WritePnm()}{WritePnm()}}
-{\footnotesize\ttfamily static void Pnm\+Handler.\+Write\+Pnm (\begin{DoxyParamCaption}\item[{string}]{file\+Path,  }\item[{SKBitmap}]{bitmap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static void Pnm\+Handler.\+Write\+Pnm (\begin{DoxyParamCaption}\item[{string}]{file\+Path,  }\item[{FluentBitmap}]{bitmap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 

@@ -16,7 +16,7 @@ Inheritance diagram for Main\+Window\+View\+Model\+:\begin{figure}[H]
 \item 
 \mbox{\hyperlink{class_main_window_view_model_aea33f24dad4fd1bb353e23b2d461377e}{Main\+Window\+View\+Model}} ()
 \item 
-SKBitmap \mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{Get\+Bitmap\+Channels}} ()
+FluentBitmap \mbox{\hyperlink{class_main_window_view_model_a0d41304a830b14b3bf3d92cb9cf656e4}{Get\+Bitmap\+Channels}} ()
 \begin{DoxyCompactList}\small\item\em Filters image in current color space so that output contains only chosen channels using \mbox{\hyperlink{class_main_window_view_model_ac55e03a2e7f4e318c29106e8175d64b9}{Selected\+Space}} and \mbox{\hyperlink{class_main_window_view_model_a5da6a78af6fb1201a01382e157b403b4}{Selected\+Channels}}.  \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
@@ -25,7 +25,7 @@ string \mbox{\hyperlink{class_main_window_view_model_ae9ba3b2dea9bf2e181c399cd31
 \begin{DoxyCompactList}\small\item\em Path to the file that will be loaded in the application.  \end{DoxyCompactList}\item 
 string \mbox{\hyperlink{class_main_window_view_model_a4c7924982d4167f49eff108e7a78fc84}{Saving\+File\+Path}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Path to the file in which current picture will be saved in chosen color space.  \end{DoxyCompactList}\item 
-SKBitmap \mbox{\hyperlink{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}{Rgb\+File}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+FluentBitmap \mbox{\hyperlink{class_main_window_view_model_adc074962d41803edc942c141e3c7785d}{Rgb\+File}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Represents loaded file in RGB color space.  \end{DoxyCompactList}\item 
 List$<$ Combo\+Box\+Item $>$ \mbox{\hyperlink{class_main_window_view_model_a645226638cb9baedf207395f5001a632}{Spaces}} = new()\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Items that are displayed in Color\+Space\+Choosing Combo\+Box of \mbox{\hyperlink{class_main_window}{Main\+Window}}.  \end{DoxyCompactList}\item 
@@ -51,9 +51,9 @@ string \mbox{\hyperlink{class_main_window_view_model_abadb01f560c6507298affd269e
 \item 
 string \mbox{\hyperlink{class_main_window_view_model_ae1fc1a5ae74ea3be38c48edd20e1a92b}{\+\_\+selected\+Space}} = \char`\"{}Space choosing\char`\"{}
 \item 
-SKBitmap? \mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{\+\_\+rgb\+File}}
+FluentBitmap? \mbox{\hyperlink{class_main_window_view_model_abe5b49e61cb5e32b972032c2a0133e38}{\+\_\+rgb\+File}}
 \item 
-SKBitmap \mbox{\hyperlink{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}{\+\_\+current\+Color\+Space\+File}} = new()
+FluentBitmap \mbox{\hyperlink{class_main_window_view_model_a3e1d9c51e994d5d8bbb1f5e725744d1f}{\+\_\+current\+Color\+Space\+File}} = new()
 \item 
 readonly \mbox{\hyperlink{class_converter_factory}{Converter\+Factory}} \mbox{\hyperlink{class_main_window_view_model_a7e46d3718f59fea20534098e4452dee0}{\+\_\+converter\+Factory}} = new()
 \item 
@@ -90,7 +90,7 @@ Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00036}{3
 \index{MainWindowViewModel@{MainWindowViewModel}!GetBitmapChannels@{GetBitmapChannels}}
 \index{GetBitmapChannels@{GetBitmapChannels}!MainWindowViewModel@{MainWindowViewModel}}
 \doxysubsubsection{\texorpdfstring{GetBitmapChannels()}{GetBitmapChannels()}}
-{\footnotesize\ttfamily SKBitmap Main\+Window\+View\+Model.\+Get\+Bitmap\+Channels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily FluentBitmap Main\+Window\+View\+Model.\+Get\+Bitmap\+Channels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -190,7 +190,7 @@ Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00027}{2
 \index{MainWindowViewModel@{MainWindowViewModel}!\_currentColorSpaceFile@{\_currentColorSpaceFile}}
 \index{\_currentColorSpaceFile@{\_currentColorSpaceFile}!MainWindowViewModel@{MainWindowViewModel}}
 \doxysubsubsection{\texorpdfstring{\_currentColorSpaceFile}{\_currentColorSpaceFile}}
-{\footnotesize\ttfamily SKBitmap Main\+Window\+View\+Model.\+\_\+current\+Color\+Space\+File = new()\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily FluentBitmap Main\+Window\+View\+Model.\+\_\+current\+Color\+Space\+File = new()\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
@@ -210,7 +210,7 @@ Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00019}{1
 \index{MainWindowViewModel@{MainWindowViewModel}!\_rgbFile@{\_rgbFile}}
 \index{\_rgbFile@{\_rgbFile}!MainWindowViewModel@{MainWindowViewModel}}
 \doxysubsubsection{\texorpdfstring{\_rgbFile}{\_rgbFile}}
-{\footnotesize\ttfamily SKBitmap? Main\+Window\+View\+Model.\+\_\+rgb\+File\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily FluentBitmap? Main\+Window\+View\+Model.\+\_\+rgb\+File\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
@@ -271,7 +271,7 @@ Definition at line \mbox{\hyperlink{_main_window_view_model_8cs_source_l00048}{4
 \index{MainWindowViewModel@{MainWindowViewModel}!RgbFile@{RgbFile}}
 \index{RgbFile@{RgbFile}!MainWindowViewModel@{MainWindowViewModel}}
 \doxysubsubsection{\texorpdfstring{RgbFile}{RgbFile}}
-{\footnotesize\ttfamily SKBitmap Main\+Window\+View\+Model.\+Rgb\+File\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+{\footnotesize\ttfamily FluentBitmap Main\+Window\+View\+Model.\+Rgb\+File\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
 
 
 
