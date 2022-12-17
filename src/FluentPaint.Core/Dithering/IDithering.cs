@@ -1,9 +1,10 @@
 using System.Drawing;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Dithering;
 
 public interface IDithering
 {
-    SKBitmap Dithering(SKBitmap bitmap, int bitDepth);
+    FluentBitmap Dithering(FluentBitmap bitmap, int bitDepth);
 }

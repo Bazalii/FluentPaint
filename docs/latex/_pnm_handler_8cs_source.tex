@@ -11,7 +11,7 @@
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00007}00007 }
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00011}\mbox{\hyperlink{class_pnm_handler}{00011}} \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_pnm_handler}{PnmHandler}}}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00012}00012 \{}
-\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00023}\mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{00023}}     \textcolor{keyword}{public} \textcolor{keyword}{static} SKBitmap \mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{ReadPnm}}(\textcolor{keywordtype}{string} filePath)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00023}\mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{00023}}     \textcolor{keyword}{public} \textcolor{keyword}{static} FluentBitmap \mbox{\hyperlink{class_pnm_handler_ae09b5651fd63a197dbb2a5036e0c973b}{ReadPnm}}(\textcolor{keywordtype}{string} filePath)}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00024}00024     \{}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00025}00025         var fileStream = \textcolor{keyword}{new} FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00026}00026 }
@@ -34,7 +34,7 @@
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00043}00043         \textcolor{keywordflow}{return} reader.\mbox{\hyperlink{interface_i_picture_reader_a28e132d1f0f81c4a248613e0ecf3b589}{ReadImageData}}(fileStream, width, height);}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00044}00044     \}}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00045}00045 }
-\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00054}\mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{00054}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{WritePnm}}(\textcolor{keywordtype}{string} filePath, SKBitmap bitmap)}
+\DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00054}\mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{00054}}     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_pnm_handler_a56e652bc07ce9e4666d7688444c69b78}{WritePnm}}(\textcolor{keywordtype}{string} filePath, FluentBitmap bitmap)}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00055}00055     \{}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00056}00056         var extension = filePath.Substring(filePath.Length -\/ 4, 4).ToLower();}
 \DoxyCodeLine{\Hypertarget{_pnm_handler_8cs_source_l00057}00057 }

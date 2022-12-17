@@ -10,11 +10,11 @@ public class PgmReader : IPictureReader
 {
     private readonly PnmHeaderReader _pnmHeaderReader = new();
 
-    public SKBitmap ReadImageData(FileStream fileStream)
+    public FluentBitmap ReadImageData(FileStream fileStream)
     {
         var pictureSize = _pnmHeaderReader.Read(fileStream);
 
-        var bitmap = new SKBitmap(pictureSize.Width, pictureSize.Height);
+        var bitmap = new FluentBitmap(pictureSize.Width, pictureSize.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {

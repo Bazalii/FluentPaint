@@ -18,12 +18,10 @@ public class JpegReader : IPictureReader
     private bool _isTopSideMatrix = true;
     private readonly List<int[,]> _yCbCrMatrices = new();
 
-    public SKBitmap ReadImageData(FileStream fileStream)
+    public FluentBitmap ReadImageData(FileStream fileStream)
     {
         var pointer = 0;
         var markerBuffer = new byte[2];
-
-        var bitmap = new SKBitmap();
 
         while (pointer < fileStream.Length)
         {
@@ -89,13 +87,14 @@ public class JpegReader : IPictureReader
                         CorrectDcCoefficients();
                         QuantizeCoefficientTables();
                         ProcessCosineTransform();
-                        bitmap = ConvertYCbCrToRgb();
-                        break;
+                        var bitmap = ConvertYCbCrToRgb();
+                        
+                        return bitmap;
                 }
             }
         }
 
-        return bitmap;
+        throw new Exception("Something went wrong with JPEG reading!");
     }
 
     private void ReadHuffmanTree(byte[] section)
@@ -546,9 +545,9 @@ public class JpegReader : IPictureReader
         }
     }
 
-    private SKBitmap ConvertYCbCrToRgb()
+    private FluentBitmap ConvertYCbCrToRgb()
     {
-        var bitmap = new SKBitmap(_width, _height);
+        var bitmap = new FluentBitmap(_width, _height);
 
         var yTableRow = 0;
         var yTableColumn = 0;

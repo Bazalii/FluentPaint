@@ -10,6 +10,7 @@ using FluentPaint.Core.Enums;
 using FluentPaint.Core.GammaCorrectors;
 using FluentPaint.Core.Gradient;
 using FluentPaint.Core.Histograms;
+using FluentPaint.Core.Pictures;
 using FluentPaint.Core.Pictures.Handlers.Implementations;
 using ReactiveUI;
 using SkiaSharp;
@@ -29,9 +30,9 @@ public class MainWindowViewModel : ReactiveObject
 
     private string _selectedSpace = "Space choosing";
 
-    private SKBitmap? _rgbFile;
-    private SKBitmap _currentColorSpaceFile = new();
-    private SKBitmap _currentGammaFile = new();
+    private FluentBitmap? _rgbFile;
+    private FluentBitmap? _currentColorSpaceFile;
+    private FluentBitmap? _currentGammaFile;
 
     private readonly PictureHandler _pictureHandler = new();
     private readonly ConverterFactory _converterFactory = new();
@@ -125,13 +126,13 @@ public class MainWindowViewModel : ReactiveObject
     /// <summary>
     /// Represents loaded file in RGB color space.
     /// </summary>
-    public SKBitmap RgbFile
+    public FluentBitmap RgbFile
     {
         get => _rgbFile;
         set => this.RaiseAndSetIfChanged(ref _rgbFile, value);
     }
 
-    public SKBitmap CurrentGammaFile
+    public FluentBitmap CurrentGammaFile
     {
         get => _currentGammaFile;
         set => _currentGammaFile = value;
@@ -207,7 +208,7 @@ public class MainWindowViewModel : ReactiveObject
     /// <returns>
     /// Bitmap that contains only chosen channels.
     /// </returns>
-    public SKBitmap GetBitmapChannels()
+    public FluentBitmap GetBitmapChannels()
     {
         Enum.TryParse(SelectedSpace, out ColorSpace colorSpace);
         Enum.TryParse(SelectedChannels, out ColorChannels colorChannels);
@@ -224,7 +225,7 @@ public class MainWindowViewModel : ReactiveObject
         return convertor.ToRgb(modifiedCurrentColorSpaceBitmap);
     }
 
-    public SKBitmap CreateGradient()
+    public FluentBitmap CreateGradient()
     {
         _rgbFile = SelectedGradientParameters switch
         {
@@ -240,7 +241,7 @@ public class MainWindowViewModel : ReactiveObject
         return _rgbFile;
     }
 
-    public SKBitmap ApplyDithering()
+    public FluentBitmap ApplyDithering()
     {
         IDithering ditheringAlgorithm = SelectedDitheringAlgorithm switch
         {
@@ -262,7 +263,7 @@ public class MainWindowViewModel : ReactiveObject
         return _histogram.CreateHistograms(SelectedIgnoredPercent);
     }
     
-    public SKBitmap CorrectHistogram()
+    public FluentBitmap CorrectHistogram()
     {
         var correctedHistogram = _histogram.Correct();
         

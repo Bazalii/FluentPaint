@@ -82,9 +82,9 @@ $(function() {
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_hsv_converter.html">    8</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="class_hsv_converter.html">HsvConverter</a> : <a class="code hl_interface" href="interface_i_converter.html">IConverter</a></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_hsv_converter.html#a318a71c98d9bb5911b367378c3d78b0a">   17</a></span>    <span class="keyword">public</span> SKBitmap <a class="code hl_function" href="class_hsv_converter.html#a318a71c98d9bb5911b367378c3d78b0a">FromRgb</a>(SKBitmap bitmap)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_hsv_converter.html#a318a71c98d9bb5911b367378c3d78b0a">   17</a></span>    <span class="keyword">public</span> FluentBitmap <a class="code hl_function" href="class_hsv_converter.html#a318a71c98d9bb5911b367378c3d78b0a">FromRgb</a>(FluentBitmap bitmap)</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        var convertedBitmap = <span class="keyword">new</span> SKBitmap(bitmap.Width, bitmap.Height);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        var convertedBitmap = <span class="keyword">new</span> FluentBitmap(bitmap.Width, bitmap.Height);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordflow">for</span> (var y = 0; y &lt; bitmap.Height; y++)</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        {</div>
@@ -150,9 +150,9 @@ $(function() {
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordflow">return</span> convertedBitmap;</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_hsv_converter.html#acab6683e0bc3e04a028577feffe1c714">   92</a></span>    <span class="keyword">public</span> SKBitmap <a class="code hl_function" href="class_hsv_converter.html#acab6683e0bc3e04a028577feffe1c714">ToRgb</a>(SKBitmap bitmap)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_hsv_converter.html#acab6683e0bc3e04a028577feffe1c714">   92</a></span>    <span class="keyword">public</span> FluentBitmap <a class="code hl_function" href="class_hsv_converter.html#acab6683e0bc3e04a028577feffe1c714">ToRgb</a>(FluentBitmap bitmap)</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        var convertedBitmap = <span class="keyword">new</span> SKBitmap(bitmap.Width, bitmap.Height);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        var convertedBitmap = <span class="keyword">new</span> FluentBitmap(bitmap.Width, bitmap.Height);</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">for</span> (var y = 0; y &lt; bitmap.Height; y++)</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        {</div>
@@ -232,8 +232,8 @@ $(function() {
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    }</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>}</div>
 <div class="ttc" id="aclass_hsv_converter_html"><div class="ttname"><a href="class_hsv_converter.html">HsvConverter</a></div><div class="ttdoc">Provides methods to convert pictures from RGB to HSV and in the opposite direction.</div><div class="ttdef"><b>Definition:</b> <a href="_hsv_converter_8cs_source.html#l00008">HsvConverter.cs:9</a></div></div>
-<div class="ttc" id="aclass_hsv_converter_html_a318a71c98d9bb5911b367378c3d78b0a"><div class="ttname"><a href="class_hsv_converter.html#a318a71c98d9bb5911b367378c3d78b0a">HsvConverter.FromRgb</a></div><div class="ttdeci">SKBitmap FromRgb(SKBitmap bitmap)</div><div class="ttdoc">Converts picture from RGB to HSV.</div><div class="ttdef"><b>Definition:</b> <a href="_hsv_converter_8cs_source.html#l00017">HsvConverter.cs:17</a></div></div>
-<div class="ttc" id="aclass_hsv_converter_html_acab6683e0bc3e04a028577feffe1c714"><div class="ttname"><a href="class_hsv_converter.html#acab6683e0bc3e04a028577feffe1c714">HsvConverter.ToRgb</a></div><div class="ttdeci">SKBitmap ToRgb(SKBitmap bitmap)</div><div class="ttdoc">Converts picture from HSV to RGB.</div><div class="ttdef"><b>Definition:</b> <a href="_hsv_converter_8cs_source.html#l00092">HsvConverter.cs:92</a></div></div>
+<div class="ttc" id="aclass_hsv_converter_html_a318a71c98d9bb5911b367378c3d78b0a"><div class="ttname"><a href="class_hsv_converter.html#a318a71c98d9bb5911b367378c3d78b0a">HsvConverter.FromRgb</a></div><div class="ttdeci">FluentBitmap FromRgb(FluentBitmap bitmap)</div><div class="ttdoc">Converts picture from RGB to HSV.</div><div class="ttdef"><b>Definition:</b> <a href="_hsv_converter_8cs_source.html#l00017">HsvConverter.cs:17</a></div></div>
+<div class="ttc" id="aclass_hsv_converter_html_acab6683e0bc3e04a028577feffe1c714"><div class="ttname"><a href="class_hsv_converter.html#acab6683e0bc3e04a028577feffe1c714">HsvConverter.ToRgb</a></div><div class="ttdeci">FluentBitmap ToRgb(FluentBitmap bitmap)</div><div class="ttdoc">Converts picture from HSV to RGB.</div><div class="ttdef"><b>Definition:</b> <a href="_hsv_converter_8cs_source.html#l00092">HsvConverter.cs:92</a></div></div>
 <div class="ttc" id="ainterface_i_converter_html"><div class="ttname"><a href="interface_i_converter.html">IConverter</a></div><div class="ttdoc">Provides methods to convert picture from rgb to corresponding color space and in the opposite directi...</div><div class="ttdef"><b>Definition:</b> <a href="_i_converter_8cs_source.html#l00007">IConverter.cs:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

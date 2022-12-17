@@ -1,4 +1,5 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Histograms;
@@ -9,9 +10,9 @@ public class Histogram
     private List<Coordinates>[]? _greenHistogram;
     private List<Coordinates>[]? _blueHistogram;
 
-    private readonly SKBitmap _bitmap;
+    private readonly FluentBitmap _bitmap;
 
-    public Histogram(ColorChannels channels, SKBitmap bitmap)
+    public Histogram(ColorChannels channels, FluentBitmap bitmap)
     {
         _bitmap = bitmap;
 
@@ -108,7 +109,7 @@ public class Histogram
         return resultingHistograms;
     }
 
-    public SKBitmap Correct()
+    public FluentBitmap Correct()
     {
         var redHistogram = _redHistogram is null ? null : new List<Coordinates>[256];
         var greenHistogram = _greenHistogram is null ? null : new List<Coordinates>[256];

@@ -1,14 +1,15 @@
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Dithering.Implementations;
 
 public class AktinsonDithering : IDithering
 {
-    public SKBitmap Dithering(SKBitmap bitmap, int bitDepth)
+    public FluentBitmap Dithering(FluentBitmap bitmap, int bitDepth)
     {
         var errorMatrix = new double[bitmap.Width, bitmap.Height, 3];
 
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {

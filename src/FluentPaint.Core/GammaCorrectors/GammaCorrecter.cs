@@ -1,3 +1,4 @@
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.GammaCorrectors;
@@ -7,7 +8,7 @@ public class GammaCorrecter
     private delegate double ConvertComponent(double value);
     private float _gamma;
 
-    public SKBitmap ToNewGamma(SKBitmap bitmap, float gamma)
+    public FluentBitmap ToNewGamma(FluentBitmap bitmap, float gamma)
     {
         _gamma = gamma;
 
@@ -20,9 +21,9 @@ public class GammaCorrecter
         return result;
     }
 
-    private SKBitmap ConvertToGamma(SKBitmap bitmap, ConvertComponent convertComponent)
+    private FluentBitmap ConvertToGamma(FluentBitmap bitmap, ConvertComponent convertComponent)
     {
-        var convertedBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var convertedBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {

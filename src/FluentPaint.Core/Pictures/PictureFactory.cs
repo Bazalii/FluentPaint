@@ -29,6 +29,7 @@ public static class PictureFactory
             ".pgm" => PictureType.P5,
             ".ppm" => PictureType.P6,
             ".pnm" => PictureType.P6,
+            ".png" => PictureType.PNG,
             ".jpeg" => PictureType.JPEG,
             ".jpg" => PictureType.JPEG,
             _ => throw new Exception(
@@ -52,7 +53,7 @@ public static class PictureFactory
         {
             PictureType.P5 => new PgmWriter(),
             PictureType.P6 => new PpmWriter(),
-            PictureType.JPEG => new JpegWriter(),
+            PictureType.PNG => new PngWriter(),
             _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };
 
@@ -75,6 +76,7 @@ public static class PictureFactory
         {
             PictureType.P5 => new PgmReader(),
             PictureType.P6 => new PpmReader(),
+            PictureType.PNG => new PngReader(),
             PictureType.JPEG => new JpegReader(),
             _ => throw new ArgumentException("Error: This file type is not supported, .ppm .pgm is expected")
         };

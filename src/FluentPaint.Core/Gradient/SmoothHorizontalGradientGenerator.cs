@@ -1,12 +1,13 @@
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Gradient;
 
 public class SmoothHorizontalGradientGenerator
 {
-    public SKBitmap CreateGradient(bool isRed, bool isGreen, bool isBlue)
+    public FluentBitmap CreateGradient(bool isRed, bool isGreen, bool isBlue)
     {
-        var bitmap = new SKBitmap(256 * 8, 600);
+        var bitmap = new FluentBitmap(256 * 8, 600);
         var red = 0;
         var green = 0;
         var blue = 0;

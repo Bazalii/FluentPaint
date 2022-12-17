@@ -12,7 +12,7 @@ public class PgmWriter : IPictureWriter
 {
     private readonly PnmHeaderWriter _pnmHeaderWriter = new();
     
-    public void WriteImageData(FileStream fileStream, SKBitmap bitmap, PictureType type)
+    public void WriteImageData(FileStream fileStream, FluentBitmap bitmap, PictureType type)
     {
         _pnmHeaderWriter.Write(fileStream, bitmap, type);  
         

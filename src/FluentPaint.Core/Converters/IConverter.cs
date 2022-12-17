@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using FluentPaint.Core.Pictures;
+using SkiaSharp;
 
 namespace FluentPaint.Core.Converters;
 /// <summary>
@@ -9,18 +10,18 @@ public interface IConverter
     /// <summary>
     /// Converts picture from rgb to corresponding color space.
     /// </summary>
-    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <param name="bitmap"> <see cref="FluentBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
-    SKBitmap FromRgb(SKBitmap bitmap);
+    FluentBitmap FromRgb(FluentBitmap bitmap);
     
     /// <summary>
     /// Converts picture from corresponding color space to rgb.
     /// </summary>
-    /// <param name="bitmap"> <see cref="SKBitmap"/> that contains all pixels of the picture. </param>
+    /// <param name="bitmap"> <see cref="FluentBitmap"/> that contains all pixels of the picture. </param>
     /// <returns>
     /// Converted bitmap.
     /// </returns>
-    SKBitmap ToRgb(SKBitmap bitmap);
+    FluentBitmap ToRgb(FluentBitmap bitmap);
 }
