@@ -38,7 +38,7 @@ public partial class DrawLinePopupWindow : Window
         var endCoordinates = endPointInput.Split(' ').Select(element => Convert.ToInt32(element)).ToArray();
         var colorElements = colorInput.Split(' ').Select(element => Convert.ToByte(element)).ToArray();
 
-        var color = new SKColor(colorElements[0], colorElements[0], colorElements[0]);
+        var color = new SKColor(colorElements[0], colorElements[1], colorElements[2]);
 
         Close(new LineDrawer(startCoordinates[0], startCoordinates[1], endCoordinates[0], endCoordinates[1], color));
     }
