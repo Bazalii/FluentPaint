@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using FluentPaint.Core.Parsers;
+using FluentPaint.UI.Models;
 using FluentPaint.UI.ViewModels;
 
 namespace FluentPaint.UI.Views;
@@ -160,6 +161,28 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     private void OnAssignButtonClickCommand(object? sender, RoutedEventArgs e)
     {
         MainImage.Source = ViewModel.CurrentGammaFile.ConvertToAvaloniaBitmap();
+    }
+    
+    private async void OnDrawLineButtonClickCommand(object sender, RoutedEventArgs e)
+    {
+        var dialog = new DrawLinePopupWindow
+        {
+            Width = 700,
+            Height = 400
+        };
+
+        try
+        {
+            var lineDrawer = await dialog.ShowDialog<LineDrawer>(this);
+            
+            lineDrawer.Draw(ViewModel.RgbFile);
+
+            MainImage.Source = ViewModel.RgbFile.ConvertToAvaloniaBitmap();
+        }
+        catch (Exception exception)
+        {
+            ShowException(exception.Message);
+        }
     }
 
     private void ApplyDitheringButtonClickCommand(object? sender, RoutedEventArgs e)
