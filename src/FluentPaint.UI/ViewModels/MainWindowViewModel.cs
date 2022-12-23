@@ -7,13 +7,14 @@ using FluentPaint.Core.Converters;
 using FluentPaint.Core.Dithering;
 using FluentPaint.Core.Dithering.Implementations;
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Filters;
+using FluentPaint.Core.Filters.Implementations;
 using FluentPaint.Core.GammaCorrectors;
 using FluentPaint.Core.Gradient;
 using FluentPaint.Core.Histograms;
 using FluentPaint.Core.Pictures;
 using FluentPaint.Core.Pictures.Handlers.Implementations;
 using ReactiveUI;
-using SkiaSharp;
 
 namespace FluentPaint.UI.ViewModels;
 
@@ -55,6 +56,9 @@ public class MainWindowViewModel : ReactiveObject
     private readonly List<string> _gradientParameters = new()
         { "First", "Second", "Third", "FirstAndSecond", "FirstAndThird", "SecondAndThird", "All" };
 
+    private readonly List<string> _filters = new()
+        { "Adaptive", "Gaussian", "Linear", "Median", "Sobel", "Threshold", "Threshold Otsu" };
+
     public MainWindowViewModel()
     {
         SetColorSpaces();
@@ -62,6 +66,7 @@ public class MainWindowViewModel : ReactiveObject
         SetDitheringAlgorithms();
         SetBitDepths();
         SetGradientParameters();
+        SetFilters();
     }
 
     /// <summary>
@@ -149,6 +154,16 @@ public class MainWindowViewModel : ReactiveObject
         }
     }
 
+    public float Sigma { get; set; } = 1.0f;
+    
+    public float Sharpness { get; set; } = 1.0f;
+    
+    public int Radius { get; set; } = 3;
+    
+    public int Limit { get; set; } = 150;
+    
+    public byte Threshold { get; set; } = 150;
+
     /// <summary>
     /// Items that are displayed in ColorSpaceChoosing ComboBox of MainWindow.
     /// </summary>
@@ -164,6 +179,8 @@ public class MainWindowViewModel : ReactiveObject
     public List<ComboBoxItem> BitDepths { get; set; } = new();
 
     public List<ComboBoxItem> GradientParameters { get; set; } = new();
+
+    public List<ComboBoxItem> Filters { get; set; } = new();
 
     /// <summary>
     /// Color space that is selected by the user.
@@ -197,10 +214,12 @@ public class MainWindowViewModel : ReactiveObject
     public string SelectedDitheringAlgorithm { get; set; } = "Dithering algorithm";
 
     public int SelectedBitDepth { get; set; }
-    
+
     public double SelectedIgnoredPercent { get; set; }
 
     public string SelectedGradientParameters { get; set; } = "Gradient parameters";
+
+    public string SelectedFilter { get; set; } = "Filters";
 
     /// <summary>
     /// Filters image in current color space so that output contains only chosen channels using <see cref="SelectedSpace"/> and <see cref="SelectedChannels"/>.
@@ -254,21 +273,39 @@ public class MainWindowViewModel : ReactiveObject
         return ditheringAlgorithm.Dithering(_rgbFile, SelectedBitDepth);
     }
 
+    public FluentBitmap ApplyFilter()
+    {
+        Enum.TryParse(SelectedChannels, out ColorChannels colorChannels);
+        
+        IFilter filter = SelectedFilter switch
+        {
+            "Adaptive" => new AdaptiveFilter(Sharpness),
+            "Gaussian" => new GaussianFilter(Sigma),
+            "Linear" => new LinearAveragingFilter(Radius),
+            "Median" => new MedianFilter(Radius),
+            "Sobel" => new SobelFilter(Limit),
+            "Threshold" => new ThresholdFilter(Threshold),
+            "Threshold Otsu" => new ThresholdFilterOtsuMethod()
+        };
+
+        return filter.Filter(colorChannels, _rgbFile);
+    }
+
     public List<List<int>> CreateHistogram()
     {
         Enum.TryParse(SelectedChannels, out ColorChannels colorChannels);
-        
+
         _histogram = new Histogram(colorChannels, _rgbFile);
-        
+
         return _histogram.CreateHistograms(SelectedIgnoredPercent);
     }
-    
+
     public FluentBitmap CorrectHistogram()
     {
         var correctedHistogram = _histogram.Correct();
-        
+
         Enum.TryParse(SelectedChannels, out ColorChannels colorChannels);
-        
+
         return _channelGetter.GetChannels(correctedHistogram, colorChannels);
     }
 
@@ -340,6 +377,19 @@ public class MainWindowViewModel : ReactiveObject
             };
 
             GradientParameters.Add(comboBoxItem);
+        });
+    }
+
+    private void SetFilters()
+    {
+        _filters.ForEach(name =>
+        {
+            var comboBoxItem = new ComboBoxItem
+            {
+                Content = name
+            };
+
+            Filters.Add(comboBoxItem);
         });
     }
 }
