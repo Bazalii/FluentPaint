@@ -27,7 +27,7 @@
             VerticalAlignment="Bottom"
             HorizontalAlignment="Stretch"
             Background="#565656"
-            ColumnDefinitions="150*,150*,150*,150*,150*"
+            ColumnDefinitions="150*,150*,150*,150*,150*,150*"
             RowDefinitions="Auto,Auto,Auto">
             <Button
                 Width="150"
@@ -347,6 +347,28 @@
                 Name="ApplyDitheringButton"
 
                 Click="ApplyDitheringButtonClickCommand">
+            </Button>
+            <Button
+                Width="150"
+                Height="35"
+                Margin="10"
+                CornerRadius="10"
+
+                Background="White"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center"
+
+                Grid.Column="5"
+                Grid.Row="0"
+
+                Content="Draw line"
+
+                Name="DrawLineButton"
+
+                Click="OnDrawLineButtonClickCommand">
             </Button>
         </Grid>
     </Panel>
