@@ -1,5 +1,6 @@
 using FluentPaint.Core.Enums;
 using FluentPaint.Core.Histograms;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -10,9 +11,9 @@ public class ThresholdFilterOtsuMethod : IFilter
     private byte? _greenThreshold;
     private byte? _blueThreshold;
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         var histogram = new Histogram(channels, bitmap);
         var histograms = histogram.CreateHistograms(0);
