@@ -1,9 +1,10 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters;
 
 public interface IFilter
 {
-    SKBitmap Filter(ColorChannels channels, SKBitmap bitmap);
+    FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap);
 }

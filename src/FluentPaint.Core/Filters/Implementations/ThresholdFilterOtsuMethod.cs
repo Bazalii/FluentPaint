@@ -1,5 +1,6 @@
 using FluentPaint.Core.Enums;
 using FluentPaint.Core.Histograms;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -10,9 +11,9 @@ public class ThresholdFilterOtsuMethod : IFilter
     private byte? _greenThreshold;
     private byte? _blueThreshold;
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         var histogram = new Histogram(channels, bitmap);
         var histograms = histogram.CreateHistograms(0);
@@ -32,19 +33,19 @@ public class ThresholdFilterOtsuMethod : IFilter
                 if (channels is ColorChannels.All or ColorChannels.First or ColorChannels.FirstAndSecond
                     or ColorChannels.FirstAndThird)
                 {
-                    red = pixel.Red < _redThreshold ? (byte)0 : (byte)255;
+                    red = pixel.Red < _redThreshold ? (byte) 0 : (byte) 255;
                 }
 
                 if (channels is ColorChannels.All or ColorChannels.Second or ColorChannels.FirstAndSecond
                     or ColorChannels.SecondAndThird)
                 {
-                    green = pixel.Green < _greenThreshold ? (byte)0 : (byte)255;
+                    green = pixel.Green < _greenThreshold ? (byte) 0 : (byte) 255;
                 }
 
                 if (channels is ColorChannels.All or ColorChannels.Third or ColorChannels.FirstAndThird
                     or ColorChannels.SecondAndThird)
                 {
-                    blue = pixel.Blue < _blueThreshold ? (byte)0 : (byte)255;
+                    blue = pixel.Blue < _blueThreshold ? (byte) 0 : (byte) 255;
                 }
 
                 resultBitmap.SetPixel(x, y, new SKColor(red, green, blue));
@@ -94,7 +95,7 @@ public class ThresholdFilterOtsuMethod : IFilter
         ulong maxIntensitySum = 0;
         for (var i = 0; i < 256; ++i)
         {
-            maxIntensitySum += (ulong)(i * histogram[i]);
+            maxIntensitySum += (ulong) (i * histogram[i]);
         }
 
         var maxSigma = -1.0f;
@@ -110,11 +111,11 @@ public class ThresholdFilterOtsuMethod : IFilter
             if (sumPixels == 0) continue;
             if (sumPixels == size) break;
 
-            intensitySum += (ulong)(i * histogram[i]);
+            intensitySum += (ulong) (i * histogram[i]);
 
-            var probability = (float)sumPixels / size;
+            var probability = (float) sumPixels / size;
 
-            var mean = (float)intensitySum / sumPixels - (float)(maxIntensitySum - intensitySum) / (size - sumPixels);
+            var mean = (float) intensitySum / sumPixels - (float) (maxIntensitySum - intensitySum) / (size - sumPixels);
 
             var sigma = probability * (1 - probability) * mean * mean;
 
@@ -124,6 +125,6 @@ public class ThresholdFilterOtsuMethod : IFilter
             threshold = i;
         }
 
-        return (byte)threshold;
+        return (byte) threshold;
     }
 }

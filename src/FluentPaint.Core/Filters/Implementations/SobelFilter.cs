@@ -1,4 +1,5 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -26,9 +27,9 @@ public class SobelFilter : IFilter
         _limit = limit;
     }
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -46,6 +47,7 @@ public class SobelFilter : IFilter
                     for (var j = -1; j < 2; j++)
                     {
                         if (x + i < 0 || y + j < 0 || x + i > bitmap.Width || y + j > bitmap.Height) continue;
+
                         var pixel = bitmap.GetPixel(x + i, y + j);
 
                         redX += _gx[i + 1, j + 1] * pixel.Red;
@@ -62,7 +64,7 @@ public class SobelFilter : IFilter
                 byte red = 0;
                 byte green = 0;
                 byte blue = 0;
-                
+
                 if (channels is ColorChannels.All or ColorChannels.First or ColorChannels.FirstAndSecond
                     or ColorChannels.FirstAndThird)
                 {
@@ -91,12 +93,12 @@ public class SobelFilter : IFilter
     private byte GetColor(int colorX, int colorY)
     {
         var color = 255 - Math.Abs(colorX) - Math.Abs(colorY);
-        
+
         if (colorX * colorX + colorY * colorY > _limit * _limit)
         {
             color = 0;
         }
 
-        return (byte)color;
+        return (byte) color;
     }
 }

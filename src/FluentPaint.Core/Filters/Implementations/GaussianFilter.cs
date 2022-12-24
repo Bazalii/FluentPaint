@@ -1,4 +1,5 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -12,12 +13,12 @@ public class GaussianFilter : IFilter
         _sigma = sigma;
     }
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         var gaussian = CreateGaussian();
-        var radius = (int)(3 * _sigma);
+        var radius = (int) (3 * _sigma);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -56,7 +57,7 @@ public class GaussianFilter : IFilter
                 }
 
                 resultBitmap.SetPixel(x, y,
-                    new SKColor((byte)redValues.Sum(), (byte)greenValues.Sum(), (byte)blueValues.Sum()));
+                    new SKColor((byte) redValues.Sum(), (byte) greenValues.Sum(), (byte) blueValues.Sum()));
             }
         }
 
@@ -67,11 +68,11 @@ public class GaussianFilter : IFilter
     {
         var sum = 0.0;
         var radius = 3 * _sigma;
-        var gaussian = new double[(int)(2 * radius) + 1, (int)(2 * radius) + 1];
+        var gaussian = new double[(int) (2 * radius) + 1, (int) (2 * radius) + 1];
 
-        for (var i = 0; i <= (int)(2 * radius); i++)
+        for (var i = 0; i <= (int) (2 * radius); i++)
         {
-            for (var j = 0; j <= (int)(2 * radius); j++)
+            for (var j = 0; j <= (int) (2 * radius); j++)
             {
                 gaussian[i, j] =
                     Math.Exp(-(Math.Pow(i - radius, 2) + Math.Pow(j - radius, 2)) / (2 * _sigma * _sigma)) /

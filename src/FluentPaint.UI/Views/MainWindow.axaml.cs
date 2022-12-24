@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
 using FluentPaint.Core.Parsers;
+using FluentPaint.UI.Models;
 using FluentPaint.UI.ViewModels;
 
 namespace FluentPaint.UI.Views;
@@ -156,6 +157,30 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
             ShowException(exception.Message);
         }
     }
+    
+    private async void AddFilterParametersButtonClickCommand(object? sender, RoutedEventArgs e)
+    {
+        var dialog = new FilterParametersPopupWindow
+        {
+            Width = 700,
+            Height = 300
+        };
+
+        try
+        {
+            var filterParameters = await dialog.ShowDialog<FilterParameters>(this);
+
+            ViewModel.Sigma = filterParameters.Sigma;
+            ViewModel.Sharpness = filterParameters.Sharpness;
+            ViewModel.Radius = filterParameters.Radius;
+            ViewModel.Limit = filterParameters.Limit;
+            ViewModel.Threshold = filterParameters.Threshold;
+        }
+        catch (Exception exception)
+        {
+            ShowException(exception.Message);
+        }
+    }
 
     private void OnAssignButtonClickCommand(object? sender, RoutedEventArgs e)
     {
@@ -201,5 +226,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         ViewModel.SelectedGradientParameters = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;
         MainImage.Source = ViewModel.CreateGradient().ConvertToAvaloniaBitmap();
+    }
+    
+    private void OnFiltersChange(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
+    {
+        ViewModel.SelectedFilter = ((ComboBoxItem) ((ComboBox) sender).SelectedItem).Content as string;
+        MainImage.Source = ViewModel.ApplyFilter().ConvertToAvaloniaBitmap();
     }
 }

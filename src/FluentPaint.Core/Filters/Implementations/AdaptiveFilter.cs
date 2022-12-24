@@ -1,4 +1,5 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -12,9 +13,9 @@ public class AdaptiveFilter : IFilter
         _sharpness = sharpness;
     }
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -23,7 +24,6 @@ public class AdaptiveFilter : IFilter
                 var samplingPixels = new List<SKColor>();
                 var min = new double[3];
                 var max = new double[3];
-
 
                 for (var j = y - 1; j < y + 2; j++)
                 {
@@ -70,6 +70,7 @@ public class AdaptiveFilter : IFilter
                     samplingPixels[6].Blue / 255.0, samplingPixels[8].Blue / 255.0);
 
                 var value = new double[3];
+
                 for (var i = 0; i < 3; i++)
                 {
                     value[i] = Math.Min(Math.Max(Math.Min(2.0 - max[i], min[i]) / (max[i] + 1e-9), 0.0), 1.0) *
@@ -77,9 +78,9 @@ public class AdaptiveFilter : IFilter
                 }
 
                 var weight = 4.0 * value[0] + 1.0;
-                var red = value[0] * (
-                    samplingPixels[7].Red / 255.0 + samplingPixels[3].Red / 255.0 + samplingPixels[5].Red / 255.0 +
-                    samplingPixels[1].Red / 255.0) + samplingPixels[4].Red / 255.0;
+                var red = value[0] * (samplingPixels[7].Red / 255.0 + samplingPixels[3].Red / 255.0 +
+                                      samplingPixels[5].Red / 255.0 + samplingPixels[1].Red / 255.0) +
+                          samplingPixels[4].Red / 255.0;
                 red = Math.Min(Math.Max(red / weight, 0.0), 1.0);
 
                 weight = 4.0 * value[1] + 1.0;
@@ -95,7 +96,7 @@ public class AdaptiveFilter : IFilter
                     samplingPixels[1].Blue / 255.0) + samplingPixels[4].Blue / 255.0;
                 blue = Math.Min(Math.Max(blue / weight, 0.0), 1.0);
 
-                resultBitmap.SetPixel(x, y, new SKColor((byte)(red * 255), (byte)(green * 255), (byte)(blue * 255)));
+                resultBitmap.SetPixel(x, y, new SKColor((byte) (red * 255), (byte) (green * 255), (byte) (blue * 255)));
             }
         }
 

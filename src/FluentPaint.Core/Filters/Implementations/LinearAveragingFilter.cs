@@ -1,4 +1,5 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -12,9 +13,9 @@ public class LinearAveragingFilter : IFilter
         _radius = radius;
     }
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -29,19 +30,19 @@ public class LinearAveragingFilter : IFilter
                 if (channels is ColorChannels.All or ColorChannels.First or ColorChannels.FirstAndSecond
                     or ColorChannels.FirstAndThird)
                 {
-                    red = (byte)(samplingPixels.Select(pixel => (int)pixel.Red).Sum() / samplingPixels.Count);
+                    red = (byte) (samplingPixels.Select(pixel => (int) pixel.Red).Sum() / samplingPixels.Count);
                 }
 
                 if (channels is ColorChannels.All or ColorChannels.Second or ColorChannels.FirstAndSecond
                     or ColorChannels.SecondAndThird)
                 {
-                    green = (byte)(samplingPixels.Select(pixel => (int)pixel.Green).Sum() / samplingPixels.Count);
+                    green = (byte) (samplingPixels.Select(pixel => (int) pixel.Green).Sum() / samplingPixels.Count);
                 }
 
                 if (channels is ColorChannels.All or ColorChannels.Third or ColorChannels.FirstAndThird
                     or ColorChannels.SecondAndThird)
                 {
-                    blue = (byte)(samplingPixels.Select(pixel => (int)pixel.Blue).Sum() / samplingPixels.Count);
+                    blue = (byte) (samplingPixels.Select(pixel => (int) pixel.Blue).Sum() / samplingPixels.Count);
                 }
 
                 resultBitmap.SetPixel(x, y, new SKColor(red, green, blue));
@@ -51,7 +52,7 @@ public class LinearAveragingFilter : IFilter
         return resultBitmap;
     }
 
-    private IList<SKColor> GetSamplingPixels(SKBitmap bitmap, int x, int y)
+    private IList<SKColor> GetSamplingPixels(FluentBitmap bitmap, int x, int y)
     {
         var result = new List<SKColor>();
 

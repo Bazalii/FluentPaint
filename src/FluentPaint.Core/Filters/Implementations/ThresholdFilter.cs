@@ -1,4 +1,5 @@
 using FluentPaint.Core.Enums;
+using FluentPaint.Core.Pictures;
 using SkiaSharp;
 
 namespace FluentPaint.Core.Filters.Implementations;
@@ -12,9 +13,9 @@ public class ThresholdFilter : IFilter
         _threshold = threshold;
     }
 
-    public SKBitmap Filter(ColorChannels channels, SKBitmap bitmap)
+    public FluentBitmap Filter(ColorChannels channels, FluentBitmap bitmap)
     {
-        var resultBitmap = new SKBitmap(bitmap.Width, bitmap.Height);
+        var resultBitmap = new FluentBitmap(bitmap.Width, bitmap.Height);
 
         for (var y = 0; y < bitmap.Height; y++)
         {
@@ -29,19 +30,19 @@ public class ThresholdFilter : IFilter
                 if (channels is ColorChannels.All or ColorChannels.First or ColorChannels.FirstAndSecond
                     or ColorChannels.FirstAndThird)
                 {
-                    red = pixel.Red < _threshold ? (byte)0 : (byte)255;
+                    red = pixel.Red < _threshold ? (byte) 0 : (byte) 255;
                 }
 
                 if (channels is ColorChannels.All or ColorChannels.Second or ColorChannels.FirstAndSecond
                     or ColorChannels.SecondAndThird)
                 {
-                    green = pixel.Green < _threshold ? (byte)0 : (byte)255;
+                    green = pixel.Green < _threshold ? (byte) 0 : (byte) 255;
                 }
 
                 if (channels is ColorChannels.All or ColorChannels.Third or ColorChannels.FirstAndThird
                     or ColorChannels.SecondAndThird)
                 {
-                    blue = pixel.Blue < _threshold ? (byte)0 : (byte)255;
+                    blue = pixel.Blue < _threshold ? (byte) 0 : (byte) 255;
                 }
 
                 resultBitmap.SetPixel(x, y, new SKColor(red, green, blue));
